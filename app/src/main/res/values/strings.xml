@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">haritagedemo</string>
+    <string name="sign_in_with_google">Sign in With Google</string>
+    <string name="example">Example</string>
+    <string name="id">ID</string>
+    <string name="name">Name</string>
+    <string name="email_address">Email address</string>
+    <string name="sign_out">Sign out</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="facebook_app_id">1525179727838262</string>
+    <string name="fb_login_protocol_scheme">fb1525179727838262</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="dialogTitle">Profile</string>
+    <string name="dialogMessage">You Want To LogOut From this App</string>
+
+    <string name="selected_item">Selected item:</string>
+
+    <string-array name="Languages">
+        <item>java</item>
+        <item>kotlin</item>
+        <item>python</item>
+    </string-array>
+
+</resources>

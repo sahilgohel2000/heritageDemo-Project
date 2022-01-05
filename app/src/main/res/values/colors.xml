@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!--Other  Colors-->
+    <color name="colorGray">#D8D8D8</color>
+    <color name="colorGray1">#a7a7a7</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorBlack50">#80000000</color>
+    <color name="colorBlack75">#BF000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWhite30">#4DFFFFFF</color>
+    <color name="colorWhite60">#99FFFFFF</color>
+    <color name="colorBlue">#244AFC</color>
+    <color name="colorBlue1">#FF193CFF</color>
+    <color name="colorBrown">#AE802C</color>
+    <color name="colorOrange">#E58842</color>
+    <color name="colorGreen">#51A884</color>
+    <color name="colorIcon">#842837</color>
+    <color name="colorProgress">#923C20</color>
+
+    <color name="colorBtnBrown">#333333</color>
+    <color name="colorBtnFacebook">#3A63BF</color>
+    <color name="colorBtnGoogle">#CA4130</color>
+
+    <color name="colorDot1">#923C20</color>
+    <color name="colorDot2">#AE802C</color>
+    <color name="colorDot3">#D6C5AB</color>
+    <color name="movie_bottom_bg">#7F000000</color>
+    <color name="textcolorcream">#FFD6C5AB</color>
+    <color name="textcolorbrown">#FF923C20</color>
+    <color name="disable">#E7E7E7</color>
+
+    <color name="orange">#e44b25</color>
+    <color name="orange_transparent">#88e44b25</color>
+    <color name="gray">#58595B</color>
+    <color name="white_transparent">#99FFFFFF</color>
+    <color name="black_transparent">#000000</color>
+    <color name="gray_light">#d3d6db</color>
+    <color name="gray_dark">#666666</color>
+    <color name="background">#FFFFFF </color>
+
+</resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <item
+            android:id="@+id/first"
+            android:title="Home"
+            android:icon="@drawable/side_menu_home_icon"
+            android:drawable="@color/colorBrown"
+            android:checked="true"
+            android:iconTint="@color/colorBrown" />
+        <item
+            android:id="@+id/second"
+            android:actionLayout="@layout/activity_main"
+            android:icon="@drawable/side_menu_explore_ahmedabad"
+            android:iconTint="@color/colorBrown"
+            android:title="Explore Ahmedabad" />
+
+        <item
+            android:id="@+id/navigation_spinner"
+            android:actionLayout="@layout/spinner_layout"
+            android:title="A"
+            android:icon="@drawable/side_menu"
+            />
+
+        <item android:id="@+id/fourth" android:title="Tourism Packages" android:icon="@drawable/side_menu_tourism_packages" android:iconTint="@color/colorBrown"></item>
+        <item android:id="@+id/fifth" android:title="Ageless Ahmedabad" android:icon="@drawable/side_menu_about_ahmedabad" android:iconTint="@color/colorBrown"></item>
+
+        <item android:title="My Itinary" android:icon="@drawable/side_menu_iteneraries"></item>
+        <item android:title="Haritage Quiz" android:icon="@drawable/side_menu_quiz"></item>
+        <item android:title="Ahemedabad News Feed" android:icon="@drawable/ahmedabad_updates_menu"></item>
+        <item android:title="Choose Language" android:icon="@drawable/side_menu_choose_language"></item>
+        <item android:title="Privacy Policy" android:icon="@drawable/ic_lock"></item>
+        <item android:title="FAQs and Feedback" android:icon="@drawable/side_menu_faqs"></item>
+        <item android:title="Helpline" android:icon="@drawable/helplines_menu">
+        </item>
+
+        <item android:title="RELATED LINKS" android:menuCategory="alternative">
+        <menu>
+                <item android:title="Hoe to use"></item>
+                <item android:title="Smart City Ahmedabad Developmeny Limited"></item>
+                <item android:title="AMC Haritage Department"></item>
+                <item android:title="Amdavad Municipal Corporation"></item>
+                <item android:title="AMC Seva - Android"></item>
+                <item android:title="AMC Seva - ios"></item>
+                <item android:title="Gujarat Tourism - Android"></item>
+                <item android:title="Ahmedabad World Heritage City Guide App - Android"></item>
+                <item android:title="Ahmedabad Heritage City Guide"></item>
+        </menu>
+</item>
+</menu>

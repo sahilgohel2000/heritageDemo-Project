@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "278960096884",
+    "project_id": "haritagedemo",
+    "storage_bucket": "haritagedemo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278960096884:android:e9d337f1bb3c9392db7321",
+        "android_client_info": {
+          "package_name": "com.example.haritagedemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "278960096884-hi9qndibijllorqv3l3eo1n4pl550p0a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV4yZrbzjNOSI9N-7e337FAhzmUvxd-rc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "278960096884-hi9qndibijllorqv3l3eo1n4pl550p0a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

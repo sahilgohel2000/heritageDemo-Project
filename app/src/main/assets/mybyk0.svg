@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" height="28px" version="1.1" viewBox="0 0 22 28" width="22px"
+    xmlns="http://www.w3.org/2000/svg">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>mybykinactive_onlypin</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path
+            d="M115,7.27114084 C115,12.9460845 108,20 108,20 C108,20 101,13.0227041 101,7.27114084 C101,3.25538064 104.133988,0 108,0 C111.866012,0 115,3.25538064 115,7.27114084 Z"
+            id="path-1"></path>
+        <filter filterUnits="objectBoundingBox" height="170.0%" id="filter-2" width="200.0%" x="-50.0%"
+            y="-25.0%">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1"
+                stdDeviation="2"></feGaussianBlur>
+            <feColorMatrix in="shadowBlurOuter1" type="matrix"
+                values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd" id="MyByk-Workflow" stroke="none" stroke-width="1">
+        <g id="Explore-Page---Transit-Info-Displayed"
+            transform="translate(-217.000000, -57.000000)">
+            <g id="Ahmedabad-Map" transform="translate(-73.000000, -45.000000)">
+                <g id="mybyk-hubs" transform="translate(193.000000, 104.000000)">
+                    <g id="mybyk-hubs-deactive">
+                        <g id="mybykinactive_onlypin">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)"
+                                xlink:href="#path-1"></use>
+                            <use fill="#9B9B9B" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
