@@ -1,4 +1,4 @@
-package com.example.haritagedemo.API
+package com.example.haritagedemo.Model
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -25,4 +25,5 @@ data class HeritageSiteDetailModel(
     var type: String = "", // heritage_site
     @SerializedName("field_upload_url")
     var fieldUploadUrl: ArrayList<String> = ArrayList()
-):Serializable
+):Serializable {
+}

@@ -1,7 +1,7 @@
 package com.example.haritagedemo
 
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,21 +14,26 @@ import android.webkit.*
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.example.haritagedemo.API.*
+import com.example.haritagedemo.Model.EventDetailModel
+import com.example.haritagedemo.Model.HeritageSiteDetailModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_bottomsheet_quickview.*
-import java.lang.Exception
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-
-
-
-
+import com.example.haritagedemo.Model.FestivalDetailModel
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class HomeFragment : BaseFragment() {
 
     lateinit var bottomSheetLayout: LinearLayout
     lateinit var sheetBehaviorUnit: BottomSheetBehavior<*>
     private var mHeritageSiteDetailModel: HeritageSiteDetailModel?=null
+    private var latLng = null
+    private var mFestivalDetailModel: FestivalDetailModel? = null
+    private var mEventDetailModel: EventDetailModel? = null
+    private var mLocalCuisineDetail: LocalCuisineDetail? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +50,9 @@ class HomeFragment : BaseFragment() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     BottomSheetBehavior.STATE_COLLAPSED -> {
-                        Handler(Looper.getMainLooper()).post { webView.loadUrl("javascript:deselectSite()") }
+                        Handler(Looper.getMainLooper()).post { webView?.loadUrl("javascript:deselectSite()") }
+                        //when you click on webview or deselect sitre will desable
+                        //then BottomSheetBehavior.State_hide
                     }
                 }
             }
@@ -99,6 +106,15 @@ class HomeFragment : BaseFragment() {
                         if (type.equals(Const.HERITAGETYPE.HERITAGE_SITE.toString(),true)){
                             callAPIHeritageSiteDetails(dataId)
                         }
+                        else if (type.equals(Const.HERITAGETYPE.FESTIVALS.toString(),true)){
+                            callAPIGetFestivalDetails(dataId)
+                        }
+                        else if (type.equals(Const.HERITAGETYPE.EVENTS_ENTERTAINMENT.toString(),true)){
+                            callAPIEventDetail(dataId)
+                        }
+                        else if (type.equals(Const.HERITAGETYPE.LOCAL_CUISINE.toString(),true)){
+                            callAPILocalCusine(dataId)
+                        }
                         else {
                             Log.e("MainFragment","Else Part")
                         }
@@ -108,6 +124,213 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    private fun callAPILocalCusine(dataId: String?){
+        val serviceManager = ServiceManager(mContext!!)
+        val hashMap = HashMap<String, Any?>()
+
+        hashMap[Const.PARAM_NID] = dataId
+        hashMap[Const.PARAM_USER_ID] = mPreferenceManager.getUserId()
+        hashMap[Const.PARAM_LANGUAGE] = "en"
+
+        serviceManager.apiLocalCuisineDetail(
+            hashMap,
+            object : ResponseListener<Response<LocalCuisineDetail>>(){
+                override fun onRequestSuccess(response: Response<LocalCuisineDetail>) {
+                    mLocalCuisineDetail = response.result
+
+                    activity!!.runOnUiThread(Runnable {
+                        setupBottomCusine(
+                        mLocalCuisineDetail!!.heritageSiteName,
+                        mLocalCuisineDetail!!.fieldUploadUrl.get(0),
+                        mLocalCuisineDetail!!.fieldHeritageSitesCategory.joinToString(
+                        separator = " "
+                        ),
+                        mLocalCuisineDetail!!.type,
+                        response.result!!.nid
+                        )
+                    })
+                }
+
+                override fun onRequestSuccess(
+                    isSuccess: Boolean,
+                    response: Response<LocalCuisineDetail>,
+                    message: String
+                ) {
+                    super.onRequestSuccess(isSuccess, response, message)
+                }
+
+                override fun onRequestFailed(t: Throwable) {
+                    super.onRequestFailed(t)
+                }
+
+                override fun onRequestFailed(message: String) {
+                    super.onRequestFailed(message)
+                }
+            }
+        )
+    }
+
+    private fun setupBottomCusine(
+        heritageSiteName: String,
+        get: String,
+        joinToString: String,
+        type: String,
+        nid: String
+    ) {
+        Glide.with(mContext!!).load(get).into(course)
+
+        idTVCourseName.text = heritageSiteName
+        idTVCourseTracks.text = joinToString
+
+        bottomSheetLayout.setOnClickListener(View.OnClickListener {
+            if (type!=null){
+                sheetBehaviorUnit.state =BottomSheetBehavior.STATE_COLLAPSED
+            }
+        })
+    }
+
+    private fun callAPIGetFestivalDetails(dataId: String?){
+        val serviceManager = ServiceManager(mContext!!)
+        val hashMap = HashMap<String, Any?>()
+
+        hashMap[Const.PARAM_NID] = dataId
+        hashMap[Const.PARAM_USER_ID] = mPreferenceManager.getUserId()
+        hashMap[Const.PARAM_LANGUAGE] = "en"
+
+        serviceManager.apiGetFestivalDetails(
+            hashMap,
+            object:ResponseListener<Response<FestivalDetailModel>>(){
+                override fun onRequestSuccess(response: Response<FestivalDetailModel>) {
+                    mFestivalDetailModel = response.result
+                    Log.d("responses-->",response.result.toString())
+                    activity!!.runOnUiThread(Runnable {
+                    setupBottomSites(
+                        mFestivalDetailModel!!.heritageSiteName,
+                        mFestivalDetailModel!!.fieldUploadUrl.get(0),
+                        mFestivalDetailModel!!.fieldFestivalCategory.joinToString(
+                            separator = " "
+                        ),
+                        mFestivalDetailModel!!.heritageSiteName.toString(),
+                        mFestivalDetailModel!!.type,
+                        response.result!!.nid
+                    )
+                    })
+                }
+
+                override fun onRequestSuccess(
+                    isSuccess: Boolean,
+                    response: Response<FestivalDetailModel>,
+                    message: String
+                ) {
+                    super.onRequestSuccess(isSuccess, response, message)
+                }
+
+                override fun onRequestFailed(t: Throwable) {
+                    super.onRequestFailed(t)
+                }
+
+                override fun onRequestFailed(message: String) {
+                    super.onRequestFailed(message)
+                }
+            }
+        )
+    }
+
+    private fun setupBottomSites(
+        heritageSiteName: String,
+        get: String,
+        joinToString: String,
+        toString: String,
+        type: String,
+        nid: String
+    ) {
+        Glide.with(mContext!!).load(get).into(course)
+
+        idTVCourseName.text = heritageSiteName
+        idTVCourseTracks.text = joinToString
+
+        bottomSheetLayout.setOnClickListener(View.OnClickListener {
+            if (type!=null){
+                sheetBehaviorUnit.state =BottomSheetBehavior.STATE_COLLAPSED
+            }
+        })
+    }
+
+    //CALL API EVENT DETAIL
+    private fun callAPIEventDetail(dataId: String?){
+        val serviceManager = ServiceManager(mContext!!)
+        val hashMap = HashMap<String, Any?>()
+
+        hashMap[Const.PARAM_NID] = dataId
+        hashMap[Const.PARAM_USER_ID] = mPreferenceManager.getUserId()
+        hashMap[Const.PARAM_LANGUAGE] = "en"
+
+        serviceManager.apiEventDetail(
+            hashMap,
+            object : ResponseListener<Response<EventDetailModel>>(){
+                override fun onRequestSuccess(response: Response<EventDetailModel>) {
+                    mEventDetailModel = response.result
+                    Log.d("Events-->",response.result.toString())
+                    activity!!.runOnUiThread(Runnable {
+                    setupBottomSiteEvent(
+                        mEventDetailModel!!.heritageSiteName,
+                        mEventDetailModel!!.fieldHeritageSitesCategory.joinToString(
+                            separator = " "
+                        ),
+                        mEventDetailModel!!.fieldUploadUrl.get(0),
+                        mEventDetailModel!!.type,
+                        response.result!!.nid
+                    )
+                    })
+                }
+
+                override fun onRequestSuccess(
+                    isSuccess: Boolean,
+                    response: Response<EventDetailModel>,
+                    message: String
+                ) {
+                    super.onRequestSuccess(isSuccess, response, message)
+                }
+
+                override fun onRequestFailed(t: Throwable) {
+                    super.onRequestFailed(t)
+                }
+
+                override fun onRequestFailed(message: String) {
+                    super.onRequestFailed(message)
+                }
+            }
+        )
+    }
+
+    private fun setupBottomSiteEvent(
+        heritageSiteName: String,
+        joinToString: String,
+        get: String,
+        type: String,
+        nid: String
+    ) {
+        Glide.with(mContext!!).load(get).into(course)
+
+//        idTVCourseTracks.text = stripHtml(description) //stripHtml that removes Html tag and get data without tag
+        idTVCourseName.text = heritageSiteName
+        idTVCourseTracks.text = joinToString
+
+        bottomSheetLayout.setOnClickListener(View.OnClickListener {
+//            try {
+//                val intent=Intent(mContext,EmptyActivity::class.java)
+//                startActivity(intent)
+//            }catch (e:Exception){
+//                e.printStackTrace()
+//            }
+
+            if (type!=null){
+                sheetBehaviorUnit.state =BottomSheetBehavior.STATE_COLLAPSED
+            }
+        })
+    }
+
+    //CALL API HERITAGE SITE
     private fun callAPIHeritageSiteDetails(dataId: String?){
 
         val serviceManager = ServiceManager(mContext!!)
@@ -138,7 +361,11 @@ class HomeFragment : BaseFragment() {
                             mHeritageSiteDetailModel!!.type,
                             response.result!!.nid,
                             mHeritageSiteDetailModel!!.fieldUploadUrl.get(0),
-                            mHeritageSiteDetailModel!!.amenities
+                            mHeritageSiteDetailModel!!.amenities,
+                            Util.getLocation(
+                                mHeritageSiteDetailModel!!.latitude,
+                                mHeritageSiteDetailModel!!.longitude
+                            )
                         )
                     })
                 }
@@ -162,13 +389,18 @@ class HomeFragment : BaseFragment() {
         type: String,
         nid: String,
         fieldUploadUrl: String,
-        amenities: ArrayList<String>
+        amenities: ArrayList<String>,
+        location: Location
     ) {
         Glide.with(mContext!!).load(fieldUploadUrl).into(course)
 
 //        idTVCourseTracks.text = stripHtml(description) //stripHtml that removes Html tag and get data without tag
-//        idTVCourseTracks.text = description
         idTVCourseName.text = heritageSiteName
+        idTVCourseTracks.text = joinToString
+
+        Log.d("HomeFragment",location.toString())
+
+        idTVCourseDuration.text = location.toString()
 
         bottomSheetLayout.setOnClickListener(View.OnClickListener {
 //            try {
@@ -201,6 +433,5 @@ class HomeFragment : BaseFragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
-
 
 }

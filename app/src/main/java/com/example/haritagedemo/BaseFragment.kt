@@ -1,12 +1,15 @@
 package com.example.haritagedemo
 
 import android.content.Context
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.haritagedemo.API.PreferanceManager
+import java.math.BigDecimal
 
 
 abstract class BaseFragment : Fragment() {

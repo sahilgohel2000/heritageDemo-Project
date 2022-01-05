@@ -2,6 +2,9 @@ package com.example.haritagedemo.API
 
 import android.content.Context
 import android.net.Uri
+import com.example.haritagedemo.Model.EventDetailModel
+import com.example.haritagedemo.Model.FestivalDetailModel
+import com.example.haritagedemo.Model.HeritageSiteDetailModel
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,6 +43,100 @@ class ServiceManager(private val mContext: Context) {
         return params
     }
 
+
+    /**
+     *
+     * Api For get site Details
+     *
+     * */
+
+    fun apiLocalCuisineDetail(
+        params: HashMap<String, Any?>,
+        l: ResponseListener<Response<LocalCuisineDetail>>
+    ) {
+
+        val call = buildApi().apiLocalCuisineDetail(addKey(params))
+        call.enqueue(object : Callback<Response<LocalCuisineDetail>> {
+            override fun onResponse(
+                call: Call<Response<LocalCuisineDetail>>,
+                response: retrofit2.Response<Response<LocalCuisineDetail>>
+            ) {
+                val body = response.body()
+                if (body != null) {
+                    if (body.code == Const.SUCCESS)
+                        l.onRequestSuccess(response.body()!!)
+                    else
+                        l.onRequestFailed(body.message)
+                } else
+                    l.onRequestFailed(response.message())
+
+            }
+
+            override fun onFailure(call: Call<Response<LocalCuisineDetail>>, t: Throwable) {
+                l.onRequestFailed(t)
+            }
+        })
+    }
+
+    //CALL API EVENT DETAIL
+    fun apiEventDetail(
+        params: HashMap<String, Any?>,
+        l: ResponseListener<Response<EventDetailModel>>
+    ) {
+
+        val call = buildApi().apiEventDetail(addKey(params))
+        call.enqueue(object : Callback<Response<EventDetailModel>> {
+            override fun onResponse(
+                call: Call<Response<EventDetailModel>>,
+                response: retrofit2.Response<Response<EventDetailModel>>
+            ) {
+                val body = response.body()
+                if (body != null) {
+                    if (body.code == Const.SUCCESS)
+                        l.onRequestSuccess(response.body()!!)
+                    else
+                        l.onRequestFailed(body.message)
+                } else
+                    l.onRequestFailed(response.message())
+
+            }
+
+            override fun onFailure(call: Call<Response<EventDetailModel>>, t: Throwable) {
+                l.onRequestFailed(t)
+            }
+        })
+    }
+
+    //API FOR GET FESTIVAL SITE
+    fun apiGetFestivalDetails(
+        params: HashMap<String, Any?>,
+        l: ResponseListener<Response<FestivalDetailModel>>
+    ) {
+
+        val call = buildApi().apiGetFestivalDetails(addKey(params))
+        call.enqueue(object : Callback<Response<FestivalDetailModel>> {
+            override fun onResponse(
+                call: Call<Response<FestivalDetailModel>>,
+                response: retrofit2.Response<Response<FestivalDetailModel>>
+            ) {
+                val body = response.body()
+                if (body != null) {
+                    if (body.code == Const.SUCCESS)
+                        l.onRequestSuccess(response.body()!!)
+                    else
+                        l.onRequestFailed(body.message)
+                } else
+                    l.onRequestFailed(response.message())
+
+            }
+
+            override fun onFailure(call: Call<Response<FestivalDetailModel>>, t: Throwable) {
+                l.onRequestFailed(t)
+            }
+        })
+    }
+
+    //API FOR HERITAGE SITE
     fun apiHeritageSiteDetails(
         params: HashMap<String, Any?>,
         l: ResponseListener<Response<HeritageSiteDetailModel>>
