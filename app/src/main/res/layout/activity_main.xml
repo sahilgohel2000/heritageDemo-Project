@@ -5,7 +5,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/maindrawer">
+        android:id="@+id/maindrawer"
+        tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/firstPage"
@@ -13,11 +14,11 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <WebView
-            android:id="@+id/secondWebView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="51dp"/>
+<!--        <WebView-->
+<!--            android:id="@+id/secondWebView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="51dp"/>-->
 
         <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarLayout"

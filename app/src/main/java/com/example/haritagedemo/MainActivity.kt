@@ -70,12 +70,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        secondwebView = findViewById(R.id.secondWebView)
-        setUpMapViews()
+        try {
+            val fragmentTransaction=supportFragmentManager.beginTransaction()
+            fragmentTransaction.add(R.id.firstPage,HomeFragment())
+            fragmentTransaction.commit()
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
 
-        Handler().postDelayed({
-            progressDialog.dismiss()
-        },2000)
+
+//        secondwebView = findViewById(R.id.secondWebView)
+//        setUpMapViews()
+
+//        Handler().postDelayed({
+//            progressDialog.dismiss()
+//        },2000)
 
         navigationView = findViewById(R.id.navigation)
 
