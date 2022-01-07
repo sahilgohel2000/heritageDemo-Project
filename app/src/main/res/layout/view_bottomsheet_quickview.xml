@@ -23,7 +23,8 @@
             android:src="@drawable/mainarrowdown"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="#800" />
 
         <ImageView
             android:id="@+id/course"
@@ -129,11 +130,11 @@
             app:layout_constraintTop_toBottomOf="@id/idTVCourseDuration"/>
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/sharebtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="15dp"
             android:clickable="true"
             app:fabCustomSize="30dp"
             app:borderWidth="0dp"
@@ -143,31 +144,25 @@
             app:layout_constraintRight_toRightOf="@id/guideline2"
             app:layout_constraintTop_toBottomOf="@id/idTVCourseDuration"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/cambtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            app:borderWidth="0dp"
-            app:fabCustomSize="30dp"
-            android:backgroundTint="#800000"
             android:src="@drawable/cameraicon"
-            app:layout_constraintRight_toLeftOf="@id/sharebtn"
-            app:layout_constraintTop_toBottomOf="@id/idTVCourseDuration"
-            tools:ignore="SpeakableTextPresentCheck" />
+            app:layout_constraintRight_toLeftOf="@+id/sharebtn"
+            app:layout_constraintTop_toBottomOf="@id/idTVCourseDuration"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/addRating"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="14dp"
             app:borderWidth="0dp"
             app:fabCustomSize="30dp"
-            android:backgroundTint="#800000"
-            android:src="@drawable/giveratingtwo"
-            android:tint="@color/white"
+            android:src="@drawable/ratings"
             app:layout_constraintRight_toLeftOf="@id/cambtn"
             app:layout_constraintTop_toBottomOf="@id/idTVCourseDuration"
             tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />

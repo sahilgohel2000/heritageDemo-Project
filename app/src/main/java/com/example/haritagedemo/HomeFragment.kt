@@ -1,6 +1,7 @@
 package com.example.haritagedemo
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -12,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.Model.EventDetailModel
@@ -20,6 +22,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_bottomsheet_quickview.*
 import com.example.haritagedemo.Model.FestivalDetailModel
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -37,23 +41,24 @@ class HomeFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun bindViews(view: View) {
         setsUpMap()
+
         bottomSheetLayout = view.findViewById(R.id.bottomsheetLayout)
         sheetBehaviorUnit = BottomSheetBehavior.from(bottomSheetLayout)
         sheetBehaviorUnit.state = BottomSheetBehavior.STATE_HIDDEN
 
         sheetBehaviorUnit.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                        Handler(Looper.getMainLooper()).post { webView?.loadUrl("javascript:deselectSite()") }
-                        //when you click on webview or deselect sitre will desable
-                        //then BottomSheetBehavior.State_hide
+                if (newState!=null) {
+                    if (sheetBehaviorUnit.state == BottomSheetBehavior.STATE_HIDDEN){
+                        Handler(Looper.getMainLooper()).post {
+                            webView.loadUrl("javascript:deselectSite()")
+                        }
                     }
+                    else{}
                 }
             }
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
@@ -63,7 +68,7 @@ class HomeFragment : BaseFragment() {
     @SuppressLint("SetJavaScriptEnabled")
     private fun setsUpMap() {
 
-        webView.addJavascriptInterface(WebInterface(), "appInterface")
+        webView.addJavascriptInterface(WebInterface(mContext!!), "appInterface")
         webView.settings.javaScriptEnabled = true
         webView.settings.allowContentAccess = true
         webView.settings.allowFileAccess = true
@@ -90,7 +95,7 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    inner class WebInterface(){
+    inner class WebInterface(val mContext: Context){
         @JavascriptInterface
         fun getPinInfo(dataId: String?, type: String?) {
                 activity!!.runOnUiThread(Runnable {
@@ -183,8 +188,10 @@ class HomeFragment : BaseFragment() {
         idTVCourseTracks.text = joinToString
 
         bottomSheetLayout.setOnClickListener(View.OnClickListener {
-            if (type!=null){
-                sheetBehaviorUnit.state =BottomSheetBehavior.STATE_COLLAPSED
+            if (type!=null)
+            {
+                Util.openDetailsScreen(mContext!!,type,nid)
+                sheetBehaviorUnit.state=BottomSheetBehavior.STATE_COLLAPSED
             }
         })
     }
@@ -250,8 +257,10 @@ class HomeFragment : BaseFragment() {
         idTVCourseTracks.text = joinToString
 
         bottomSheetLayout.setOnClickListener(View.OnClickListener {
-            if (type!=null){
-                sheetBehaviorUnit.state =BottomSheetBehavior.STATE_COLLAPSED
+            if (type!=null)
+            {
+                Util.openDetailsScreen(mContext!!,type,nid)
+                sheetBehaviorUnit.state=BottomSheetBehavior.STATE_COLLAPSED
             }
         })
     }
@@ -323,9 +332,10 @@ class HomeFragment : BaseFragment() {
 //            }catch (e:Exception){
 //                e.printStackTrace()
 //            }
-
-            if (type!=null){
-                sheetBehaviorUnit.state =BottomSheetBehavior.STATE_COLLAPSED
+            if (type!=null)
+            {
+                Util.openDetailsScreen(mContext!!,type,nid)
+                sheetBehaviorUnit.state=BottomSheetBehavior.STATE_COLLAPSED
             }
         })
     }
@@ -409,9 +419,10 @@ class HomeFragment : BaseFragment() {
 //            }catch (e:Exception){
 //                e.printStackTrace()
 //            }
-
-            if (type!=null){
-                sheetBehaviorUnit.state =BottomSheetBehavior.STATE_COLLAPSED
+            if (type!=null)
+            {
+                Util.openDetailsScreen(mContext!!,type,nid)
+                sheetBehaviorUnit.state=BottomSheetBehavior.STATE_COLLAPSED
             }
         })
 

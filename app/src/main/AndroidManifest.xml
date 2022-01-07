@@ -17,9 +17,21 @@
         android:theme="@style/Theme.Haritagedemo"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".HomeActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".Activity.FestivalDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".Activity.LocalCuisineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.EventDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.HeritageSiteDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".EmptyActivity"
             android:exported="false" />
