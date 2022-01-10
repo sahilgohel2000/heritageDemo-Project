@@ -1,14 +1,12 @@
 package com.example.haritagedemo.API
 
 import android.content.Context
-import android.content.Intent
 import android.location.Location
 import android.location.LocationManager
 import com.example.haritagedemo.Activity.EventDetailActivity
 import com.example.haritagedemo.Activity.FestivalDetailActivity
 import com.example.haritagedemo.Activity.HeritageSiteDetailActivity
 import com.example.haritagedemo.Activity.LocalCuisineActivity
-import com.example.haritagedemo.Activity.LocalCuisineActivity.Companion.startActivity
 import java.math.BigDecimal
 
 object Util {
@@ -33,21 +31,29 @@ object Util {
         return bd.toFloat()
     }
 
-    fun openDetailsScreen(mContext: Context, type: String, nid: String) {
-        when(type){
-            Const.HERITAGETYPE.HERITAGE_SITE.toString().toLowerCase()->{
-            HeritageSiteDetailActivity.startActivity(mContext,nid)
-            }
-            Const.HERITAGETYPE.EVENTS_ENTERTAINMENT.toString().toLowerCase()->{
-            EventDetailActivity.startActivity(mContext,nid)
-            }
-            Const.HERITAGETYPE.LOCAL_CUISINE.toString().toLowerCase()->{
-            LocalCuisineActivity.startActivity(mContext,nid)
-            }
-            Const.HERITAGETYPE.FESTIVALS.toString().toLowerCase()->{
-            FestivalDetailActivity.startActivity(mContext,nid)
+    fun openDetailsScreen(mContext: Context, type: String, dataId: String?) {
+        when (type) {
+            Const.HERITAGETYPE.HERITAGE_SITE.toString().toLowerCase() -> {
+                HeritageSiteDetailActivity.startActivity(mContext, dataId)
             }
         }
     }
+
+//    fun openDetailsScreen(mContext: Context, type: String, nid: String?) {
+//        when(type){
+//            Const.HERITAGETYPE.HERITAGE_SITE.toString().toLowerCase()->{
+//            HeritageSiteDetailActivity.startActivity(mContext,nid)
+//            }
+//            Const.HERITAGETYPE.EVENTS_ENTERTAINMENT.toString().toLowerCase()->{
+//            EventDetailActivity.startActivity(mContext,nid)
+//            }
+//            Const.HERITAGETYPE.LOCAL_CUISINE.toString().toLowerCase()->{
+//            LocalCuisineActivity.startActivity(mContext,nid)
+//            }
+//            Const.HERITAGETYPE.FESTIVALS.toString().toLowerCase()->{
+//            FestivalDetailActivity.startActivity(mContext,nid)
+//            }
+//        }
+//    }
 
 }

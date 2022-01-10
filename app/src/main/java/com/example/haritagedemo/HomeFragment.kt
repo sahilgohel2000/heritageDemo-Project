@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.Model.EventDetailModel
@@ -22,9 +21,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_bottomsheet_quickview.*
 import com.example.haritagedemo.Model.FestivalDetailModel
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -341,7 +337,7 @@ class HomeFragment : BaseFragment() {
     }
 
     //CALL API HERITAGE SITE
-    private fun callAPIHeritageSiteDetails(dataId: String?){
+     fun callAPIHeritageSiteDetails(dataId: String?){
 
         val serviceManager = ServiceManager(mContext!!)
         val hashMap = HashMap<String, Any?>()
@@ -357,7 +353,7 @@ class HomeFragment : BaseFragment() {
 //                    super.onRequestSuccess(response)
                     mHeritageSiteDetailModel = response.result
 
-                    Log.d("response-->",response.result.toString())
+                    //Log.d("response-->",response.result.toString())
 
                     activity!!.runOnUiThread(Runnable {
                         Log.d("HomeFragment", "HeritageName:"+mHeritageSiteDetailModel!!.heritageSiteName)
@@ -421,7 +417,7 @@ class HomeFragment : BaseFragment() {
 //            }
             if (type!=null)
             {
-                Util.openDetailsScreen(mContext!!,type,nid)
+                Util.openDetailsScreen(mContext!!,type,dataId)
                 sheetBehaviorUnit.state=BottomSheetBehavior.STATE_COLLAPSED
             }
         })

@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Haritagedemo"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".API.BaseActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.FestivalDetailActivity"
             android:exported="false" />
         <activity
