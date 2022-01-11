@@ -3,6 +3,7 @@ package com.example.haritagedemo
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,12 +16,14 @@ import android.webkit.*
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.example.haritagedemo.API.*
+import com.example.haritagedemo.API.Util.getLocation
 import com.example.haritagedemo.Model.EventDetailModel
 import com.example.haritagedemo.Model.HeritageSiteDetailModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_bottomsheet_quickview.*
 import com.example.haritagedemo.Model.FestivalDetailModel
+import com.google.android.gms.maps.model.LatLng
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -29,7 +32,7 @@ class HomeFragment : BaseFragment() {
     lateinit var bottomSheetLayout: LinearLayout
     lateinit var sheetBehaviorUnit: BottomSheetBehavior<*>
     private var mHeritageSiteDetailModel: HeritageSiteDetailModel?=null
-    private var latLng = null
+    private var latLng: LatLng? = null
     private var mFestivalDetailModel: FestivalDetailModel? = null
     private var mEventDetailModel: EventDetailModel? = null
     private var mLocalCuisineDetail: LocalCuisineDetail? = null
@@ -120,7 +123,6 @@ class HomeFragment : BaseFragment() {
                             Log.e("MainFragment","Else Part")
                         }
                     }
-
                 })
         }
     }
@@ -368,7 +370,7 @@ class HomeFragment : BaseFragment() {
                             response.result!!.nid,
                             mHeritageSiteDetailModel!!.fieldUploadUrl.get(0),
                             mHeritageSiteDetailModel!!.amenities,
-                            Util.getLocation(
+                            getLocation(
                                 mHeritageSiteDetailModel!!.latitude,
                                 mHeritageSiteDetailModel!!.longitude
                             )
