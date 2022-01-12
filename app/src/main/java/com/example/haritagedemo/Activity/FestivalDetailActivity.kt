@@ -4,12 +4,20 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.API.*
+import com.example.haritagedemo.AmentiesAdapter
 import com.example.haritagedemo.CustomPagerAdapter
 import com.example.haritagedemo.Model.EventDetailModel
 import com.example.haritagedemo.Model.FestivalDetailModel
 import com.example.haritagedemo.R
+import com.example.haritagedemo.SpacesItemDecoration
 import kotlinx.android.synthetic.main.activity_festival_detail.*
+import kotlinx.android.synthetic.main.activity_festival_detail.mViewpager
+import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
+import java.util.ArrayList
 
 class FestivalDetailActivity : BaseActivity() {
 
@@ -19,6 +27,8 @@ class FestivalDetailActivity : BaseActivity() {
     var type: String? = null
     private var mCustomPagerAdapter: CustomPagerAdapter? = null
     private lateinit var mFestivalDetailModel: FestivalDetailModel
+    //    private var mAdapterAmenities: AmentiesAdapter? = null
+//    private var mArrayListAmenities: ArrayList<String?> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +42,21 @@ class FestivalDetailActivity : BaseActivity() {
         type = intent.getStringExtra("type")
 
         callAPIGetFestivalDetails()
+
+//        val spacingVertical = resources.getDimensionPixelSize(R.dimen._8dp)
+//        val spacingHorizontal = resources.getDimensionPixelSize(R.dimen._zero_dp)
+//
+//        mAdapterAmenities =
+//            AmentiesAdapter(
+//                mContext,
+//                mArrayListAmenities
+//            )
+//        with(amentiesRecycler) {
+//            layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+//            addItemDecoration(SpacesItemDecoration(spacingHorizontal, spacingVertical))
+//            adapter = mAdapterAmenities
+//        }
+
     }
 
     private fun callAPIGetFestivalDetails() {
@@ -63,13 +88,32 @@ class FestivalDetailActivity : BaseActivity() {
     }
 
     private fun setData() {
-        festival_name.text = mFestivalDetailModel.heritageSiteName
+        festival_title.text = mFestivalDetailModel.heritageSiteName
 
         mCustomPagerAdapter = CustomPagerAdapter(
             mContext,
             mFestivalDetailModel.fieldUploadUrl
         )
         mViewpager.adapter = mCustomPagerAdapter
+        festival_desc.text = stripHtml(mFestivalDetailModel.description)
+
+//        if (!mFestivalDetailModel?.amenities!!.isNullOrEmpty()) {
+//            mArrayListAmenities.addAll(mFestivalDetailModel?.amenities!!)
+//            mAdapterAmenities?.notifyDataSetChanged()
+//            amentiesRecycler.visibility = View.VISIBLE
+//        } else {
+//            amentiesRecycler.visibility = View.GONE
+//        }
+
+    }
+
+    //this stripHtml method removes the Html Tag without this we can get data with html tag
+    private fun stripHtml(description: String): CharSequence? {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N){
+            return Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY).toString()
+        }else{
+            return Html.fromHtml(description).toString()
+        }
     }
 
     companion object{

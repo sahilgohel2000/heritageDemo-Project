@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.CustomPagerAdapter
 import com.example.haritagedemo.Model.EventDetailModel
@@ -62,12 +63,24 @@ class LocalCuisineActivity : BaseActivity() {
     }
 
     private fun setData() {
-        cusine_name.text = mLocalCuisineDetail.heritageSiteName
+        cuisine_title.text = mLocalCuisineDetail.heritageSiteName
+
         mCustomPagerAdapter = CustomPagerAdapter(
             mContext,
             mLocalCuisineDetail.fieldUploadUrl
         )
         mViewpager.adapter=mCustomPagerAdapter
+
+        cuisine_desc.text = stripHtml(mLocalCuisineDetail.description)
+    }
+
+    //this stripHtml method removes the Html Tag without this we can get data with html tag
+    private fun stripHtml(description: String): CharSequence? {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N){
+            return Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY).toString()
+        }else{
+            return Html.fromHtml(description).toString()
+        }
     }
 
     companion object{

@@ -402,7 +402,7 @@ class HomeFragment : BaseFragment() {
     ) {
         Glide.with(mContext!!).load(fieldUploadUrl).into(course)
 
-//        idTVCourseTracks.text = stripHtml(description) //stripHtml that removes Html tag and get data without tag
+    //    idTVCourseTracks.text = stripHtml(description) //stripHtml that removes Html tag and get data without tag
         idTVCourseName.text = heritageSiteName
         idTVCourseTracks.text = joinToString
 

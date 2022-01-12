@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import com.example.haritagedemo.API.*
 
 import com.example.haritagedemo.Activity.EventDetailActivity
@@ -66,12 +67,22 @@ class EventDetailActivity : BaseActivity() {
     }
 
     private fun setData() {
-        event_name.text = mEventDetailModel.eventName
+        event_title.text = mEventDetailModel.eventName
         mCustomPagerAdapter=CustomPagerAdapter(
             mContext,
             mEventDetailModel.fieldUploadUrl
         )
         mViewpager.adapter=mCustomPagerAdapter
+        event_desc.text = stripHtml(mEventDetailModel.description)
+    }
+
+    //this stripHtml method removes the Html Tag without this we can get data with html tag
+    private fun stripHtml(description: String): CharSequence? {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N){
+            return Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY).toString()
+        }else{
+            return Html.fromHtml(description).toString()
+        }
     }
 
     companion object{
