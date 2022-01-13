@@ -5,14 +5,21 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.API.*
 
 import com.example.haritagedemo.Activity.EventDetailActivity
+import com.example.haritagedemo.AmentiesAdapter
 import com.example.haritagedemo.CustomPagerAdapter
 import com.example.haritagedemo.Model.EventDetailModel
 import com.example.haritagedemo.Model.HeritageSiteDetailModel
 import com.example.haritagedemo.R
+import com.example.haritagedemo.SpacesItemDecoration
 import kotlinx.android.synthetic.main.activity_event_detail.*
+import kotlinx.android.synthetic.main.activity_event_detail.mViewpager
+import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
+import java.util.ArrayList
 import java.util.HashMap
 
 class EventDetailActivity : BaseActivity() {
@@ -23,6 +30,8 @@ class EventDetailActivity : BaseActivity() {
     var type: String? = null
     private var mCustomPagerAdapter: CustomPagerAdapter? = null
     private lateinit var mEventDetailModel: EventDetailModel
+    private var eAdapterAmenities: AmentiesAdapter? = null
+    private var eArrayListAmenities: ArrayList<String?> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +45,19 @@ class EventDetailActivity : BaseActivity() {
         type = intent.getStringExtra("type")
 
         callAPIEventDetail()
+        val spacingVertical = resources.getDimensionPixelSize(R.dimen._8dp)
+        val spacingHorizontal = resources.getDimensionPixelSize(R.dimen._zero_dp)
+
+        eAdapterAmenities =
+            AmentiesAdapter(
+                mContext,
+                eArrayListAmenities
+            )
+        with(eventRecycler) {
+            layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+            addItemDecoration(SpacesItemDecoration(spacingHorizontal, spacingVertical))
+            adapter = eAdapterAmenities
+        }
     }
 
     private fun callAPIEventDetail() {
@@ -74,6 +96,15 @@ class EventDetailActivity : BaseActivity() {
         )
         mViewpager.adapter=mCustomPagerAdapter
         event_desc.text = stripHtml(mEventDetailModel.description)
+
+        if (!mEventDetailModel?.amenities!!.isNullOrEmpty()) {
+            eArrayListAmenities.addAll(mEventDetailModel?.amenities!!)
+            eAdapterAmenities?.notifyDataSetChanged()
+            eventRecycler.visibility = View.VISIBLE
+            eventAmenties.visibility = View.VISIBLE
+        } else {
+            eventRecycler.visibility = View.GONE
+        }
     }
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag

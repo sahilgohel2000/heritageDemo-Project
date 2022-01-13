@@ -38,17 +38,16 @@
         android:textSize="18dp"
         android:maxLines="1"
         android:textStyle="bold"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="315dp"
         android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@id/mViewpager" />
+        app:layout_constraintTop_toTopOf="@id/mViewpager"
+        app:layout_constraintBottom_toBottomOf="@id/mViewpager"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/heritage_title"
+                app:layout_constraintTop_toBottomOf="@id/mViewpager"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="20dp"
@@ -77,7 +76,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/nearbyAmenties"
+                android:id="@+id/heritageAmenties"
                 android:text="NearBy Amenties"
                 android:textSize="15dp"
                 android:textAlignment="center"
@@ -90,14 +89,15 @@
                 android:layout_marginEnd="50dp"
                 app:layout_constraintTop_toBottomOf="@id/cardlayout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/amentiesRecycler"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/nearbyAmenties"
+            app:layout_constraintTop_toBottomOf="@id/heritageAmenties"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:listitem="@layout/amenties_list_item"/>

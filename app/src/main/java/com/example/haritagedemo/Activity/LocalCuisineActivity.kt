@@ -5,11 +5,18 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.API.*
+import com.example.haritagedemo.AmentiesAdapter
 import com.example.haritagedemo.CustomPagerAdapter
 import com.example.haritagedemo.Model.EventDetailModel
 import com.example.haritagedemo.R
+import com.example.haritagedemo.SpacesItemDecoration
+import kotlinx.android.synthetic.main.activity_event_detail.*
 import kotlinx.android.synthetic.main.activity_local_cuisine.*
+import kotlinx.android.synthetic.main.activity_local_cuisine.mViewpager
+import java.util.ArrayList
 
 class LocalCuisineActivity : BaseActivity() {
 
@@ -19,6 +26,8 @@ class LocalCuisineActivity : BaseActivity() {
     var type: String? = null
     private var mCustomPagerAdapter: CustomPagerAdapter? = null
     private lateinit var mLocalCuisineDetail: LocalCuisineDetail
+    private var cAdapterAmenities: AmentiesAdapter? = null
+    private var cArrayListAmenities: ArrayList<String?> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +41,19 @@ class LocalCuisineActivity : BaseActivity() {
         type = intent.getStringExtra("type")
 
         callAPILocalCusine()
+        val spacingVertical = resources.getDimensionPixelSize(R.dimen._8dp)
+        val spacingHorizontal = resources.getDimensionPixelSize(R.dimen._zero_dp)
+
+        cAdapterAmenities =
+            AmentiesAdapter(
+                mContext,
+                cArrayListAmenities
+            )
+        with(cuisineRecycler) {
+            layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+            addItemDecoration(SpacesItemDecoration(spacingHorizontal, spacingVertical))
+            adapter = cAdapterAmenities
+        }
     }
 
     private fun callAPILocalCusine() {
@@ -72,6 +94,15 @@ class LocalCuisineActivity : BaseActivity() {
         mViewpager.adapter=mCustomPagerAdapter
 
         cuisine_desc.text = stripHtml(mLocalCuisineDetail.description)
+
+        if (!mLocalCuisineDetail?.amenities!!.isNullOrEmpty()) {
+            cArrayListAmenities.addAll(mLocalCuisineDetail?.amenities!!)
+            cAdapterAmenities?.notifyDataSetChanged()
+            cuisineRecycler.visibility = View.VISIBLE
+            cuisineAmenties.visibility = View.VISIBLE
+        } else {
+            cuisineRecycler.visibility = View.GONE
+        }
     }
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag

@@ -113,6 +113,7 @@ class HeritageSiteDetailActivity :BaseActivity() {
             mArrayListAmenities.addAll(mHeritageSiteDetailModel?.amenities!!)
             mAdapterAmenities?.notifyDataSetChanged()
             amentiesRecycler.visibility = View.VISIBLE
+            heritageAmenties.visibility = View.VISIBLE
         } else {
             amentiesRecycler.visibility = View.GONE
         }

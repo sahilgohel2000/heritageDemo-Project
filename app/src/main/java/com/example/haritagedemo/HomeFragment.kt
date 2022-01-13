@@ -62,6 +62,7 @@ class HomeFragment : BaseFragment() {
             }
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
+
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -103,7 +104,6 @@ class HomeFragment : BaseFragment() {
 
                     //idTVCourseName.text = dataId.toString()
                     //idTVCourseDuration.text = type.toString()
-
                     sheetBehaviorUnit.state = BottomSheetBehavior.STATE_COLLAPSED
 
                     if (!dataId.isNullOrEmpty() && type != null){
@@ -119,9 +119,7 @@ class HomeFragment : BaseFragment() {
                         else if (type.equals(Const.HERITAGETYPE.LOCAL_CUISINE.toString(),true)){
                             callAPILocalCusine(dataId)
                         }
-                        else {
-                            Log.e("MainFragment","Else Part")
-                        }
+                        else {}
                     }
                 })
         }

@@ -27,8 +27,8 @@ class FestivalDetailActivity : BaseActivity() {
     var type: String? = null
     private var mCustomPagerAdapter: CustomPagerAdapter? = null
     private lateinit var mFestivalDetailModel: FestivalDetailModel
-    //    private var mAdapterAmenities: AmentiesAdapter? = null
-//    private var mArrayListAmenities: ArrayList<String?> = ArrayList()
+    private var fAdapterAmenities: AmentiesAdapter? = null
+    private var fArrayListAmenities: ArrayList<String?> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,19 +43,19 @@ class FestivalDetailActivity : BaseActivity() {
 
         callAPIGetFestivalDetails()
 
-//        val spacingVertical = resources.getDimensionPixelSize(R.dimen._8dp)
-//        val spacingHorizontal = resources.getDimensionPixelSize(R.dimen._zero_dp)
-//
-//        mAdapterAmenities =
-//            AmentiesAdapter(
-//                mContext,
-//                mArrayListAmenities
-//            )
-//        with(amentiesRecycler) {
-//            layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
-//            addItemDecoration(SpacesItemDecoration(spacingHorizontal, spacingVertical))
-//            adapter = mAdapterAmenities
-//        }
+        val spacingVertical = resources.getDimensionPixelSize(R.dimen._8dp)
+        val spacingHorizontal = resources.getDimensionPixelSize(R.dimen._zero_dp)
+
+        fAdapterAmenities =
+            AmentiesAdapter(
+                mContext,
+                fArrayListAmenities
+            )
+        with(festivalRecycler) {
+            layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+            addItemDecoration(SpacesItemDecoration(spacingHorizontal, spacingVertical))
+            adapter = fAdapterAmenities
+        }
 
     }
 
@@ -97,13 +97,14 @@ class FestivalDetailActivity : BaseActivity() {
         mViewpager.adapter = mCustomPagerAdapter
         festival_desc.text = stripHtml(mFestivalDetailModel.description)
 
-//        if (!mFestivalDetailModel?.amenities!!.isNullOrEmpty()) {
-//            mArrayListAmenities.addAll(mFestivalDetailModel?.amenities!!)
-//            mAdapterAmenities?.notifyDataSetChanged()
-//            amentiesRecycler.visibility = View.VISIBLE
-//        } else {
-//            amentiesRecycler.visibility = View.GONE
-//        }
+        if (!mFestivalDetailModel?.amenities!!.isNullOrEmpty()) {
+            fArrayListAmenities.addAll(mFestivalDetailModel?.amenities!!)
+            fAdapterAmenities?.notifyDataSetChanged()
+            festivalRecycler.visibility = View.VISIBLE
+            festivalAmenties.visibility = View.VISIBLE
+        } else {
+            festivalRecycler.visibility = View.GONE
+        }
 
     }
 
@@ -124,4 +125,8 @@ class FestivalDetailActivity : BaseActivity() {
         mContext.startActivity(intent)
     }
 }
+}
+
+private fun <E> ArrayList<E>.addAll(elements: ArrayList<Any>) {
+    TODO("Not yet implemented")
 }
