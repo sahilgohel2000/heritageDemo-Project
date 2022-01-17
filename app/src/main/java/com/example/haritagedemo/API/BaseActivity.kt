@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.example.haritagedemo.FieldNearbySitesLocation
+import com.example.haritagedemo.SiteNearbyAdapter
+import java.util.ArrayList
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -34,4 +37,5 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(newBase)
     }
+
 }

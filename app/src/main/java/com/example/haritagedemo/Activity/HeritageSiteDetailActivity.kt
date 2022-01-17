@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.*
@@ -20,14 +21,17 @@ import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
 import java.io.File
 import java.util.ArrayList
 import java.util.HashMap
+import kotlin.math.roundToInt
 
 
-class HeritageSiteDetailActivity :BaseActivity() {
+class HeritageSiteDetailActivity :BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCallback {
 
     var dataId: String? = null
     var contentMessage: String? = null
     var titleMsg: String? = null
     var type: String? = null
+    private var mAdapter: SiteNearbyAdapter? = null
+    private var mArrayList: ArrayList<FieldNearbySitesLocation?> = ArrayList()
     private var mCustomPagerAdapter: CustomPagerAdapter? = null
     private var mAdapterAmenities: AmentiesAdapter? = null
     private var mArrayListAmenities: ArrayList<String?> = ArrayList()
@@ -49,6 +53,17 @@ class HeritageSiteDetailActivity :BaseActivity() {
 
         val spacingVertical = resources.getDimensionPixelSize(R.dimen._8dp)
         val spacingHorizontal = resources.getDimensionPixelSize(R.dimen._zero_dp)
+
+        mAdapter = SiteNearbyAdapter(
+            mContext,
+            mArrayList,
+            this
+        )
+        with(sitesRecycler){
+            layoutManager = LinearLayoutManager(mContext)
+            addItemDecoration(SpacesItemDecoration(spacingVertical, spacingHorizontal))
+            adapter = mAdapter
+        }
 
         mAdapterAmenities =
             AmentiesAdapter(
@@ -118,6 +133,58 @@ class HeritageSiteDetailActivity :BaseActivity() {
             amentiesRecycler.visibility = View.GONE
         }
 
+        txtTimeToCover.text = mHeritageSiteDetailModel.fieldTotalTimeRequired
+        txtTime.text = mHeritageSiteDetailModel.fieldTimingsForSite
+        txtFees.text = mHeritageSiteDetailModel.fieldEntryFeeBookingInfo.toString()
+
+        if (mHeritageSiteDetailModel.fieldSpecialConsideration.isNullOrEmpty()){
+            textThings.visibility = View.GONE
+            textttk.visibility = View.GONE
+        }
+        else{
+            textThings.text=mHeritageSiteDetailModel.fieldSpecialConsideration
+            textThings.visibility = View.VISIBLE
+            textttk.visibility = View.VISIBLE
+        }
+
+        if (mHeritageSiteDetailModel.fieldMostPopularAttraction.isNullOrEmpty())
+        {
+            textPopularAttraction.visibility = View.GONE
+            textPopular.visibility = View.GONE
+        }
+        else{
+            textPopularAttraction.text = mHeritageSiteDetailModel.fieldMostPopularAttraction
+            textPopularAttraction.visibility = View.VISIBLE
+            textPopular.visibility = View.VISIBLE
+        }
+
+        if (mHeritageSiteDetailModel.type.equals("local_cuisine",true)){
+            textPopular.text = "Must try Item"
+        }
+        else{
+            textPopular.text = "Most Popular Attraction"
+        }
+
+        ratingBar.rating = mHeritageSiteDetailModel.ratingReview.average.roundToInt().toFloat()
+
+        if (mHeritageSiteDetailModel.fieldRatingsAndReviewsOn == 1){
+            rating.visibility = View.VISIBLE
+        }
+
+        Log.d("HeritageSiteDetail",mHeritageSiteDetailModel.fieldNearbySitesLocation.toString())
+        if (mHeritageSiteDetailModel?.fieldNearbySitesLocation!!.isNullOrEmpty()){
+            Toast.makeText(this,"invalid Data",Toast.LENGTH_LONG).show()
+        }else{
+            mArrayList.addAll(mHeritageSiteDetailModel?.fieldNearbySitesLocation!!)
+            mAdapter?.notifyDataSetChanged()
+            sitesRecycler.visibility = View.VISIBLE
+            nearbySites.visibility = View.VISIBLE
+        }
+        //nearbySites.text = mHeritageSiteDetailModel.fieldNearbySitesLocation.toString()
+
+        nearestBus.text = mHeritageSiteDetailModel.fieldNearestBusStationLocation.toString()
+        nearestTrain.text = mHeritageSiteDetailModel.fieldNearestTrainStationLocation.toString()
+        nearestAirport.text = mHeritageSiteDetailModel.fieldNearestAirportLocation.toString()
     }
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag
@@ -143,6 +210,15 @@ class HeritageSiteDetailActivity :BaseActivity() {
         fun getIntent(mContext: Context, dataId: String?): Intent {
             return Intent(mContext, HeritageSiteDetailActivity::class.java).apply {
                 putExtra(Intent.EXTRA_TITLE, dataId)
+            }
+        }
+    }
+
+    override fun onNearBySiteClick(position: Int) {
+        if (position != -1) {
+            val mData = mArrayList[position]
+            if (mData != null) {
+                openDetailsScreen(mContext, mHeritageSiteDetailModel?.type.toString(), mData.id)
             }
         }
     }

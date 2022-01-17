@@ -105,6 +105,21 @@ class EventDetailActivity : BaseActivity() {
         } else {
             eventRecycler.visibility = View.GONE
         }
+
+        eventTimeToCover.text = mEventDetailModel.fieldTotalTimeRequired
+
+        if (mEventDetailModel.fieldSpecialConsideration.isNullOrEmpty()){
+            eventThings.visibility = View.GONE
+            eventttk.visibility = View.GONE
+        }
+        else{
+            eventThings.text=mEventDetailModel.fieldSpecialConsideration
+            eventThings.visibility = View.VISIBLE
+            eventttk.visibility = View.VISIBLE
+        }
+
+        eventTime.text = mEventDetailModel.fieldTimingsForEvent
+        eventFees.text = mEventDetailModel.fieldEntryFeeBookingInfo.toString()
     }
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag

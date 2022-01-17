@@ -102,6 +102,95 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:listitem="@layout/amenties_list_item"/>
 
+            <TextView
+                android:id="@+id/approxtime"
+                android:text="APPROXIMATE TIME REQUIRED TO VISIT"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/eventRecycler" />
+
+            <TextView
+                android:id="@+id/eventTimeToCover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:text="45 Minutes - 1 Hour"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                app:layout_constraintTop_toBottomOf="@id/approxtime"/>
+
+            <TextView
+                android:id="@+id/eventttk"
+                android:text="Things to Know"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/eventTimeToCover"/>
+
+            <TextView
+                android:id="@+id/eventThings"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/eventttk"/>
+
+            <TextView
+                android:id="@+id/eventtexttime"
+                android:text="Timings"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/eventThings"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/eventTime"
+                android:text="05:00 to 21:00"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/eventtexttime"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"/>
+
+            <TextView
+                android:id="@+id/eventtxtfee"
+                android:text="Entry Fees"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/eventTime"/>
+
+            <TextView
+                android:id="@+id/eventFees"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/eventtxtfee"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
