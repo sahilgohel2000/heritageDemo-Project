@@ -7,23 +7,24 @@ import android.os.Bundle
 import android.text.Html
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.haritagedemo.*
 import com.example.haritagedemo.API.*
-import com.example.haritagedemo.AmentiesAdapter
-import com.example.haritagedemo.CustomPagerAdapter
 import com.example.haritagedemo.Model.EventDetailModel
-import com.example.haritagedemo.R
-import com.example.haritagedemo.SpacesItemDecoration
 import kotlinx.android.synthetic.main.activity_event_detail.*
+import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
 import kotlinx.android.synthetic.main.activity_local_cuisine.*
 import kotlinx.android.synthetic.main.activity_local_cuisine.mViewpager
 import java.util.ArrayList
+import kotlin.math.roundToInt
 
-class LocalCuisineActivity : BaseActivity() {
+class LocalCuisineActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCallback {
 
     var dataId: String? = null
     var contentMessage: String? = null
     var titleMsg: String? = null
     var type: String? = null
+    private var cAdapter: SiteNearbyAdapter? = null
+    private var cArrayList: ArrayList<FieldNearbySitesLocation?> = ArrayList()
     private var mCustomPagerAdapter: CustomPagerAdapter? = null
     private lateinit var mLocalCuisineDetail: LocalCuisineDetail
     private var cAdapterAmenities: AmentiesAdapter? = null
@@ -43,6 +44,17 @@ class LocalCuisineActivity : BaseActivity() {
         callAPILocalCusine()
         val spacingVertical = resources.getDimensionPixelSize(R.dimen._8dp)
         val spacingHorizontal = resources.getDimensionPixelSize(R.dimen._zero_dp)
+
+        cAdapter = SiteNearbyAdapter(
+            mContext,
+            cArrayList,
+            this
+        )
+        with(cuisinesitesRecycler){
+            layoutManager = LinearLayoutManager(mContext)
+            addItemDecoration(SpacesItemDecoration(spacingHorizontal,spacingVertical))
+            adapter=cAdapter
+        }
 
         cAdapterAmenities =
             AmentiesAdapter(
@@ -103,6 +115,28 @@ class LocalCuisineActivity : BaseActivity() {
         } else {
             cuisineRecycler.visibility = View.GONE
         }
+
+        cuisineTryItems.text = mLocalCuisineDetail.fieldMostPopularAttraction
+
+        if (!mLocalCuisineDetail?.fieldNearbySitesLocation!!.isNullOrEmpty()){
+            cArrayList.addAll(mLocalCuisineDetail?.fieldNearbySitesLocation!!)
+            cAdapter?.notifyDataSetChanged()
+            cuisinesitesRecycler.visibility=View.VISIBLE
+            cuisinenearbySites.visibility = View.VISIBLE
+        }
+        else{
+            cuisinesitesRecycler.visibility=View.GONE
+            cuisinenearbySites.visibility = View.GONE
+        }
+
+        cuisinetxtTimeToCover.text = mLocalCuisineDetail.fieldTotalTimeRequired
+        cuisinetxtTime.text = mLocalCuisineDetail.fieldTimingsForEvent
+
+        cuisineratingBar.rating = mLocalCuisineDetail.ratingReview.average.roundToInt().toFloat()
+
+        if (mLocalCuisineDetail.fieldRatingsAndReviewsOn == 1){
+            cuisinerating.visibility = View.VISIBLE
+        }
     }
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag
@@ -121,6 +155,19 @@ class LocalCuisineActivity : BaseActivity() {
             val intent = Intent(mContext, LocalCuisineActivity::class.java)
             intent.putExtra(Intent.EXTRA_TITLE, dataId)
             mContext.startActivity(intent)
+        }
+    }
+
+    override fun onNearBySiteClick(position: Int) {
+        if (position != -1) {
+            val mData = cArrayList[position]
+            if (mData != null) {
+                Util.openDetailsScreen(
+                    mContext,
+                    mLocalCuisineDetail?.type.toString(),
+                    mData.id
+                )
+            }
         }
     }
 }

@@ -107,8 +107,11 @@ class HeritageSiteDetailActivity :BaseActivity(),SiteNearbyAdapter.OnNearBySiteC
     }
 
     private fun setData() {
+
+        //heritage site Titile
         heritage_title.text = mHeritageSiteDetailModel.heritageSiteName
 
+        //heritage site Images
         mCustomPagerAdapter=CustomPagerAdapter(
             mContext,
             mHeritageSiteDetailModel.fieldUploadUrl
@@ -173,7 +176,8 @@ class HeritageSiteDetailActivity :BaseActivity(),SiteNearbyAdapter.OnNearBySiteC
 
         Log.d("HeritageSiteDetail",mHeritageSiteDetailModel.fieldNearbySitesLocation.toString())
         if (mHeritageSiteDetailModel?.fieldNearbySitesLocation!!.isNullOrEmpty()){
-            Toast.makeText(this,"invalid Data",Toast.LENGTH_LONG).show()
+            sitesRecycler.visibility = View.GONE
+            nearbySites.visibility = View.GONE
         }else{
             mArrayList.addAll(mHeritageSiteDetailModel?.fieldNearbySitesLocation!!)
             mAdapter?.notifyDataSetChanged()

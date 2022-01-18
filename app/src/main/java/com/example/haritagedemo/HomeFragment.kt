@@ -1,7 +1,9 @@
 package com.example.haritagedemo
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -14,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.getLocation
@@ -26,10 +29,12 @@ import com.example.haritagedemo.Model.FestivalDetailModel
 import com.google.android.gms.maps.model.LatLng
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import com.example.haritagedemo.API.Util.getDistance
 
 class HomeFragment : BaseFragment() {
 
     lateinit var bottomSheetLayout: LinearLayout
+    private val RC_BACKGROUND_LOCATION = 2021
     lateinit var sheetBehaviorUnit: BottomSheetBehavior<*>
     private var mHeritageSiteDetailModel: HeritageSiteDetailModel?=null
     private var latLng: LatLng? = null
@@ -408,6 +413,16 @@ class HomeFragment : BaseFragment() {
 
         idTVCourseDuration.text = location.toString()
 
+        val distance = if (latLng != null) {
+            getDistance(
+                location,
+                getLocation(latLng!!.latitude, latLng!!.longitude)
+            )
+        } else ""
+        idTVCourseDuration.text = getString(R.string.lbl_approximate_distance,distance.toString())
+
+        Log.d("HomeFragment",location.toString())
+
         bottomSheetLayout.setOnClickListener(View.OnClickListener {
 //            try {
 //                val intent=Intent(mContext,EmptyActivity::class.java)
@@ -423,6 +438,7 @@ class HomeFragment : BaseFragment() {
         })
 
     }
+
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag
     private fun stripHtml(description: String): CharSequence? {

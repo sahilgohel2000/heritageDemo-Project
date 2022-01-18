@@ -6,25 +6,28 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.view.View
+import android.widget.Adapter
+import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.haritagedemo.*
 import com.example.haritagedemo.API.*
-import com.example.haritagedemo.AmentiesAdapter
-import com.example.haritagedemo.CustomPagerAdapter
+import com.example.haritagedemo.API.Util.openDetailsScreen
 import com.example.haritagedemo.Model.EventDetailModel
 import com.example.haritagedemo.Model.FestivalDetailModel
-import com.example.haritagedemo.R
-import com.example.haritagedemo.SpacesItemDecoration
 import kotlinx.android.synthetic.main.activity_festival_detail.*
 import kotlinx.android.synthetic.main.activity_festival_detail.mViewpager
 import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
 import java.util.ArrayList
+import kotlin.math.roundToInt
 
-class FestivalDetailActivity : BaseActivity() {
+class FestivalDetailActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCallback {
 
     var dataId: String? = null
     var contentMessage: String? = null
     var titleMsg: String? = null
     var type: String? = null
+    private var fAdapter:SiteNearbyAdapter? = null
+    private var fArrayList: ArrayList<FieldNearbySitesLocation?> = ArrayList()
     private var mCustomPagerAdapter: CustomPagerAdapter? = null
     private lateinit var mFestivalDetailModel: FestivalDetailModel
     private var fAdapterAmenities: AmentiesAdapter? = null
@@ -45,6 +48,17 @@ class FestivalDetailActivity : BaseActivity() {
 
         val spacingVertical = resources.getDimensionPixelSize(R.dimen._8dp)
         val spacingHorizontal = resources.getDimensionPixelSize(R.dimen._zero_dp)
+
+        fAdapter = SiteNearbyAdapter(
+            mContext,
+            fArrayList,
+            this
+        )
+        with(festivalsitesRecycler){
+            layoutManager = LinearLayoutManager(mContext)
+            addItemDecoration(SpacesItemDecoration(spacingVertical,spacingHorizontal))
+            adapter = fAdapter
+        }
 
         fAdapterAmenities =
             AmentiesAdapter(
@@ -106,6 +120,35 @@ class FestivalDetailActivity : BaseActivity() {
             festivalRecycler.visibility = View.GONE
         }
 
+        if (mFestivalDetailModel.fieldSpecialConsideration.isNullOrEmpty()){
+            festivaltextThings.visibility = View.GONE
+            festivaltextttk.visibility = View.GONE
+        }
+        else{
+            festivaltextThings.text=mFestivalDetailModel.fieldSpecialConsideration
+            festivaltextThings.visibility = View.VISIBLE
+            festivaltextttk.visibility = View.VISIBLE
+        }
+
+        festivaltxtTime.text = mFestivalDetailModel.fieldTimingsOfFestival
+        festivaltxtFees.text = mFestivalDetailModel.fieldEntryFeeBookingInfo.toString()
+
+        festivalratingBar.rating = mFestivalDetailModel.ratingReview.average.roundToInt().toFloat()
+
+        if (mFestivalDetailModel.fieldRatingsAndReviewsOn == 1){
+            festivalrating.visibility = View.VISIBLE
+        }
+
+        if (!mFestivalDetailModel?.fieldSelectSpecialCelebrationLocations!!.isNullOrEmpty())
+        {
+            fArrayList.addAll(mFestivalDetailModel?.fieldSelectSpecialCelebrationLocations!!)
+            fAdapter?.notifyDataSetChanged()
+            festivalRecycler.visibility = View.VISIBLE
+            festivalVisit.visibility = View.VISIBLE
+        }else{
+            festivalRecycler.visibility = View.GONE
+            festivalVisit.visibility = View.GONE
+        }
     }
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag
@@ -125,6 +168,15 @@ class FestivalDetailActivity : BaseActivity() {
         mContext.startActivity(intent)
     }
 }
+
+    override fun onNearBySiteClick(position: Int) {
+        if (position != -1){
+            val mData = fArrayList[position]
+            if (mData != null){
+                openDetailsScreen(mContext, mData?.type.toString(), mData.id)
+            }
+        }
+    }
 }
 
 private fun <E> ArrayList<E>.addAll(elements: ArrayList<Any>) {

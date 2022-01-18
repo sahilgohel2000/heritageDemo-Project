@@ -6,28 +6,30 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.haritagedemo.*
 import com.example.haritagedemo.API.*
+import com.example.haritagedemo.API.Util.openDetailsScreen
 
 import com.example.haritagedemo.Activity.EventDetailActivity
-import com.example.haritagedemo.AmentiesAdapter
-import com.example.haritagedemo.CustomPagerAdapter
 import com.example.haritagedemo.Model.EventDetailModel
 import com.example.haritagedemo.Model.HeritageSiteDetailModel
-import com.example.haritagedemo.R
-import com.example.haritagedemo.SpacesItemDecoration
 import kotlinx.android.synthetic.main.activity_event_detail.*
 import kotlinx.android.synthetic.main.activity_event_detail.mViewpager
 import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
 import java.util.ArrayList
 import java.util.HashMap
+import kotlin.math.roundToInt
 
-class EventDetailActivity : BaseActivity() {
+class EventDetailActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCallback {
 
     var dataId: String? = null
     var contentMessage: String? = null
     var titleMsg: String? = null
     var type: String? = null
+    private var eAdapter: SiteNearbyAdapter? = null
+    private var eArrayList: ArrayList<FieldNearbySitesLocation?> = ArrayList()
     private var mCustomPagerAdapter: CustomPagerAdapter? = null
     private lateinit var mEventDetailModel: EventDetailModel
     private var eAdapterAmenities: AmentiesAdapter? = null
@@ -47,6 +49,17 @@ class EventDetailActivity : BaseActivity() {
         callAPIEventDetail()
         val spacingVertical = resources.getDimensionPixelSize(R.dimen._8dp)
         val spacingHorizontal = resources.getDimensionPixelSize(R.dimen._zero_dp)
+
+        eAdapter = SiteNearbyAdapter(
+            mContext,
+            eArrayList,
+            this
+        )
+        with(eventsitesRecycler){
+            layoutManager = LinearLayoutManager(mContext)
+            addItemDecoration(SpacesItemDecoration(spacingVertical,spacingHorizontal))
+            adapter = eAdapter
+        }
 
         eAdapterAmenities =
             AmentiesAdapter(
@@ -120,6 +133,29 @@ class EventDetailActivity : BaseActivity() {
 
         eventTime.text = mEventDetailModel.fieldTimingsForEvent
         eventFees.text = mEventDetailModel.fieldEntryFeeBookingInfo.toString()
+
+        eventratingBar.rating = mEventDetailModel.ratingReview.average.roundToInt().toFloat()
+
+        if (mEventDetailModel.fieldRatingsAndReviewsOn == 1){
+            eventrating.visibility = View.VISIBLE
+        }
+
+        if (mEventDetailModel?.fieldNearbySitesLocation!!.isNullOrEmpty()){
+            Toast.makeText(this,"invalid data",Toast.LENGTH_LONG).show()
+        }
+        else{
+            eArrayList.addAll(mEventDetailModel?.fieldNearbySitesLocation!!)
+            eAdapter?.notifyDataSetChanged()
+            eventsitesRecycler.visibility = View.VISIBLE
+            eventnearbySites.visibility = View.VISIBLE
+        }
+
+        txtLocationOfEvent.text = mEventDetailModel.fieldLocationOfEvent
+
+        eventnearestBus.text = mEventDetailModel.fieldNearestBusStationLocation.toString()
+        eventnearestTrain.text = mEventDetailModel.fieldNearestTrainStationLocation.toString()
+        eventnearestAirport.text = mEventDetailModel.fieldNearestAirportLocation.toString()
+
     }
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag
@@ -139,6 +175,15 @@ class EventDetailActivity : BaseActivity() {
             val intent = Intent(mContext, EventDetailActivity::class.java)
             intent.putExtra(Intent.EXTRA_TITLE, dataId)
             mContext.startActivity(intent)
+        }
+    }
+
+    override fun onNearBySiteClick(position: Int) {
+        if (position != -1){
+            val mData = eArrayList[position]
+            if (mData != null){
+                openDetailsScreen(mContext, mEventDetailModel?.type.toString(), mData.id )
+            }
         }
     }
 }

@@ -31,20 +31,19 @@
                 android:id="@+id/festival_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="hello"
+                android:text=""
                 android:textColor="@color/white"
                 android:background="@color/orange_transparent"
                 android:textSize="18dp"
                 android:maxLines="1"
                 android:textStyle="bold"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="315dp"
                 android:padding="10dp"
-                app:layout_constraintTop_toBottomOf="@id/mViewpager" />
+                app:layout_constraintTop_toTopOf="@id/mViewpager"
+                app:layout_constraintBottom_toBottomOf="@id/mViewpager"/>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardlayout"
+                android:id="@+id/festivalcardlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/festival_title"
@@ -55,6 +54,17 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="30dp"
                 app:cardCornerRadius="20dp">
+
+                <TextView
+                    android:id="@+id/textdescription"
+                    android:text="Description"
+                    android:textColor="@color/white"
+                    android:textSize="10dp"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <com.borjabravo.readmoretextview.ReadMoreTextView
                     android:id="@+id/festival_desc"
@@ -68,7 +78,7 @@
                     app:trimMode="trimModeLength"
                     app:trimLength="300"
                     app:colorClickableText="@color/colorOrange"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="20dp"/>
@@ -87,7 +97,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
-                app:layout_constraintTop_toBottomOf="@id/cardlayout"
+                app:layout_constraintTop_toBottomOf="@id/festivalcardlayout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:visibility="gone"/>
@@ -101,6 +111,143 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:listitem="@layout/amenties_list_item"/>
+
+
+            <TextView
+                android:id="@+id/festivaltextttk"
+                android:text="Things to Know"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/festivalRecycler"/>
+
+            <TextView
+                android:id="@+id/festivaltextThings"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/festivaltextttk"/>
+
+            <TextView
+                android:id="@+id/festivaltexttime"
+                android:text="Festival Dates For Current Year"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/festivaltextThings"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/festivaltxtTime"
+                android:text="05:00 to 21:00"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/festivaltexttime"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"/>
+
+            <TextView
+                android:id="@+id/festivaltxtfee"
+                android:text="Entry Fees"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/festivaltxtTime"/>
+
+            <TextView
+                android:id="@+id/festivaltxtFees"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/festivaltxtfee"/>
+
+            <TextView
+                android:id="@+id/festivaltxtdate"
+                android:text="Timings"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/festivaltxtFees"/>
+
+            <TextView
+                android:id="@+id/festivaldates"
+                android:textColor="@color/gray"
+                android:text="06:00 to 22:00, 27th to 31st Jan"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/festivaltxtdate"/>
+
+            <TextView
+                android:id="@+id/festivalrating"
+                android:text="Rating and Review"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/festivaldates"/>
+
+            <RatingBar
+                android:id="@+id/festivalratingBar"
+                style="@style/ratingBarSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="3"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/festivalrating"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/festivalVisit"
+                android:text="Visit to Experience"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/festivalratingBar"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/festivalsitesRecycler"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/festivalVisit"
+                tools:listitem="@layout/item_nearby_sites"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

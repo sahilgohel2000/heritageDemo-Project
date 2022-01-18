@@ -18,6 +18,20 @@ import java.math.BigDecimal
 
 object Util {
 
+    fun getDistance(location1: Location, location2: Location): Float {
+        // return  (Math.round((location1.distanceTo(location2) / 1000) * 10.0) / 10.0).toFloat()
+        var distance = location1.distanceTo(location2) / 1000
+        var addedKm = Math.ceil((distance / 6).toDouble())
+        var totalKm = distance + addedKm
+        return round(totalKm.toFloat(), 2)
+    }
+
+    fun round(d: Float, decimalPlace: Int): Float {
+        var bd = BigDecimal(java.lang.Float.toString(d))
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP)
+        return bd.toFloat()
+    }
+
     fun getLocation(lat: Double, long: Double): Location {
         var location = Location(LocationManager.GPS_PROVIDER)
         location.latitude = lat

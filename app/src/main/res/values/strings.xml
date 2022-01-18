@@ -18,11 +18,12 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-
+    <string name="rationale_location">This app needs access to your location to pick current location</string>
     <string name="dialogTitle">Profile</string>
     <string name="dialogMessage">You Want To LogOut From this App</string>
 
     <string name="selected_item">Selected item:</string>
+    <string name="lbl_approximate_distance">Approximate distance from your current location %1s km</string>
 
     <string-array name="Languages">
         <item>java</item>
