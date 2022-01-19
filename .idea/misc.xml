@@ -52,12 +52,13 @@
         <entry key="..\:/haritagedemo/app/src/main/res/menu/navigation_drawer.xml" value="0.2" />
         <entry key="..\:/haritagedemo/app/src/main/res/menu/navigation_menu.xml" value="0.1296875" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable/addratings.xml" value="0.15" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable/cross_button.xml" value="0.14814814814814814" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable/rating_stars.xml" value="0.236986301369863" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable/rating_stars_site.xml" value="0.236986301369863" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable/view_list_of_sites_button.xml" value="0.15" />
-        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_event_detail.xml" value="0.13657407407407407" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_event_detail.xml" value="0.4" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_festival_detail.xml" value="0.11666666666666667" />
-        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_heritage_site_detail.xml" value="0.2" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_heritage_site_detail.xml" value="0.2632146709816613" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_home2.xml" value="0.22592592592592592" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_local_cuisine.xml" value="0.10416666666666667" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_main.xml" value="0.22592592592592592" />

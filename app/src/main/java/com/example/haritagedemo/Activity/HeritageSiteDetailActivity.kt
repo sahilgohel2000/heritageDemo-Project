@@ -17,7 +17,9 @@ import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.openDetailsScreen
 import com.example.haritagedemo.Model.HeritageSiteDetailModel
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.util.ArrayList
 import java.util.HashMap
@@ -35,7 +37,7 @@ class HeritageSiteDetailActivity :BaseActivity(),SiteNearbyAdapter.OnNearBySiteC
     private var mCustomPagerAdapter: CustomPagerAdapter? = null
     private var mAdapterAmenities: AmentiesAdapter? = null
     private var mArrayListAmenities: ArrayList<String?> = ArrayList()
-
+    var isPlay:Boolean = false
     private lateinit var mHeritageSiteDetailModel: HeritageSiteDetailModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -189,6 +191,20 @@ class HeritageSiteDetailActivity :BaseActivity(),SiteNearbyAdapter.OnNearBySiteC
         nearestBus.text = mHeritageSiteDetailModel.fieldNearestBusStationLocation.toString()
         nearestTrain.text = mHeritageSiteDetailModel.fieldNearestTrainStationLocation.toString()
         nearestAirport.text = mHeritageSiteDetailModel.fieldNearestAirportLocation.toString()
+
+        floatingBtn.setOnClickListener(View.OnClickListener {
+            Toast.makeText(this,"Button is Working",Toast.LENGTH_LONG).show()
+//            floatingBtn.visibility = View.GONE
+            floatingBtn.setImageResource(
+                if (isPlay)
+                    R.drawable.cross_button
+                else
+                    R.drawable.plus_sign
+            )
+
+            isPlay = !isPlay
+
+        })
     }
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag
@@ -227,3 +243,5 @@ class HeritageSiteDetailActivity :BaseActivity(),SiteNearbyAdapter.OnNearBySiteC
         }
     }
 }
+
+
