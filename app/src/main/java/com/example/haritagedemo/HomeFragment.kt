@@ -1,11 +1,8 @@
 package com.example.haritagedemo
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.getLocation

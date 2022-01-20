@@ -1,5 +1,6 @@
 package com.example.haritagedemo
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,12 +19,19 @@ import kotlin.collections.ArrayList
 class FAQActivity : AppCompatActivity() {
 
     val versionList = ArrayList<Version>()
+    private var lastPosition = -1
+    var isOpen: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_faqactivity)
         initData()
         setRecyclerView()
+
+        arrowBack.setOnClickListener(View.OnClickListener {
+            val intent:Intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        })
     }
 
     private fun setRecyclerView() {

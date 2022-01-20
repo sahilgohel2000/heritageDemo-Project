@@ -454,7 +454,6 @@
                 android:id="@+id/eleven"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/first"
                 app:layout_constraintVertical_bias="0.0"
@@ -462,9 +461,9 @@
 
                     <ImageView
                         android:id="@+id/elevenimg"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/lock_img"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/privacy_policy"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.062"
@@ -472,19 +471,19 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.571" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Privacy Policy"
-                    android:textColor="@color/black"
-                    android:textSize="15dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.125"
-                    app:layout_constraintStart_toEndOf="@+id/elevenimg"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Privacy Policy"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.155"
+                        app:layout_constraintStart_toEndOf="@+id/elevenimg"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/twelve"
@@ -523,7 +522,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/thirteen"
+                android:id="@+id/helpLine"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@color/white"

@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import com.example.haritagedemo.Model.EventDetailModel
 import com.example.haritagedemo.Model.FestivalDetailModel
+import com.example.haritagedemo.Model.HelpModel
 import com.example.haritagedemo.Model.HeritageSiteDetailModel
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -136,6 +137,30 @@ class ServiceManager(private val mContext: Context) {
         })
     }
 
+    //API for Call Helpline Numbers
+    fun apiHelpLine(
+        params: HashMap<String, Any?>,
+        l: ResponseListener<retrofit2.Response<Response<ArrayList<HelpModel?>>>>
+    ) {
+
+        val call = buildApi().apiHelpLine(addKey(params))
+        call.enqueue(object : Callback<Response<ArrayList<HelpModel?>>> {
+            override fun onResponse(
+                call: Call<Response<ArrayList<HelpModel?>>>,
+                response: retrofit2.Response<Response<ArrayList<HelpModel?>>>
+            ) {
+                l.onRequestSuccess(response)
+            }
+
+            override fun onFailure(
+                call: Call<Response<ArrayList<HelpModel?>>>,
+                t: Throwable
+            ) {
+                l.onRequestFailed(t)
+            }
+        })
+    }
+
     //API FOR HERITAGE SITE
     fun apiHeritageSiteDetails(
         params: HashMap<String, Any?>,
@@ -164,6 +189,7 @@ class ServiceManager(private val mContext: Context) {
             }
         })
     }
+
 
     fun getUrl(URL: APIURL): String {
         val builder = Uri.Builder()

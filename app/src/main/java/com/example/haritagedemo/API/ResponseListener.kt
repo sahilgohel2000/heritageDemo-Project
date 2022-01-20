@@ -1,6 +1,7 @@
 package com.example.haritagedemo.API
 
 abstract class ResponseListener<in T>:OnListener<T> {
+
     override fun onRequestSuccess(response: T) {
 
     }

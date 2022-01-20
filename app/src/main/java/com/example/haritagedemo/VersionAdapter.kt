@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 class VersionAdapter(val versionList:List<Version>) : RecyclerView.Adapter<VersionAdapter.VersionVH >()
 {
-
     class VersionVH (itemView:View):RecyclerView.ViewHolder(itemView){
         var codeNameText:TextView = itemView.findViewById(R.id.cardName)
         var descriptionText:TextView = itemView.findViewById(R.id.cardDescription)
@@ -28,10 +27,15 @@ class VersionAdapter(val versionList:List<Version>) : RecyclerView.Adapter<Versi
         holder.codeNameText.text = version.codeName
         holder.descriptionText.text = version.description
 
+
         val isExpandable:Boolean = versionList[position].expandable
 
         //check it here in else condition or apply more condition and check
-        holder.expandableLayout.visibility = if (isExpandable) View.VISIBLE else View.GONE
+        holder.expandableLayout.visibility = if (isExpandable) {
+            View.VISIBLE
+        }else {
+            View.GONE
+        }
 
         holder.linearLayout.setOnClickListener(View.OnClickListener {
             val version = versionList[position]

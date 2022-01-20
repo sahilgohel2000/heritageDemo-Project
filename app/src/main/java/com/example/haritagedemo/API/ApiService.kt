@@ -2,6 +2,7 @@ package com.example.haritagedemo.API
 
 import com.example.haritagedemo.Model.EventDetailModel
 import com.example.haritagedemo.Model.FestivalDetailModel
+import com.example.haritagedemo.Model.HelpModel
 import retrofit2.Call
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
@@ -29,4 +30,9 @@ interface ApiService {
     @FormUrlEncoded
     @POST(Api.API_GET_LOCAL_CUISINE_DETAIL)
     fun apiLocalCuisineDetail(@FieldMap param: HashMap<String, Any?>): Call<Response<LocalCuisineDetail>>
+
+    // Call Api For get Itinerary List
+    @FormUrlEncoded
+    @POST(Api.API_GET_HELPLINE)
+    fun apiHelpLine(@FieldMap param: HashMap<String, Any?>): Call<Response<ArrayList<HelpModel?>>>
 }

@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Haritagedemo"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.HelpActivity"
+            android:exported="false" />
+        <activity
             android:name=".API.BaseActivity"
             android:exported="false" />
         <activity
@@ -41,13 +44,8 @@
         <activity
             android:name=".FAQActivity"
             android:exported="false"
+            android:label="Frequntly Asked Questions"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".mapActivity"
-            android:allowBackup="true"
-            android:supportsRtl="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:usesCleartextTraffic="true" />
         <activity
             android:name=".NotificationActivity"
             android:exported="false"

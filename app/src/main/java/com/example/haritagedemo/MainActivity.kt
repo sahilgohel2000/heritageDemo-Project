@@ -31,6 +31,7 @@ import android.widget.Toast
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.haritagedemo.Activity.HelpActivity
 import com.example.haritagedemo.RoomDatabase.UserDatabase
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -125,9 +126,13 @@ class MainActivity : AppCompatActivity() {
 
         Homebutton = findViewById(R.id.secondLayout)
         Homebutton.setOnClickListener(View.OnClickListener {
-            Toast.makeText(this,"Home Activity",Toast.LENGTH_SHORT).show()
             val HomeIntent:Intent = Intent(this,HomeActivity::class.java)
             startActivity(HomeIntent)
+        })
+
+        helpLine.setOnClickListener(View.OnClickListener {
+            val helpline:Intent = Intent(this,HelpActivity::class.java)
+            startActivity(helpline)
         })
 
         FAQ = findViewById(R.id.twelve)

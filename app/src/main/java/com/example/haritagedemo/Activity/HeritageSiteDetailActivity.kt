@@ -2,22 +2,16 @@ package com.example.haritagedemo.Activity
 
 import android.content.Context
 import android.content.Intent
-import android.media.AudioMetadataReadMap
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.*
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.openDetailsScreen
 import com.example.haritagedemo.Model.HeritageSiteDetailModel
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
