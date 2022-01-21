@@ -18,6 +18,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".Activity.HelpActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".API.BaseActivity"
