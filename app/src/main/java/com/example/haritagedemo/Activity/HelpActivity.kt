@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_help.*
 import kotlinx.android.synthetic.main.item_helpline.*
 import java.util.HashMap
 
-class HelpActivity : BaseActivity(), HelpNumAdapter.Callback,HelpRecycleAdapter.RecyclerAdapterHelperCallback {
+class HelpActivity : BaseActivity() , HelpNumAdapter.Callback,HelpRecycleAdapter.RecyclerAdapterHelperCallback{
 
     var dataId: String? = null
     var e : String? = null
@@ -29,7 +29,7 @@ class HelpActivity : BaseActivity(), HelpNumAdapter.Callback,HelpRecycleAdapter.
     private var hAdapter: HelpNumAdapter? = null
     private var hArrayList: ArrayList<HelpModel?>? = ArrayList()
 
-//    private var datamob:TextView = findViewById(R.id.helpData)
+    //private var datamob:TextView = findViewById(R.id.helpData)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class HelpActivity : BaseActivity(), HelpNumAdapter.Callback,HelpRecycleAdapter.
         callApiHelpLine()
         mAdapter = HelpAdapter(mContext, mArrayList, this)
         mLayoutManager = LinearLayoutManager(mContext)
-        with(mRecyclerView) {
+        with(cHelpRecylcer) {
             layoutManager = mLayoutManager
             addItemDecoration(
                 SimpleDividerItemDecoration(
@@ -50,20 +50,20 @@ class HelpActivity : BaseActivity(), HelpNumAdapter.Callback,HelpRecycleAdapter.
             )
             adapter = mAdapter
         }
-        initializationAndCallApi()
+//        initializationAndCallApi()
     }
 
-    private fun initializationAndCallApi() {
-        if (paginationHelper != null) {
-            paginationHelper!!.resetValues()
-
-            mArrayList.clear()
-            mAdapter = HelpAdapter(mContext, mArrayList, this)
-
-            mRecyclerView.adapter = mAdapter
-            callApiHelpLine()
-        }
-    }
+//    private fun initializationAndCallApi() {
+//        if (paginationHelper != null) {
+//            paginationHelper!!.resetValues()
+//
+//            mArrayList.clear()
+//            mAdapter = HelpAdapter(mContext, mArrayList, this)
+//
+//            mRecyclerView.adapter = mAdapter
+//            callApiHelpLine()
+//        }
+//    }
 
     fun callApiHelpLine(){
         val paramMap = HashMap<String, Any?>()
