@@ -5,31 +5,27 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Toast
+import android.widget.Adapter
+import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.*
 import com.example.haritagedemo.API.*
-import com.example.haritagedemo.Model.HelpAdapter
 import com.example.haritagedemo.Model.HelpModel
-import com.example.haritagedemo.Model.HelpNumAdapter
-import com.example.haritagedemo.Model.HelpRecycleAdapter
 import kotlinx.android.synthetic.main.activity_help.*
-import kotlinx.android.synthetic.main.item_helpline.*
 import java.util.HashMap
+import com.example.haritagedemo.API.BaseActivity
+import com.example.haritagedemo.API.ServiceManager
+import com.example.haritagedemo.Model.HeritageSiteDetailModel
+import kotlinx.android.synthetic.main.items_help.*
 
-class HelpActivity : BaseActivity() , HelpNumAdapter.Callback,HelpRecycleAdapter.RecyclerAdapterHelperCallback{
+class HelpActivity : BaseActivity(),NumberAdapter.Callback{
 
-    var dataId: String? = null
-    var e : String? = null
-    private var mArrayList: ArrayList<HelpModel?> = ArrayList()
-    private var mAdapter: HelpAdapter? = null
+
     private var mLayoutManager: LinearLayoutManager? = null
-    var paginationHelper: HelpRecycleAdapter<HelpModel?>? = null
-    private var hAdapter: HelpNumAdapter? = null
-    private var hArrayList: ArrayList<HelpModel?>? = ArrayList()
+    private var hArrayList: ArrayList<HelpModel?> = ArrayList()
+    private var hAdapter:HelpAdapter? =null
 
-    //private var datamob:TextView = findViewById(R.id.helpData)
+//    private lateinit var mArrayAdapter:ArrayAdapter<HelpModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,37 +33,28 @@ class HelpActivity : BaseActivity() , HelpNumAdapter.Callback,HelpRecycleAdapter
     }
 
     override fun bindViews() {
+        Log.d("HelpActivity","bindView")
         callApiHelpLine()
-        mAdapter = HelpAdapter(mContext, mArrayList, this)
+        Log.d("HelpActivity","callApiHelpLine:1")
+
+        hAdapter = HelpAdapter(mContext, hArrayList, this)
         mLayoutManager = LinearLayoutManager(mContext)
+        Log.d("HelpActivity","HelpAdapter")
+
         with(cHelpRecylcer) {
+            Log.d("HelpActivity","cHelpRecycler")
+
             layoutManager = mLayoutManager
-            addItemDecoration(
-                SimpleDividerItemDecoration(
-                    mContext,
-                    R.drawable.item_seprator_help
-                )
-            )
-            adapter = mAdapter
+            adapter = hAdapter
         }
-//        initializationAndCallApi()
     }
 
-//    private fun initializationAndCallApi() {
-//        if (paginationHelper != null) {
-//            paginationHelper!!.resetValues()
-//
-//            mArrayList.clear()
-//            mAdapter = HelpAdapter(mContext, mArrayList, this)
-//
-//            mRecyclerView.adapter = mAdapter
-//            callApiHelpLine()
-//        }
-//    }
+    fun callApiHelpLine() {
 
-    fun callApiHelpLine(){
+        val serviceManager = ServiceManager(mContext)
         val paramMap = HashMap<String, Any?>()
-        ServiceManager(mContext).apiHelpLine(paramMap,
+
+        serviceManager.apiHelpLine(paramMap,
             object : ResponseListener<retrofit2.Response<Response<ArrayList<HelpModel?>>>>() {
                 override fun onRequestSuccess(response: retrofit2.Response<Response<ArrayList<HelpModel?>>>) {
                     super.onRequestSuccess(response)
@@ -76,20 +63,36 @@ class HelpActivity : BaseActivity() , HelpNumAdapter.Callback,HelpRecycleAdapter
                         !responseBody.isSuccess
                         responseBody.result
                         responseBody.message
+                        hArrayList.addAll(responseBody.result!!)
+                        hAdapter!!.notifyDataSetChanged()
                     }
-                    Log.d("HelpActivity",responseBody!!.result.toString())
+                    Log.d("HelpActivity", responseBody!!.result.toString())
+                    //responseBody!!.result?.get(0)?.let { Log.d("HelpActivity", it.helplineTitle.toString()) }
+
+
+//                    helpLineTitle.text = responseBody!!.result?.get(0)?.let { it.helplineTitle.toString() }
+
+//                    mArrayAdapter= ArrayAdapter<HelpModel>(this@HelpActivity,android.R.layout.simple_list_item_1,mArrayList)
+//                    listViewFirst.adapter = mArrayAdapter
+
+//                    for (i in responseBody.result!!){
+//                        if (i != null) {
+//                            nameText.text = i.helplineTitle.toString()
+//                            Log.d("HelpActivity",i.helplineTitle.toString())
+//                        }
+//                        else{
+//                            Log.d("HelpActivity",i?.helplineTitle.toString())
+//                        }
+//                    }
+
                 }
+
                 override fun onRequestFailed(t: Throwable) {
                     super.onRequestFailed(t)
+                    Log.d("HelpActivity","onRequestFailed")
                 }
             })
-
     }
-
-//    private fun setData() {
-//        //datamob.text = cHelpModel.helplineNumber.toString()
-//
-//    }
 
     override fun onHelpClick(mNumber: String) {
         val intent = Intent(Intent.ACTION_DIAL)
@@ -97,15 +100,12 @@ class HelpActivity : BaseActivity() , HelpNumAdapter.Callback,HelpRecycleAdapter
         startActivity(intent)
     }
 
-    companion object{
-        fun startActivity(mContext:Context){
-            val intent = Intent(mContext,HelpActivity::class.java)
-            mContext.startActivity(intent)
-        }
+companion object{
+    fun startActivity(mContext: Context){
+        val intent = Intent(mContext,HelpActivity::class.java)
+        mContext.startActivity(intent)
     }
-
-    override fun onRetryPage() {
-
-    }
-
 }
+}
+
+

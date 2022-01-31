@@ -20,7 +20,6 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPreferanceManager = PreferanceManager(mContext)
-
     }
 
     val secureKey: String
