@@ -32,6 +32,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.haritagedemo.Activity.HelpActivity
+import com.example.haritagedemo.Activity.HeritageQuizActivity
 import com.example.haritagedemo.RoomDatabase.UserDatabase
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -139,6 +140,11 @@ class MainActivity : AppCompatActivity() {
         FAQ.setOnClickListener(View.OnClickListener {
             val FAQIntent:Intent = Intent(this,FAQActivity::class.java)
             startActivity(FAQIntent)
+        })
+
+        heritageQuiz.setOnClickListener(View.OnClickListener {
+            val heritagesiteQuiz=Intent(this,HeritageQuizActivity::class.java)
+            startActivity(heritagesiteQuiz)
         })
 
         mAuth = FirebaseAuth.getInstance()

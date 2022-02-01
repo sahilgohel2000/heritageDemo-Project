@@ -8,26 +8,22 @@
     tools:context=".Activity.HelpActivity">
 
 
-    <!--    <RelativeLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:gravity="center_horizontal"-->
-    <!--        android:orientation="vertical">-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cHelpRecylcer"
-            android:background="@color/gray_light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            tools:listitem="@layout/items_help"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/gray_light"
+            tools:listitem="@layout/items_help" />
 
-    <!--        <TextView-->
-    <!--            android:id="@+id/helpLineTitle"-->
-    <!--            android:text="HelpLineTitle"-->
-    <!--            android:textSize="30dp"-->
-    <!--            android:textStyle="bold"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"/>-->
-    <!--    </RelativeLayout>-->
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

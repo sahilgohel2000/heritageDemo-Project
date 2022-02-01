@@ -17,9 +17,13 @@
         android:theme="@style/Theme.Haritagedemo"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Activity.HelpActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".Activity.HeritageQuizActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:exported="false" />
+        <activity
+            android:name=".Activity.HelpActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".API.BaseActivity"
             android:exported="false" />

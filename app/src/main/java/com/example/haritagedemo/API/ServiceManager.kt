@@ -6,6 +6,7 @@ import com.example.haritagedemo.Model.EventDetailModel
 import com.example.haritagedemo.Model.FestivalDetailModel
 import com.example.haritagedemo.Model.HelpModel
 import com.example.haritagedemo.Model.HeritageSiteDetailModel
+import com.example.haritagedemo.QuizData
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -190,6 +191,26 @@ class ServiceManager(private val mContext: Context) {
         })
     }
 
+    //api for Heritage Quiz............
+    fun apiGetHeritageQuiz(
+        params: HashMap<String, Any?>,
+        l: ResponseListener<retrofit2.Response<Response<ArrayList<QuizData?>>>>
+    ){
+        val call=buildApi().getHeritageQuiz(addKey(params))
+        call.enqueue(object : Callback<Response<ArrayList<QuizData?>>>{
+            override fun onResponse(
+                call: Call<Response<ArrayList<QuizData?>>>,
+                response: retrofit2.Response<Response<ArrayList<QuizData?>>>
+            ) {
+                l.onRequestSuccess(response)
+            }
+
+            override fun onFailure(call: Call<Response<ArrayList<QuizData?>>>, t: Throwable) {
+                l.onRequestFailed(t)
+            }
+
+        })
+    }
 
     fun getUrl(URL: APIURL): String {
         val builder = Uri.Builder()

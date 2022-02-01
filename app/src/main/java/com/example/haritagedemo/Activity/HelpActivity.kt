@@ -25,32 +25,22 @@ class HelpActivity : BaseActivity(),NumberAdapter.Callback{
     private var hArrayList: ArrayList<HelpModel?> = ArrayList()
     private var hAdapter:HelpAdapter? =null
 
-//    private lateinit var mArrayAdapter:ArrayAdapter<HelpModel>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_help)
     }
 
     override fun bindViews() {
-        Log.d("HelpActivity","bindView")
         callApiHelpLine()
-        Log.d("HelpActivity","callApiHelpLine:1")
-
         hAdapter = HelpAdapter(mContext, hArrayList, this)
         mLayoutManager = LinearLayoutManager(mContext)
-        Log.d("HelpActivity","HelpAdapter")
-
         with(cHelpRecylcer) {
-            Log.d("HelpActivity","cHelpRecycler")
-
             layoutManager = mLayoutManager
             adapter = hAdapter
         }
     }
 
     fun callApiHelpLine() {
-
         val serviceManager = ServiceManager(mContext)
         val paramMap = HashMap<String, Any?>()
 
@@ -89,7 +79,6 @@ class HelpActivity : BaseActivity(),NumberAdapter.Callback{
 
                 override fun onRequestFailed(t: Throwable) {
                     super.onRequestFailed(t)
-                    Log.d("HelpActivity","onRequestFailed")
                 }
             })
     }
