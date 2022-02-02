@@ -10,13 +10,14 @@ import android.widget.Button
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.haritagedemo.Activity.HeritageQuizActivity
 import kotlinx.android.synthetic.main.row_questions_layout.view.*
 
 class heritageQuizPagerAdapter(
     val context: Context,
-    var quizDataList: ArrayList<QuizData?> = ArrayList(),
+    var quizDataList: ArrayList<QuizData?>? ,
     var viewPager: ViewPager2
 ):RecyclerView.Adapter<heritageQuizPagerAdapter.UserViewHolder>() {
 
@@ -27,11 +28,11 @@ class heritageQuizPagerAdapter(
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.setIsRecyclable(false)
-        holder.tvQuestion.text = quizDataList.get(position)!!.question
-        holder.btnOptionOne.text = quizDataList.get(position)!!.option1
-        holder.btnOptionTwo.text = quizDataList.get(position)!!.option2
-        holder.btnOptionThree.text = quizDataList.get(position)!!.option3
-        holder.btnOptionFour.text = quizDataList.get(position)!!.option4
+        holder.tvQuestion.text = quizDataList!!.get(position)!!.question
+        holder.btnOptionOne.text = quizDataList!!.get(position)!!.optionArray!!.get(0)
+        holder.btnOptionTwo.text = quizDataList!!.get(position)!!.optionArray!!.get(1)
+        holder.btnOptionThree.text = quizDataList!!.get(position)!!.optionArray!!.get(2)
+        holder.btnOptionFour.text = quizDataList!!.get(position)!!.optionArray!!.get(3)
 
         val activity = context as HeritageQuizActivity
         val newIndex = position % 5
@@ -59,11 +60,11 @@ class heritageQuizPagerAdapter(
             holder.btnOptionTwo as AppCompatButton,
             holder.btnOptionThree as AppCompatButton,
             holder.btnOptionFour as AppCompatButton,
-            quizDataList.get(position)!!.answer
+            quizDataList!!.get(position)!!.answer
         )
         holder.btnOptionOne.setOnClickListener {
             checkAnswer(
-                quizDataList.get(position)!!, holder.btnOptionOne, correctBtn, position
+                quizDataList!!.get(position)!!, holder.btnOptionOne, correctBtn, position
             )
             holder.btnOptionOne!!.isEnabled = false
             holder.btnOptionTwo!!.isEnabled = false
@@ -72,7 +73,7 @@ class heritageQuizPagerAdapter(
         }
         holder.btnOptionTwo.setOnClickListener {
             checkAnswer(
-                quizDataList.get(position)!!, holder.btnOptionTwo, correctBtn, position
+                quizDataList!!.get(position)!!, holder.btnOptionTwo, correctBtn, position
             )
             holder.btnOptionOne!!.isEnabled = false
             holder.btnOptionTwo!!.isEnabled = false
@@ -81,7 +82,7 @@ class heritageQuizPagerAdapter(
         }
         holder.btnOptionThree.setOnClickListener {
             checkAnswer(
-                quizDataList.get(position)!!, holder.btnOptionThree, correctBtn, position
+                quizDataList!!.get(position)!!, holder.btnOptionThree, correctBtn, position
             )
             holder.btnOptionOne!!.isEnabled = false
             holder.btnOptionTwo!!.isEnabled = false
@@ -90,7 +91,7 @@ class heritageQuizPagerAdapter(
         }
         holder.btnOptionFour.setOnClickListener {
             checkAnswer(
-                quizDataList.get(position)!!, holder.btnOptionFour, correctBtn, position
+                quizDataList!!.get(position)!!, holder.btnOptionFour, correctBtn, position
             )
             holder.btnOptionOne!!.isEnabled = false
             holder.btnOptionTwo!!.isEnabled = false
@@ -124,7 +125,7 @@ class heritageQuizPagerAdapter(
             correctBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
         }
         val activity = context as HeritageQuizActivity
-        if (position == (quizDataList.size - 1)) {
+        if (position == (quizDataList!!.size - 1)) {
 
             Handler(Looper.getMainLooper()).postDelayed({
                 activity.prepareResult(this)
@@ -161,12 +162,12 @@ class heritageQuizPagerAdapter(
 
 
     override fun getItemCount(): Int {
-        return quizDataList.size
+        return quizDataList!!.size
     }
 
     fun getCorrectAnsCount(): Int {
         var count = 0
-        for (data in quizDataList) {
+        for (data in quizDataList!!) {
 
             if (data!!.correctAns) {
                 count++;
@@ -179,7 +180,7 @@ class heritageQuizPagerAdapter(
 
     fun getIncorrectAnsCount(): Int {
         var count = 0
-        for (data in quizDataList) {
+        for (data in quizDataList!!) {
 
             if (data!!.incorrectAns) {
                 count++;
@@ -191,7 +192,7 @@ class heritageQuizPagerAdapter(
 
     fun getSkipAnsCount(): Int {
         var count = 0
-        for (data in quizDataList) {
+        for (data in quizDataList!!) {
             if (!data!!.correctAns && !data.incorrectAns) {
                 count++;
             }

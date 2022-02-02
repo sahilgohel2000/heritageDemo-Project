@@ -19,16 +19,16 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_background_quiz_one"/>
 
-     <TextView
-         android:id="@+id/tv_quiestion"
-         android:text="Heritage Site Quiz Question?"
-         android:textColor="@color/white"
-         android:textSize="25dp"
-         android:gravity="center"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_centerInParent="true"
-         android:lines="2"/>
+    <TextView
+        android:id="@+id/tv_quiestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:lines="3"
+        android:text="Heritage Site Quiz Question?"
+        android:textColor="@color/white"
+        android:textSize="25dp" />
 </RelativeLayout>
 
     <ScrollView
@@ -60,6 +60,8 @@
                     android:background="@color/gray_light"
                     android:gravity="center"
                     android:text="Mahatma Gandhi"
+                    android:visibility="visible"
+                    android:textColor="@color/black"
                     android:textSize="18dp"
                     android:textAllCaps="false"/>
 

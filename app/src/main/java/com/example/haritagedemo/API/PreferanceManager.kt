@@ -2,6 +2,8 @@ package com.example.haritagedemo.API
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.haritagedemo.Language
+import com.google.gson.Gson
 
 class PreferanceManager(mContext:Context) {
 
@@ -54,6 +56,23 @@ class PreferanceManager(mContext:Context) {
 
     fun getProminentValue(key: String): Boolean {
         return preferences.getBoolean(key,false);
+    }
+
+    /**
+     * set Language
+     */
+    fun setLanguage(userModel: Language?) {
+        setStringPreference(LANGUAGE, Gson().toJson(userModel))
+    }
+
+    /**
+     * get Language
+     */
+    fun getLanguage(): Language? {
+        return Gson().fromJson<Language>(
+            getStringPreference(LANGUAGE),
+            Language::class.java
+        )
     }
 
     /**
