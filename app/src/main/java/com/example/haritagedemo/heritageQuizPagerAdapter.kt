@@ -26,6 +26,8 @@ class heritageQuizPagerAdapter(
         LayoutInflater.from(parent.context).inflate(R.layout.row_questions_layout,parent,false)
     )
 
+    override fun getItemCount() = quizDataList!!.size
+
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.setIsRecyclable(false)
         holder.tvQuestion.text = quizDataList!!.get(position)!!.question
@@ -34,7 +36,6 @@ class heritageQuizPagerAdapter(
         holder.btnOptionThree.text = quizDataList!!.get(position)!!.optionArray!!.get(2)
         holder.btnOptionFour.text = quizDataList!!.get(position)!!.optionArray!!.get(3)
 
-        val activity = context as HeritageQuizActivity
         val newIndex = position % 5
 
         when(newIndex){
@@ -60,11 +61,11 @@ class heritageQuizPagerAdapter(
             holder.btnOptionTwo as AppCompatButton,
             holder.btnOptionThree as AppCompatButton,
             holder.btnOptionFour as AppCompatButton,
-            quizDataList!!.get(position)!!.answer
+            quizDataList!!.get(position)!!.correctIndex.toString()
         )
         holder.btnOptionOne.setOnClickListener {
             checkAnswer(
-                quizDataList!!.get(position)!!, holder.btnOptionOne, correctBtn, position
+                quizDataList!!.get(position)!!, holder.btnOptionOne, correctBtn, position.toInt()
             )
             holder.btnOptionOne!!.isEnabled = false
             holder.btnOptionTwo!!.isEnabled = false
@@ -73,7 +74,7 @@ class heritageQuizPagerAdapter(
         }
         holder.btnOptionTwo.setOnClickListener {
             checkAnswer(
-                quizDataList!!.get(position)!!, holder.btnOptionTwo, correctBtn, position
+                quizDataList!!.get(position)!!, holder.btnOptionTwo, correctBtn, position.toInt()
             )
             holder.btnOptionOne!!.isEnabled = false
             holder.btnOptionTwo!!.isEnabled = false
@@ -82,7 +83,7 @@ class heritageQuizPagerAdapter(
         }
         holder.btnOptionThree.setOnClickListener {
             checkAnswer(
-                quizDataList!!.get(position)!!, holder.btnOptionThree, correctBtn, position
+                quizDataList!!.get(position)!!, holder.btnOptionThree, correctBtn, position.toInt()
             )
             holder.btnOptionOne!!.isEnabled = false
             holder.btnOptionTwo!!.isEnabled = false
@@ -91,7 +92,7 @@ class heritageQuizPagerAdapter(
         }
         holder.btnOptionFour.setOnClickListener {
             checkAnswer(
-                quizDataList!!.get(position)!!, holder.btnOptionFour, correctBtn, position
+                quizDataList!!.get(position)!!, holder.btnOptionFour, correctBtn, position.toInt()
             )
             holder.btnOptionOne!!.isEnabled = false
             holder.btnOptionTwo!!.isEnabled = false
@@ -103,23 +104,23 @@ class heritageQuizPagerAdapter(
 
     private fun checkAnswer(
         get: QuizData,
-        btnOptionOne: AppCompatButton,
+        selectedBtn: AppCompatButton,
         correctBtn: AppCompatButton,
         position: Int
     ) {
 
-        if (btnOptionOne == correctBtn) {
+        if (selectedBtn == correctBtn) {
             get.correctAns = true
             get.incorrectAns = false
-            btnOptionOne.background =
+            selectedBtn.background =
                 ContextCompat.getDrawable(context, R.drawable.rounded_corner_textview_correct)
-            btnOptionOne.setTextColor(ContextCompat.getColor(context, R.color.white))
+            selectedBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
         } else {
             get.incorrectAns = true
             get.correctAns = false
-            btnOptionOne.background =
+            selectedBtn.background =
                 ContextCompat.getDrawable(context, R.drawable.rounded_corner_textview_incorrect)
-            btnOptionOne.setTextColor(ContextCompat.getColor(context, R.color.white))
+            selectedBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
             correctBtn.background =
                 ContextCompat.getDrawable(context, R.drawable.rounded_corner_textview_correct)
             correctBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -146,24 +147,23 @@ class heritageQuizPagerAdapter(
         btnOptionFour: AppCompatButton?,
         answer: String
     ): AppCompatButton {
-        when(answer){
-            btnOptionOne!!.text -> return btnOptionOne
-            btnOptionTwo!!.text -> return btnOptionTwo
-            btnOptionThree!!.text -> return btnOptionThree
-            btnOptionFour!!.text -> return btnOptionFour
-        }
+
         btnOptionOne!!.isEnabled = true
         btnOptionTwo!!.isEnabled = true
         btnOptionThree!!.isEnabled = true
         btnOptionFour!!.isEnabled = true
 
-        return btnOptionOne
+         return when(answer){
+            "0" -> btnOptionOne
+            "1" -> btnOptionTwo
+            "2" -> btnOptionThree
+            "3" -> btnOptionFour
+            else -> {
+                btnOptionFour
+            }
+        }
     }
 
-
-    override fun getItemCount(): Int {
-        return quizDataList!!.size
-    }
 
     fun getCorrectAnsCount(): Int {
         var count = 0

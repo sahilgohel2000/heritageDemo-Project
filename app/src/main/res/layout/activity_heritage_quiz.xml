@@ -44,6 +44,32 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerQuiz"
         android:layout_width="match_parent"
+        android:layout_height="580dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/tv_Quit"
+        android:text="Quit"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"/>
+
+    <View
+        android:layout_width="170dp"
         android:layout_height="match_parent"/>
 
+    <Button
+        android:id="@+id/tv_skip"
+        android:text="Skip"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
 </LinearLayout>
+

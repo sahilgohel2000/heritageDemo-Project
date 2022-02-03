@@ -1,12 +1,17 @@
 package com.example.haritagedemo.Activity
 
+import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.haritagedemo.API.Const
 import com.example.haritagedemo.API.Response
@@ -34,16 +39,15 @@ class HeritageQuizActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_heritage_quiz)
         initView()
+
     }
 
     private fun initView() {
-        Log.d("HeritageQuizActivity","initView")
-        //dbHelper = DBHelper(this)
         callApiGetHeritageQuiz()
-        //viewPagerQuiz.isUserInputEnabled = false
-
         animationUp = AnimationUtils.loadAnimation(this, R.anim.bottom_up)
         animationDown = AnimationUtils.loadAnimation(this, R.anim.bottom_down)
+
+        viewPagerQuiz.isUserInputEnabled = false
 
         viewPagerQuiz.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
@@ -59,11 +63,61 @@ class HeritageQuizActivity : AppCompatActivity() {
                 }
                 currentPosition = counterPosition
                 tvHeader.text = counterPosition.toString() + " of 15"
-                //enbleSkipButton()
-                Log.d("HeritageQuizActivity","ViewPager Created" +quizList.size)
             }
         })
 
+        tv_skip.setOnClickListener(View.OnClickListener {
+            Log.d("HeritageQuizActivity","tv_skip")
+            if (currentPosition == 15){
+                Log.d("HeritageQuizActivity","curent position ==15")
+                Toast.makeText(this,"Completed",Toast.LENGTH_LONG).show()
+                Log.d("HeritageQuizActivity","prepareResult 1")
+                prepareResult(mheritageQuizPagerAdapter!!)
+            }else{
+            viewPagerQuiz.setCurrentItem(viewPagerQuiz.currentItem+1,true)
+            }
+        })
+
+        tv_Quit.setOnClickListener(View.OnClickListener {
+            Log.d("HeritageQuizActivity","Quit")
+            showAlertDialog()
+        })
+    }
+
+    private fun showAlertDialog() {
+        val builder = AlertDialog.Builder(this)
+        Log.d("HeritageQuizActivity","Show Alert Dialog")
+        builder.setTitle("")
+        builder.setMessage(getString(R.string.lbl_want_to_quit))
+        builder.setPositiveButton(getString(R.string.yes)) { dialogInterface, which ->
+            finish()
+        }
+
+        builder.setNegativeButton(getString(R.string.no)) { dialogInterface, which ->
+            alertDialog.dismiss()
+        }
+
+
+        alertDialog = builder.create().apply {
+            setOnShowListener {
+                getButton(Dialog.BUTTON_NEGATIVE)?.setTextColor(
+                    ContextCompat.getColor(
+                        this@HeritageQuizActivity,
+                        R.color.black
+                    )
+                )
+                getButton(Dialog.BUTTON_POSITIVE)?.setTextColor(
+                    ContextCompat.getColor(
+                        this@HeritageQuizActivity,
+                        R.color.colorBlue1
+                    )
+                )
+            }
+        }
+
+
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 
     private fun callApiGetHeritageQuiz() {
@@ -80,79 +134,44 @@ class HeritageQuizActivity : AppCompatActivity() {
                     runOnUiThread{
                         try {
                             if (responseBody != null) {
-                                Log.d("HeritageQuizActivity","responsebody!=null")
-
                                 if (responseBody.code == Const.SUCCESS) {
-                                    Log.d("HeritageQuizActivity","responseBody is Success")
-
-                                    //dbHelper?.insertQuiz(responseBody.result)
-                                    //quizList = responseBody.result
-                                            //dbHelper!!.getQuizList()
-                                    Log.d("HeritageQuizActivity","Added to db and quizlist")
                                     mheritageQuizPagerAdapter = heritageQuizPagerAdapter(
                                         this@HeritageQuizActivity,
                                         responseBody.result,
                                         viewPagerQuiz
                                     )
                                     viewPagerQuiz.adapter = mheritageQuizPagerAdapter
-                                    Log.d("HeritageQuizActivity","View pager set")
-                                } else {
+                                 } else {
                                     Log.d("HeritageQuizActivity", "Else Part")
                                 }
                             }
                         }catch (e:Exception){
                             e.printStackTrace()
-                            Log.d("HeritageQuizActivity","exception")
                             Toast.makeText(this@HeritageQuizActivity,"Exception", Toast.LENGTH_LONG).show()
                         }
                     }
-
-//                    heritageQuizPagerAdapter = heritageQuizPagerAdapter(
-//                    this@HeritageQuizActivity,
-//                        qarrayList
-//                    )
-//                    viewPagerQuiz.adapter = heritageQuizPagerAdapter
-
-//                    if (responseBody != null){
-//                        Log.d("HeritageQuizActivity","responesebody!=null")
-//                        if (responseBody.code == Const.SUCCESS){
-//                            heritageQuizPagerAdapter = heritageQuizPagerAdapter(
-//                                this@HeritageQuizActivity,
-//                                quizList,
-//                                viewPagerQuiz
-//                            )
-//                            viewPagerQuiz.adapter = heritageQuizPagerAdapter
-//                            Log.d("HeritageQuizActivity","Addeed")
-//                        }
-//                    }else{
-//                        Log.d("HeritageQuizActivity","Not Added")
-//                        Toast.makeText(this@HeritageQuizActivity,"its not working properly",Toast.LENGTH_LONG).show()
-//                    }
-
                 }
 
                 override fun onRequestFailed(t: Throwable) {
                     super.onRequestFailed(t)
                 }
-
             }
         )
     }
-
-    private fun getData(quizList: ArrayList<QuizData?>?): java.util.ArrayList<QuizData> {
-        var quizData = ArrayList<QuizData>()
-        quizData.add(
-            QuizData(
-                    quizList!!.get(currentPosition)!!.question,
-                    quizList!!.get(currentPosition)!!.option1,
-                    quizList!!.get(currentPosition)!!.option2,
-                    quizList!!.get(currentPosition)!!.answer,
-                    quizList!!.get(currentPosition)!!.option3,
-                    quizList!!.get(currentPosition)!!.option4
-            )
-        )
-        return quizData
-    }
+//    private fun getData(quizList: ArrayList<QuizData?>?): java.util.ArrayList<QuizData> {
+//        var quizData = ArrayList<QuizData>()
+//        quizData.add(
+//            QuizData(
+//                    quizList!!.get(currentPosition)!!.question,
+//                    quizList!!.get(currentPosition)!!.option1,
+//                    quizList!!.get(currentPosition)!!.option2,
+//                    quizList!!.get(currentPosition)!!.answer,
+//                    quizList!!.get(currentPosition)!!.option3,
+//                    quizList!!.get(currentPosition)!!.option4
+//            )
+//        )
+//        return quizData
+//    }
 
 //    private fun insertData(quizList: ArrayList<QuizData?>?){
 //        for (quizData in quizList!!){
@@ -161,16 +180,71 @@ class HeritageQuizActivity : AppCompatActivity() {
 //    }
 
     fun prepareResult(heritageQuizPagerAdapter: heritageQuizPagerAdapter) {
+        Log.d("HeritageQuizActivity","prepareResult 2")
+
         var correctAns = heritageQuizPagerAdapter.getCorrectAnsCount()
+        Log.d("HeritageQuizActivity","correct Answer"+correctAns)
+
         var incorrectAns = heritageQuizPagerAdapter.getIncorrectAnsCount()
+        Log.d("HeritageQuizActivity","correct Answer"+incorrectAns)
+
         var skippedAns = heritageQuizPagerAdapter.getSkipAnsCount()
+        Log.d("HeritageQuizActivity","correct Answer"+skippedAns)
+
         var totalcount = correctAns + incorrectAns
-//        llResult.startAnimation(animationUp)
-//        llResult.visibility = View.VISIBLE
-//        tvHeaderResult.text = getString(R.string.lbl_you_answered_questions,totalcount.toString(),"15")
-//        tvCorrectAns.text = correctAns.toString()
-//        tvIncorrectAns.text = incorrectAns.toString()
-//        tvSkippedAns.text = "$skippedAns ${getString(R.string.lbl_question)}"
+        Log.d("HeritageQuizActivity","correct Answer"+totalcount)
+
+        //ResultDialog(correctAns,incorrectAns,skippedAns,totalcount)
+
+        ResultDialogBox(correctAns,incorrectAns,skippedAns,totalcount)
     }
 
+    fun ResultDialogBox(
+        correctAns: Int,
+        incorrectAns: Int,
+        skippedAns: Int,
+        totalcount: Int
+    ) {
+        val view = View.inflate(this,R.layout.dialog_custom_background,null)
+
+        val builder = AlertDialog.Builder(this@HeritageQuizActivity)
+
+        builder.setView(view)
+
+        val dialog =builder.create()
+        //Dialog(this@HeritageQuizActivity)
+       dialog.show()
+        dialog.setContentView(R.layout.dialog_custom_background)
+        dialog.window!!.setBackgroundDrawable(getDrawable(R.drawable.background_dialog))
+
+        dialog.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+        //dialog.setCancelable(false)
+        dialog.window!!.attributes.windowAnimations = R.style.animation
+    }
+
+    private fun ResultDialog(correctAns: Int, incorrectAns: Int, skippedAns: Int, totalcount: Int) {
+
+        val builder = AlertDialog.Builder(this)
+        Log.d("HeritageQuizActivity","Show Alert Dialog")
+
+        builder.setTitle("Result")
+        builder.setMessage("Correct Ans"+correctAns+"incorrect Ans"+incorrectAns+"skiped Ans"+skippedAns+"Result"+totalcount)
+        builder.setPositiveButton(getString(R.string.close)) { dialogInterface, which ->
+            finish()
+        }
+
+        alertDialog = builder.create().apply {
+            setOnShowListener {
+                getButton(Dialog.BUTTON_POSITIVE)?.setTextColor(
+                    ContextCompat.getColor(
+                        this@HeritageQuizActivity,
+                        R.color.colorBrown
+                    )
+                )
+            }
+        }
+
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
 }

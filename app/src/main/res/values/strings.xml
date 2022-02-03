@@ -24,6 +24,16 @@
 
     <string name="selected_item">Selected item:</string>
     <string name="lbl_approximate_distance">Approximate distance from your current location %1s km</string>
+    <string name="_11">11</string>
+    <string name="corerct_answer">Corerct Answer</string>
+    <string name="_1">1</string>
+    <string name="_1_questions">1 questions</string>
+    <string name="lbl_you_answered_questions">You answered %1s of the %2s questions</string>
+    <string name="lbl_question">Questions</string>
+    <string name="lbl_want_to_quit">want to quit</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="close">got it</string>
 
     <string-array name="Languages">
         <item>java</item>
