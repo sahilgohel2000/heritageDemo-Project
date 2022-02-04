@@ -2,13 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/tv_result"
-        android:src="@drawable/right_check"
+        android:src="@drawable/quiz_done"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,24 +15,119 @@
         android:layout_height="100dp"/>
 
     <TextView
-        android:id="@+id/correctAns"
-        android:text="Correct Answer"
+        android:id="@+id/simpleText"
+        android:text="Completed"
+        android:textColor="@color/gray_dark"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_result"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/headerResult"
+        android:text="@string/header_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/simpleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_correctans"
+        android:text="Correct Answer :"
+        android:textStyle="bold"
         android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_result"
+        app:layout_constraintTop_toBottomOf="@+id/headerResult"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="50dp" />
+        app:layout_constraintEnd_toStartOf="@id/ev_correctAns"
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:id="@+id/ev_correctAns"
         android:text="10"
-        android:textSize="15dp"
+        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_result"
-        app:layout_constraintStart_toEndOf="@+id/correctAns"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="@dimen/_5dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/headerResult"
+        app:layout_constraintStart_toEndOf="@+id/tv_correctans"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_incorrectans"
+        android:text="Incorrect Answer :"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/ev_correctAns"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ev_IncorrectAns"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/ev_IncorrectAns"
+        android:text="10"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/ev_correctAns"
+        app:layout_constraintStart_toEndOf="@+id/tv_incorrectans"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <View
+        android:id="@+id/viewpart"
+        android:layout_width="match_parent"
+        android:layout_height="0.10dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/tv_incorrectans"/>
+
+    <TextView
+        android:id="@+id/tv_skipedQues"
+        android:text="You Skipped :"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textColor="@color/orange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/viewpart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ev_skippedQues"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/ev_skippedQues"
+        android:text="10"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/viewpart"
+        app:layout_constraintStart_toEndOf="@+id/tv_incorrectans"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/QuitBtn"
+        android:text="Quit"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:background="@color/gray_dark"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_skipedQues"
+        android:layout_marginTop="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
