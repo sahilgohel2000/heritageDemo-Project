@@ -5,8 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Adapter
-import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.*
 import com.example.haritagedemo.API.*
@@ -15,8 +13,6 @@ import kotlinx.android.synthetic.main.activity_help.*
 import java.util.HashMap
 import com.example.haritagedemo.API.BaseActivity
 import com.example.haritagedemo.API.ServiceManager
-import com.example.haritagedemo.Model.HeritageSiteDetailModel
-import kotlinx.android.synthetic.main.items_help.*
 
 class HelpActivity : BaseActivity(),NumberAdapter.Callback{
 

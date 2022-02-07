@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
             ).show()
         }
 
-        val Sspinner:MaterialSpinner = findViewById(R.id.spin2)
+        val Sspinner:MaterialSpinner = findViewById(R.id.TourismSpinner)
         Sspinner.setItems("Tourism Package","AMC Tourism Packages")
         Sspinner.setOnItemSelectedListener { view, position, id, item ->
             Snackbar.make(
@@ -123,6 +123,8 @@ class MainActivity : AppCompatActivity() {
                 "Clicked $item",
                 Snackbar.LENGTH_LONG
             ).show()
+            val TourismIntent:Intent = Intent(this,TourismPackageActivity::class.java)
+            startActivity(TourismIntent)
         }
 
         Homebutton = findViewById(R.id.secondLayout)

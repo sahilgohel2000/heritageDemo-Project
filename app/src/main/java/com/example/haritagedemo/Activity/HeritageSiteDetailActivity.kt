@@ -13,10 +13,8 @@ import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.openDetailsScreen
 import com.example.haritagedemo.Model.HeritageSiteDetailModel
 import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
-import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
-import java.util.ArrayList
 import java.util.HashMap
+import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 

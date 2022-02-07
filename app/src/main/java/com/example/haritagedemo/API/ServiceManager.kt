@@ -2,10 +2,7 @@ package com.example.haritagedemo.API
 
 import android.content.Context
 import android.net.Uri
-import com.example.haritagedemo.Model.EventDetailModel
-import com.example.haritagedemo.Model.FestivalDetailModel
-import com.example.haritagedemo.Model.HelpModel
-import com.example.haritagedemo.Model.HeritageSiteDetailModel
+import com.example.haritagedemo.Model.*
 import com.example.haritagedemo.QuizData
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -206,6 +203,36 @@ class ServiceManager(private val mContext: Context) {
             }
 
             override fun onFailure(call: Call<Response<ArrayList<QuizData?>>>, t: Throwable) {
+                l.onRequestFailed(t)
+            }
+
+        })
+    }
+
+    //api for Tourism Package
+    fun apiGetTourismPackageDetails(
+        params: HashMap<String, Any?>,
+        l: ResponseListener<Response<PackageDetailModel>>
+    ){
+        val call = buildApi().apiGetTourismPackageDetails(addKey(params))
+        call.enqueue( object : Callback<Response<PackageDetailModel>>{
+            override fun onResponse(
+                call: Call<Response<PackageDetailModel>>,
+                response: retrofit2.Response<Response<PackageDetailModel>>
+            ) {
+                l.onRequestSuccess(response.body()!!)
+                val body = response.body()
+                if (body != null){
+                    if (body.code == Const.SUCCESS)
+                        l.onRequestSuccess(response.body()!!)
+                    else
+                        l.onRequestFailed(body.message)
+                }else{
+                        l.onRequestFailed(response.message())
+                }
+            }
+
+            override fun onFailure(call: Call<Response<PackageDetailModel>>, t: Throwable) {
                 l.onRequestFailed(t)
             }
 

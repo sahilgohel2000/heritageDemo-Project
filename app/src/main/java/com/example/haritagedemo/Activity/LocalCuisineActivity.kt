@@ -2,20 +2,17 @@ package com.example.haritagedemo.Activity
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.*
 import com.example.haritagedemo.API.*
-import com.example.haritagedemo.Model.EventDetailModel
-import kotlinx.android.synthetic.main.activity_event_detail.*
-import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
 import kotlinx.android.synthetic.main.activity_local_cuisine.*
 import kotlinx.android.synthetic.main.activity_local_cuisine.mViewpager
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
+import com.example.haritagedemo.API.Response
 
 class LocalCuisineActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCallback {
 

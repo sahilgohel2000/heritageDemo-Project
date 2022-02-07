@@ -1,13 +1,10 @@
 package com.example.haritagedemo.API
 
-import com.example.haritagedemo.Model.EventDetailModel
-import com.example.haritagedemo.Model.FestivalDetailModel
-import com.example.haritagedemo.Model.HelpModel
+import com.example.haritagedemo.Model.*
 import retrofit2.Call
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
-import com.example.haritagedemo.Model.HeritageSiteDetailModel
 import com.example.haritagedemo.QuizData
 
 interface ApiService {
@@ -21,6 +18,10 @@ interface ApiService {
     @POST(Api.API_GET_FESTIVAL_DETAIL)
     fun apiGetFestivalDetails(@FieldMap param: HashMap<String, Any?>): Call<Response<FestivalDetailModel>>
 
+    //call Api for Tourism Package
+    @FormUrlEncoded
+    @POST(Api.API_GET_TOURISM_PACKAGE_DETAILS)
+    fun apiGetTourismPackageDetails(@FieldMap param: HashMap<String, Any?>): Call<Response<PackageDetailModel>>
 
     // call Api For get site Details
     @FormUrlEncoded

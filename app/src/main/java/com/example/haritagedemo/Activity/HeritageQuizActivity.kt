@@ -12,6 +12,7 @@ import com.example.haritagedemo.API.Const
 import com.example.haritagedemo.API.Response
 import com.example.haritagedemo.API.ResponseListener
 import com.example.haritagedemo.API.ServiceManager
+import com.example.haritagedemo.Model.PackageDetailModel
 import com.example.haritagedemo.QuizData
 import com.example.haritagedemo.R
 import com.example.haritagedemo.heritageQuizPagerAdapter
@@ -33,7 +34,9 @@ class HeritageQuizActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+
         callApiGetHeritageQuiz()
+
         animationUp = AnimationUtils.loadAnimation(this, R.anim.bottom_up)
         animationDown = AnimationUtils.loadAnimation(this, R.anim.bottom_down)
 
@@ -60,7 +63,7 @@ class HeritageQuizActivity : AppCompatActivity() {
             if (currentPosition == 15){
                 prepareResult(mheritageQuizPagerAdapter!!)
             }else{
-            viewPagerQuiz.setCurrentItem(viewPagerQuiz.currentItem+1,true)
+                viewPagerQuiz.setCurrentItem(viewPagerQuiz.currentItem+1,true)
             }
         })
     }
@@ -146,7 +149,6 @@ class HeritageQuizActivity : AppCompatActivity() {
         dialog.QuitBtn.setOnClickListener(View.OnClickListener {
             finish()
         })
-
         dialog.setCancelable(false)
     }
 

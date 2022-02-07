@@ -1,5 +1,7 @@
 package com.example.haritagedemo.API
 
+import com.example.haritagedemo.QuizData
+
 abstract class ResponseListener<in T>:OnListener<T> {
 
     override fun onRequestSuccess(response: T) {

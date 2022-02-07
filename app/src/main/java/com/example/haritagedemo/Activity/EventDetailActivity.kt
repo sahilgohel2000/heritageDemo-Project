@@ -2,7 +2,6 @@ package com.example.haritagedemo.Activity
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.view.View
@@ -12,14 +11,11 @@ import com.example.haritagedemo.*
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.openDetailsScreen
 
-import com.example.haritagedemo.Activity.EventDetailActivity
 import com.example.haritagedemo.Model.EventDetailModel
-import com.example.haritagedemo.Model.HeritageSiteDetailModel
 import kotlinx.android.synthetic.main.activity_event_detail.*
 import kotlinx.android.synthetic.main.activity_event_detail.mViewpager
-import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
-import java.util.ArrayList
 import java.util.HashMap
+import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 class EventDetailActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCallback {

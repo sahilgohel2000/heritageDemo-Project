@@ -2,22 +2,17 @@ package com.example.haritagedemo.Activity
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.view.View
-import android.widget.Adapter
-import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.*
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.openDetailsScreen
-import com.example.haritagedemo.Model.EventDetailModel
 import com.example.haritagedemo.Model.FestivalDetailModel
 import kotlinx.android.synthetic.main.activity_festival_detail.*
 import kotlinx.android.synthetic.main.activity_festival_detail.mViewpager
-import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 class FestivalDetailActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCallback {
@@ -86,7 +81,7 @@ class FestivalDetailActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClic
             object : ResponseListener<Response<FestivalDetailModel>>(){
                 override fun onRequestSuccess(response: Response<FestivalDetailModel>) {
                     super.onRequestSuccess(response)
-                    mFestivalDetailModel = response.result!!
+                    mFestivalDetailModel = response!!.result!!
                     setData()
                 }
 

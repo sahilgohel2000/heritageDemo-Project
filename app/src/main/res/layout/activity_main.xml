@@ -254,7 +254,7 @@
                         app:layout_constraintVertical_bias="0.488" />
 
                     <com.jaredrummler.materialspinner.MaterialSpinner
-                        android:id="@+id/spin2"
+                        android:id="@+id/TourismSpinner"
                         android:layout_width="240dp"
                         android:layout_height="63dp"
                         android:text="Tourism Packages"
