@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.Model.PackageDetailModel
+import com.example.haritagedemo.Model.TourPackageModel
 import com.example.haritagedemo.Model.TourPackageResponseModel
+import kotlinx.android.synthetic.main.activity_tourism_package.*
 import java.lang.Exception
 
 class TourismPackageActivity : BaseActivity() {
@@ -23,38 +26,50 @@ class TourismPackageActivity : BaseActivity() {
     override fun bindViews() {
         Log.d("TourismPackageActivity","bindview")
 
-        callApiGetTourismPackage()
+        callApiGetTourismPackages()
     }
 
-
-    private fun callApiGetTourismPackage() {
-        Log.d("TourismPackageActivity","call Api")
-
-        val paramMap = HashMap<String,Any?>()
+    private fun callApiGetTourismPackages() {
+        val paramMap = HashMap<String, Any?>()
+        paramMap["package_name"] = "amc".takeIf { type == Const.TOURISMPACKAGE.AMC }?:"nomac"
         paramMap[Const.PARAM_LANGUAGE] = "en"
 
         val serviceManager = ServiceManager(mContext)
-        serviceManager.apiGetTourismPackageDetails(
+        serviceManager.getTourismPackages(
             paramMap,
-            object: ResponseListener<Response<PackageDetailModel>>(){
-                override fun onRequestSuccess(response: Response<PackageDetailModel>) {
-                    Log.d("TourismPackageActivity","OnRequestSuccess")
-                    mPackageDetailModel = response.result
-                    try {
-                        Log.d("TourismPackageActivity",""+mPackageDetailModel!!.fieldEntryFeeBookingInfo.get(0))
-                    }catch (e:Exception){
-                        e.printStackTrace()
+            object : ResponseListener<retrofit2.Response<Response<TourPackageResponseModel>>>(){
+                override fun onRequestSuccess(response: retrofit2.Response<Response<TourPackageResponseModel>>) {
+                    val responsebody = response.body()
+                    Log.d("TourismPackageActivity","Result1"+responsebody)
+                    Log.d("TourismPackageActivity","Result2"+responsebody!!.result)
+
+                    resultText.text = responsebody.result!!.description
+                    firstBtn.text = responsebody.result!!.packages.get(0)!!.name
+                    secondBtn.text = responsebody.result!!.packages.get(1)!!.name
+
+                    firstBtn.setOnClickListener(View.OnClickListener {
+                        Toast.makeText(this@TourismPackageActivity,"you Click 1",Toast.LENGTH_SHORT).show()
+                    })
+
+                    secondBtn.setOnClickListener(View.OnClickListener {
+                        Toast.makeText(this@TourismPackageActivity,"you Click 2",Toast.LENGTH_SHORT).show()
+                    })
+
+                    if (responsebody != null && response.code() == Const.SUCCESS){
+                        if (responsebody.result?.packages.isNullOrEmpty()){
+                            Log.d("TourismPackageActivity","Result3"+responsebody.result!!.description)
+                        }
                     }
                 }
 
                 override fun onRequestFailed(t: Throwable) {
-                    Log.d("TourismPackageActivity","Resquest failed")
                     super.onRequestFailed(t)
                 }
 
             }
         )
     }
+
 
 
 }

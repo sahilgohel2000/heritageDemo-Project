@@ -17,10 +17,16 @@
         android:theme="@style/Theme.Haritagedemo"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".TourPackage"
+            android:exported="false" />
+        <activity
+            android:name=".Privacy_policyActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity
             android:name=".TourismPackageActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
             android:name=".Activity.HeritageQuizActivity"
             android:exported="false"

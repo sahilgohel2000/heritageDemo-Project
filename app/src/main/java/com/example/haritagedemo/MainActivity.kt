@@ -149,6 +149,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(heritagesiteQuiz)
         })
 
+        privayPolicy.setOnClickListener(View.OnClickListener {
+            val privacypolicyIntent:Intent = Intent(this,Privacy_policyActivity::class.java)
+            startActivity(privacypolicyIntent)
+        })
+
+        newsFeed.setOnClickListener(View.OnClickListener {
+            val newsFeedIntent:Intent = Intent(this,TourPackage::class.java)
+            startActivity(newsFeedIntent)
+        })
+
         mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth.currentUser
 

@@ -209,6 +209,27 @@ class ServiceManager(private val mContext: Context) {
         })
     }
 
+    //Tour Packages Api
+    fun getTourismPackages(
+        params: HashMap<String, Any?>,
+        l:ResponseListener<retrofit2.Response<Response<TourPackageResponseModel>>>
+    ){
+        val call = buildApi().apiGetTourismPackages(addKey(params))
+        call.enqueue(object : Callback<Response<TourPackageResponseModel>>{
+            override fun onResponse(
+                call: Call<Response<TourPackageResponseModel>>,
+                response: retrofit2.Response<Response<TourPackageResponseModel>>
+            ) {
+                l.onRequestSuccess(response)
+            }
+
+            override fun onFailure(call: Call<Response<TourPackageResponseModel>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
     //api for Tourism Package
     fun apiGetTourismPackageDetails(
         params: HashMap<String, Any?>,

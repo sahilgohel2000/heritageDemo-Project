@@ -378,7 +378,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/nine"
+                    android:id="@+id/newsFeed"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@color/white"
@@ -451,7 +451,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/eleven"
+                android:id="@+id/privayPolicy"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 app:layout_constraintBottom_toBottomOf="parent"
