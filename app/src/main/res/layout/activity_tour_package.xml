@@ -10,11 +10,35 @@
     <TextView
         android:id="@+id/titleText"
         android:textSize="25dp"
-        android:text="Welcome"
-        android:textColor="@color/black"
-        android:layout_width="wrap_content"
+        android:text="Heading"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:background="@color/gray_dark"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
+    <ScrollView
+        android:id="@+id/mScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/titleText">
+    <TextView
+        android:id="@+id/titleTextView"
+        android:textSize="20dp"
+        android:text="Description"
+        android:textColor="@color/black"
+        android:background="@color/gray_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"/>
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

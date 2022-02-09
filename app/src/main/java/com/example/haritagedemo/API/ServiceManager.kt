@@ -241,7 +241,7 @@ class ServiceManager(private val mContext: Context) {
                 call: Call<Response<PackageDetailModel>>,
                 response: retrofit2.Response<Response<PackageDetailModel>>
             ) {
-                l.onRequestSuccess(response.body()!!)
+                //l.onRequestSuccess(response.body()!!)
                 val body = response.body()
                 if (body != null){
                     if (body.code == Const.SUCCESS)
