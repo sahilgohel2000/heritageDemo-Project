@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haritagedemo.API.*
@@ -28,11 +29,9 @@ class TourismPackageActivity : BaseActivity(),TourPackageAdapter.Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tourism_package)
-        Log.d("TourismPackageActivity","onCreate")
     }
 
     override fun bindViews() {
-        Log.d("TourismPackageActivity","bindview")
         callApiGetTourismPackages()
         tourPackageAdapter = TourPackageAdapter(mContext,tArrayList,this)
         mLayoutManager = LinearLayoutManager(mContext)
@@ -57,39 +56,14 @@ class TourismPackageActivity : BaseActivity(),TourPackageAdapter.Callback {
             object : ResponseListener<retrofit2.Response<Response<TourPackageResponseModel>>>(){
                 override fun onRequestSuccess(response: retrofit2.Response<Response<TourPackageResponseModel>>) {
                     val responsebody = response.body()
-                    Log.d("TourismPackageActivity","Result1"+responsebody)
-                    Log.d("TourismPackageActivity","Result2"+responsebody!!.result)
-
-                    resultText.text = responsebody.result!!.description
-//                    firstBtn.text = responsebody.result!!.packages.get(0)!!.name
-//                    secondBtn.text = responsebody.result!!.packages.get(1)!!.name
-
-                    Log.d("TourismPackageActivity","Id:"+response!!.body()!!.result!!.packages.get(0)!!.id)
-                    Log.d("TourismPackageActivity","Name:"+response!!.body()!!.result!!.packages.get(0)!!.name)
-
-                    Log.d("TourismPackageActivity","Id:"+response!!.body()!!.result!!.packages.get(1)!!.id)
-                    Log.d("TourismPackageActivity","Id:"+response!!.body()!!.result!!.packages.get(1)!!.name)
+                    resultText.text = responsebody!!.result!!.description
                     tArrayList.addAll(response.body()!!.result!!.packages)
                     tourPackageAdapter!!.notifyDataSetChanged()
-//                    mArrayList.addAll(response.body()!!.result!!.packages)
-  //                  Log.d("TourismPackageActivity","ArrayList:"+mArrayList.toString())
 
-//                    firstBtn.setOnClickListener(View.OnClickListener {
-////                        mArrayList.add(response.body()!!.result!!.packages.get(0))
-//                        Toast.makeText(this@TourismPackageActivity,"you Click 1",Toast.LENGTH_SHORT).show()
-//                        val morningWalk:Intent = Intent(this@TourismPackageActivity,TourPackage::class.java)
-//                        startActivity(morningWalk)
-//                    })
-//
-//                    secondBtn.setOnClickListener(View.OnClickListener {
-//                        Toast.makeText(this@TourismPackageActivity,"you Click 2",Toast.LENGTH_SHORT).show()
-//                        val afterWalk:Intent = Intent(this@TourismPackageActivity,TourPackage::class.java)
-//                        startActivity(afterWalk)
-//                    })
 
                     if (responsebody != null && response.code() == Const.SUCCESS){
                         if (responsebody.result?.packages.isNullOrEmpty()){
-                            Log.d("TourismPackageActivity","Result3"+responsebody.result!!.description)
+                            Toast.makeText(this@TourismPackageActivity,"is null or empty",Toast.LENGTH_LONG).show()
                         }
                     }
                 }
@@ -107,7 +81,6 @@ class TourismPackageActivity : BaseActivity(),TourPackageAdapter.Callback {
             val mData = tArrayList[position]
             if (mData!=null){
                 TourPackage.startActivity(mContext, mData)
-                Log.d("TourismPackageActivity","Id:"+mData.id)
             }
         }
     }

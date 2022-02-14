@@ -29,17 +29,16 @@ class TourPackage : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tour_package)
-        Log.d("TourPackage","Oncreate")
-        Log.d("TourPackage","api function")
     }
 
     override fun bindViews() {
+
         try {
             mTourPackageModel = intent.getSerializableExtra(Intent.EXTRA_TEXT) as TourPackageModel
         }catch (e:Exception){
             e.printStackTrace()
-            Log.d("TourPackage","Exception"+e.toString())
         }
+
         callApi()
         val spacingVertical = resources.getDimensionPixelSize(R.dimen._8dp)
         val spacingHorizontal = resources.getDimensionPixelSize(R.dimen._zero_dp)
@@ -51,34 +50,23 @@ class TourPackage : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCallback {
         )
         with(walkSitesRecycler){
             layoutManager = LinearLayoutManager(mContext)
-            Log.d("TourPackage","Adapter ser=t for Location")
             addItemDecoration(SpacesItemDecoration(spacingVertical,spacingHorizontal))
             adapter = vAdapter
         }
     }
 
     private fun callApi() {
-        Log.d("TourPackage","Call Api")
-
         val serviceManager = ServiceManager(mContext)
         val hashMap = HashMap<String,Any?>()
 
-//        val tourismPackageActivity = TourismPackageActivity()
-//        hashMap["package_id"]=tourismPackageActivity.tArrayList?.get(tourismPackageActivity.tArrayList.size)?.id
         hashMap["package_id"]=mTourPackageModel?.id
-
-        Log.d("TourPackage","Its okay"+mTourPackageModel?.id)
-
         hashMap[Const.PARAM_LANGUAGE]="en"
-        Log.d("TourPackage","Language Set")
+
         serviceManager.apiGetTourismPackageDetails(
             hashMap,
             object : ResponseListener<Response<PackageDetailModel>>(){
                 override fun onRequestSuccess(response: Response<PackageDetailModel>) {
-                    Log.d("TourPackage","Response Aaya")
-
                     mpackageDetailModel = response.result!!
-                    Log.d("TourPackage","setData Call"+response.result)
                     setData()
                 }
             }
@@ -94,32 +82,24 @@ class TourPackage : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCallback {
     }
 
     private fun setData() {
-        Log.d("TourPackage","SetData")
-
         vCustomPagerAdapter = CustomPagerAdapter(
             mContext,
             mpackageDetailModel!!.fieldUploadUrl
         )
-
         vViewPager.adapter = vCustomPagerAdapter
 
-        Log.d("TourPackage","result1"+mpackageDetailModel!!.tourismPackageName.toString())
         titleText.text = mpackageDetailModel!!.tourismPackageName
         walkDesc.text = stripHtml(mpackageDetailModel!!.description)
 
         if (mpackageDetailModel?.fieldWalkIncludedSites.isNullOrEmpty()){
-            Log.d("TourPackage","If Condtion+Location")
             walkSitesRecycler.visibility = View.GONE
             nearbyText.visibility = View.GONE
         }else{
-            Log.d("TourPackage","else Condtion+Location")
             vArrayList.addAll(mpackageDetailModel!!.fieldWalkIncludedSites)
             vAdapter?.notifyDataSetChanged()
             walkSitesRecycler.visibility = View.VISIBLE
             nearbyText.visibility = View.VISIBLE
         }
-Log.d("TourPackage","Starting Location"+mpackageDetailModel!!.fieldStartingLocationName!!.siteName)
-
         startLocationText.text = mpackageDetailModel!!.fieldStartingLocationName!!.siteName
         requireTime.text = mpackageDetailModel!!.fieldTotalTimeRequired
 
@@ -144,7 +124,6 @@ Log.d("TourPackage","Starting Location"+mpackageDetailModel!!.fieldStartingLocat
             mContext: Context,
             mData: TourPackageModel?
         ) {
-            Log.d("TourPackage","MData:"+mData)
             val intent = Intent(mContext, TourPackage::class.java)
             intent.putExtra(Intent.EXTRA_TEXT, mData)
             mContext.startActivity(intent)
@@ -160,5 +139,4 @@ Log.d("TourPackage","Starting Location"+mpackageDetailModel!!.fieldStartingLocat
             }
         }
     }
-
 }
