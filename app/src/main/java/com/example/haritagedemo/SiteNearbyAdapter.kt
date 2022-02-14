@@ -31,10 +31,7 @@ class SiteNearbyAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (mArrayList.size > 3)
-            3
-        else
-            mArrayList.size
+        return mArrayList.size
     }
 
     internal inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

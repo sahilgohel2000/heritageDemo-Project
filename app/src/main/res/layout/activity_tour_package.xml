@@ -2,43 +2,360 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tourPackageActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".TourPackage">
 
-    <TextView
-        android:id="@+id/titleText"
-        android:textSize="25dp"
-        android:text="Heading"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:background="@color/gray_dark"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/vScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/mScroll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/titleText">
-    <TextView
-        android:id="@+id/titleTextView"
-        android:textSize="20dp"
-        android:text="Description"
-        android:textColor="@color/black"
-        android:background="@color/gray_light"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/titleText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </ScrollView>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/vViewPager"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck">
+
+            </androidx.viewpager.widget.ViewPager>
+
+            <TextView
+                android:id="@+id/titleText"
+                android:textSize="18dp"
+                android:text="Heading"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:background="@color/orange_transparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="315dp"
+                app:layout_constraintTop_toTopOf="@id/vViewPager"
+                app:layout_constraintBottom_toBottomOf="@id/vViewPager"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/vCardLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/vViewPager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="30dp"
+                app:cardCornerRadius="20dp">
+
+                <TextView
+                    android:id="@+id/titleTextView"
+                    android:textSize="12dp"
+                    android:text="About Tourism Package"
+                    android:textColor="@color/black"
+                    android:background="@color/gray_light"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textStyle="bold"/>
+
+                <com.borjabravo.readmoretextview.ReadMoreTextView
+                    android:id="@+id/walkDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:minHeight="48dp"
+                    android:text="Description"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    app:colorClickableText="@color/colorOrange"
+                    app:trimCollapsedText="show more"
+                    app:trimExpandedText="show less"
+                    app:trimLength="300"
+                    app:trimMode="trimModeLength" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/nearbyText"
+                android:text="AHMEDABAD HERITAGE SITES INCLUDED IN PACKAGE"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/vCardLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="25dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/walkSitesRecycler"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/nearbyText"
+                tools:listitem="@layout/item_nearby_sites"/>
+
+            <TextView
+                android:id="@+id/startLoc"
+                android:text="STARTING LOCATION"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/walkSitesRecycler"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="20dp"/>
+
+            <TextView
+                android:id="@+id/startLocationText"
+                android:text=""
+                android:textSize="14dp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/startLoc"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="2dp"/>
+
+            <TextView
+                android:id="@+id/timeText"
+                android:text="TOTAL TIME REQUIRED FOR TOURISM"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/startLocationText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/requireTime"
+                android:text=""
+                android:textSize="12dp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/timeText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/rating"
+                android:text="Rating and Review"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/requireTime"/>
+
+            <RatingBar
+                android:id="@+id/vratingBar"
+                style="@style/ratingBarSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="3"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/rating"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/gettingthere"
+                android:text="GETTING THERE"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/vratingBar"/>
+
+            <TextView
+                android:id="@+id/busText"
+                android:text="Nearest Bus Station"
+                android:textSize="12dp"
+                android:textColor="@color/gray_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/gettingthere"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/nearestBusstop"
+                android:text=""
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/busText"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="25dp"/>
+
+            <TextView
+                android:id="@+id/trainText"
+                android:text="Nearest Train Station"
+                android:textSize="12dp"
+                android:textColor="@color/gray_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/nearestBusstop"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="25dp"/>
+
+            <TextView
+                android:id="@+id/nearestTrainStop"
+                android:text=""
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/trainText"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="25dp"/>
+
+            <TextView
+                android:id="@+id/airportText"
+                android:text="Nearest Airport Station"
+                android:textSize="12dp"
+                android:textColor="@color/gray_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/nearestTrainStop"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="25dp"/>
+
+            <TextView
+                android:id="@+id/nearestAirportStop"
+                android:text=""
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/airportText"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="25dp"/>
+
+            <TextView
+                android:id="@+id/ttkText"
+                android:text="THINGS TO KNOW"
+                android:textSize="12dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/nearestAirportStop"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/thingstoknow"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/ttkText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="20dp"/>
+
+            <TextView
+                android:id="@+id/timingText"
+                android:text="Timings"
+                android:textSize="12dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/thingstoknow"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/timings"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/timingText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/feeText"
+                android:text="Entry Fee"
+                android:textSize="12dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/timings"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/entryfees"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                app:layout_constraintTop_toBottomOf="@id/feeText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
