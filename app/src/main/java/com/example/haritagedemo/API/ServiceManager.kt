@@ -230,6 +230,34 @@ class ServiceManager(private val mContext: Context) {
         })
     }
 
+    //api about Ahmedabad
+    fun apiGetAboutAhmedabad(
+        params: HashMap<String, Any?>,
+        l: ResponseListener<Response<AboutAhmedabadModel>>
+    ){
+        val call = buildApi().apiAboutAhmedabad(addKey(params))
+        call.enqueue(object : Callback<Response<AboutAhmedabadModel>>{
+            override fun onResponse(
+                call: Call<Response<AboutAhmedabadModel>>,
+                response: retrofit2.Response<Response<AboutAhmedabadModel>>
+            ) {
+                val body = response.body()
+                if (body != null){
+                    if (body.code == Const.SUCCESS)
+                        l.onRequestSuccess(response.body()!!)
+                    else
+                        l.onRequestFailed(body.message)
+                }else
+                    l.onRequestFailed(response.message())
+            }
+
+            override fun onFailure(call: Call<Response<AboutAhmedabadModel>>, t: Throwable) {
+                l.onRequestFailed(t)
+            }
+
+        })
+    }
+
     //api for Tourism Package
     fun apiGetTourismPackageDetails(
         params: HashMap<String, Any?>,

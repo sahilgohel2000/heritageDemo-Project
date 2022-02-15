@@ -23,6 +23,11 @@ interface ApiService {
     @POST(Api.API_GET_TOURISM_PACKAGE_DETAILS)
     fun apiGetTourismPackageDetails(@FieldMap param: HashMap<String, Any?>): Call<Response<PackageDetailModel>>
 
+    // call Api For get About Ahmedabad
+    @FormUrlEncoded
+    @POST(Api.API_ABOUT_AHMEDABAD)
+    fun apiAboutAhmedabad(@FieldMap param: HashMap<String, Any?>): Call<Response<AboutAhmedabadModel>>
+
     // Call Api For get Itinerary List
     @FormUrlEncoded
     @POST(Api.API_GET_TOURISM_PACKAGES)

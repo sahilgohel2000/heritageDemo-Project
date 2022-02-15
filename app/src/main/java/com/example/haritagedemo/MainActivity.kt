@@ -28,6 +28,7 @@ import android.widget.Toast
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.haritagedemo.Activity.AboutAhmedabadActivity
 import com.example.haritagedemo.Activity.HelpActivity
 import com.example.haritagedemo.Activity.HeritageQuizActivity
 import com.example.haritagedemo.RoomDatabase.UserDatabase
@@ -139,6 +140,11 @@ class MainActivity : AppCompatActivity() {
         FAQ.setOnClickListener(View.OnClickListener {
             val FAQIntent:Intent = Intent(this,FAQActivity::class.java)
             startActivity(FAQIntent)
+        })
+
+        AgelessAhmedbad.setOnClickListener(View.OnClickListener {
+            val aboutAhmedabadIntent = Intent(this,AboutAhmedabadActivity::class.java)
+            startActivity(aboutAhmedabadIntent)
         })
 
         heritageQuiz.setOnClickListener(View.OnClickListener {
