@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.getLocation
 import com.example.haritagedemo.Model.EventDetailModel
-import com.example.haritagedemo.Model.HeritageSiteDetailModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_bottomsheet_quickview.*

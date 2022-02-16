@@ -17,9 +17,13 @@
         android:theme="@style/Theme.Haritagedemo"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Activity.AboutAhmedabadActivity"
+            android:name=".Activity.HeritageWalkActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:exported="false" />
+        <activity
+            android:name=".Activity.AboutAhmedabadActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
             android:name=".TourPackage"
             android:exported="false" />

@@ -5,9 +5,6 @@ import android.location.Location
 import android.location.LocationManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.model.LazyHeaders
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.with
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.with
 import com.bumptech.glide.request.RequestOptions
 import com.example.haritagedemo.Activity.EventDetailActivity
 import com.example.haritagedemo.Activity.FestivalDetailActivity

@@ -1,4 +1,4 @@
-package com.example.haritagedemo.Model
+package com.example.haritagedemo
 
 import com.example.haritagedemo.*
 import com.google.gson.annotations.SerializedName

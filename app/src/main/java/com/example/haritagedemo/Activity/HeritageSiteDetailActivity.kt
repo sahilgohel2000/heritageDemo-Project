@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.*
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.openDetailsScreen
-import com.example.haritagedemo.Model.HeritageSiteDetailModel
+import com.example.haritagedemo.HeritageSiteDetailModel
 import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
 import java.util.HashMap
 import kotlin.collections.ArrayList

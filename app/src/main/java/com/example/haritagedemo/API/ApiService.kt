@@ -1,5 +1,6 @@
 package com.example.haritagedemo.API
 
+import com.example.haritagedemo.HeritageSiteDetailModel
 import com.example.haritagedemo.Model.*
 import retrofit2.Call
 import retrofit2.http.FieldMap
@@ -27,6 +28,11 @@ interface ApiService {
     @FormUrlEncoded
     @POST(Api.API_ABOUT_AHMEDABAD)
     fun apiAboutAhmedabad(@FieldMap param: HashMap<String, Any?>): Call<Response<AboutAhmedabadModel>>
+
+    // Api For get Heritage Walk Details
+    @FormUrlEncoded
+    @POST(Api.API_GET_HERITAGE_WALK_DETAIL)
+    fun apiGetHeritageWalkDetail(@FieldMap param: HashMap<String, Any?>): Call<Response<HeritageWalkModel>>
 
     // Call Api For get Itinerary List
     @FormUrlEncoded

@@ -2,6 +2,7 @@ package com.example.haritagedemo.API
 
 import android.content.Context
 import android.net.Uri
+import com.example.haritagedemo.HeritageSiteDetailModel
 import com.example.haritagedemo.Model.*
 import com.example.haritagedemo.QuizData
 import okhttp3.OkHttpClient
@@ -225,6 +226,33 @@ class ServiceManager(private val mContext: Context) {
 
             override fun onFailure(call: Call<Response<TourPackageResponseModel>>, t: Throwable) {
                 TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun apiHeritageWalkDetail(
+        params: HashMap<String, Any?>,
+        l: ResponseListener<Response<HeritageWalkModel>>
+    ){
+        val call = buildApi().apiGetHeritageWalkDetail(addKey(params))
+        call.enqueue(object : Callback<Response<HeritageWalkModel>>{
+            override fun onResponse(
+                call: Call<Response<HeritageWalkModel>>,
+                response: retrofit2.Response<Response<HeritageWalkModel>>
+            ) {
+                val body = response.body()
+                if (body != null){
+                    if (body.code == Const.SUCCESS)
+                        l.onRequestSuccess(response.body()!!)
+                    else
+                        l.onRequestFailed(response.message())
+                }else
+                    l.onRequestFailed(response.message())
+            }
+
+            override fun onFailure(call: Call<Response<HeritageWalkModel>>, t: Throwable) {
+                l.onRequestFailed(t)
             }
 
         })

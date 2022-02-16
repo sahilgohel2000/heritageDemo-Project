@@ -28,9 +28,11 @@ import android.widget.Toast
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.haritagedemo.API.Const
 import com.example.haritagedemo.Activity.AboutAhmedabadActivity
 import com.example.haritagedemo.Activity.HelpActivity
 import com.example.haritagedemo.Activity.HeritageQuizActivity
+import com.example.haritagedemo.Activity.HeritageWalkActivity
 import com.example.haritagedemo.RoomDatabase.UserDatabase
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -104,6 +106,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         val Fspinner:MaterialSpinner = findViewById(R.id.spin)
+
         Fspinner.setItems("Haritage Walks","Morning Haritage Walks","Evening Hariage Walks")
         Fspinner.setOnItemSelectedListener { view, position, id, item ->
             Snackbar.make(
@@ -111,6 +114,13 @@ class MainActivity : AppCompatActivity() {
                 "Clicked $item",
                 Snackbar.LENGTH_LONG
             ).show()
+
+            if (position == 1){
+                HeritageWalkActivity.startActivity(this,Const.HERITAGEWALK.MORNING)
+            }
+            if (position == 2){
+                HeritageWalkActivity.startActivity(this,Const.HERITAGEWALK.EVENING)
+            }
         }
 
         val Sspinner:MaterialSpinner = findViewById(R.id.TourismSpinner)
