@@ -2,8 +2,11 @@ package com.example.haritagedemo.API
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.haritagedemo.FieldNearbySitesLocation
 import com.example.haritagedemo.Language
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Field
 
 class PreferanceManager(mContext:Context) {
 
@@ -73,6 +76,26 @@ class PreferanceManager(mContext:Context) {
             getStringPreference(LANGUAGE),
             Language::class.java
         )
+    }
+
+    fun clearResentSearch() {
+        setStringPreference(RESENT_SEARCH, "")
+    }
+
+    fun getResentSearch():ArrayList<FieldNearbySitesLocation?>?{
+        var arrayList: ArrayList<FieldNearbySitesLocation?>? = ArrayList()
+        val list = getStringPreference(RESENT_SEARCH)
+
+        val gson = Gson()
+        try {
+            arrayList = gson.fromJson(
+                list,
+                object : TypeToken<ArrayList<FieldNearbySitesLocation?>?>() {}.type
+            )as ArrayList<FieldNearbySitesLocation?>?
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        return arrayList
     }
 
     /**

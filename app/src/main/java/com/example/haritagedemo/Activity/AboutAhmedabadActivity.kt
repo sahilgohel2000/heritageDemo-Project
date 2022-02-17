@@ -30,6 +30,8 @@ class AboutAhmedabadActivity : BaseActivity(),RelatedSiteAdapter.Callback {
     }
 
     override fun bindViews() {
+        showProgressView()
+
         callApiAboutAhmedabad()
 
         val spacingVertical = resources.getDimensionPixelSize(R.dimen._zero_dp)
@@ -47,7 +49,7 @@ class AboutAhmedabadActivity : BaseActivity(),RelatedSiteAdapter.Callback {
     }
 
     private fun callApiAboutAhmedabad() {
-
+        showProgressView()
         val serviceManager = ServiceManager(mContext)
         val hashMap = HashMap<String, Any?>()
 
@@ -57,15 +59,21 @@ class AboutAhmedabadActivity : BaseActivity(),RelatedSiteAdapter.Callback {
             hashMap,
             object : ResponseListener<Response<AboutAhmedabadModel>>(){
                 override fun onRequestSuccess(response: Response<AboutAhmedabadModel>) {
+                    showProgressView()
+
                     if (response.result != null)
                         setData(response.result!!)
                 }
 
                 override fun onRequestFailed(t: Throwable) {
+                    showProgressView()
+
                     super.onRequestFailed(t)
                 }
 
                 override fun onRequestFailed(message: String) {
+                    showProgressView()
+
                     super.onRequestFailed(message)
                 }
             }
@@ -73,6 +81,7 @@ class AboutAhmedabadActivity : BaseActivity(),RelatedSiteAdapter.Callback {
     }
 
     private fun setData(mData: AboutAhmedabadModel) {
+        showProgressView()
 
         aCustomPagerAdapter = CustomPagerAdapter(
             mContext,

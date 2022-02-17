@@ -17,29 +17,76 @@
         app:layout_constraintVertical_bias="0.024"
         tools:layout_editor_absoluteX="-16dp" />
 
-    <Button
-        android:id="@+id/searchBtn"
-        android:layout_width="192dp"
-        android:layout_height="48dp"
-        android:background="@color/colorBtnBrown"
-        android:text="Search"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <TextView
+        android:id="@+id/recentserach"
+        android:text="YOUR RECENT SEARCH"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView"/>
 
-    <Button
-        android:id="@+id/cancelBtn"
-        android:layout_width="192dp"
-        android:layout_height="48dp"
-        android:background="@color/colorOrange"
-        android:text="Cancel"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="20dp"
+    <TextView
+        android:id="@+id/cleartext"
+        android:text="Clear All"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="100dp"
+        app:layout_constraintStart_toEndOf="@id/recentserach"
+        app:layout_constraintTop_toBottomOf="@id/searchView"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recentSearchRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toTopOf="@id/linearButtonLayout"
+        app:layout_constraintTop_toBottomOf="@id/recentserach"/>
+
+    <LinearLayout
+        android:id="@+id/linearButtonLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginTop="680dp">
+
+        <Button
+            android:id="@+id/searchBtn"
+            android:text="Search"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:background="@color/orange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/cancelBtn"
+            android:text="Cancel"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:background="@color/gray_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
