@@ -21,6 +21,14 @@ class SearchActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCallbac
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        searchBtn.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+
+        cancelBtn.setOnClickListener(View.OnClickListener {
+            finish()
+        })
     }
 
     override fun bindViews() {
