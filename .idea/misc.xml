@@ -53,6 +53,7 @@
         <entry key="..\:/haritagedemo/app/src/main/res/menu/navigation_menu.xml" value="0.1296875" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/circle.xml" value="0.117" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/img.xml" value="0.117" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/item_separator_filter.xml" value="0.1255" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/lock_img.xml" value="0.236986301369863" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/rounded_corner_textview_correct.xml" value="0.168" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/rounded_corner_textview_incorrect.xml" value="0.168" />
@@ -71,6 +72,7 @@
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable/right_check.xml" value="0.117" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable/view_list_of_sites_button.xml" value="0.15" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_about_ahmedabad.xml" value="0.264" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_choose_language.xml" value="0.22592592592592592" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_empty.xml" value="0.175" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_event_detail.xml" value="0.4" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_faqactivity.xml" value="0.264" />
@@ -92,6 +94,7 @@
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/drawer_header.xml" value="0.16435185185185186" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/fragment_heritage_site_detail.xml" value="0.22592592592592592" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/fragment_home.xml" value="0.15833333333333333" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_choose_layout.xml" value="0.16342592592592592" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_help.xml" value="0.1574074074074074" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_help_line_number.xml" value="0.16805555555555557" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_helpline.xml" value="0.1574074074074074" />

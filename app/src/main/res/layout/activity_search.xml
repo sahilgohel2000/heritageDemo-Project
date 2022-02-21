@@ -6,16 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
-    <SearchView
-        android:id="@+id/searchView"
+    <RelativeLayout
+        android:id="@+id/searchLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:iconifiedByDefault="false"
-        android:queryHint="Search for Heritage Sites"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.024"
-        tools:layout_editor_absoluteX="-16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <AutoCompleteTextView
+            android:id="@+id/cityPrediction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/search"
+            android:hint="Searh for Heritage Sites"
+            android:imeOptions="flagNoExtractUi|actionSearch"
+            android:inputType="textCapSentences"
+            android:maxLength="48"
+            android:paddingEnd="@dimen/_8dp"
+            android:textSize="14dp"/>
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/recentserach"
@@ -29,7 +43,7 @@
         android:layout_marginStart="20dp"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView"/>
+        app:layout_constraintTop_toBottomOf="@id/searchLayout"/>
 
     <TextView
         android:id="@+id/cleartext"
@@ -43,7 +57,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="100dp"
         app:layout_constraintStart_toEndOf="@id/recentserach"
-        app:layout_constraintTop_toBottomOf="@id/searchView"/>
+        app:layout_constraintTop_toBottomOf="@id/searchLayout"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recentSearchRecycler"

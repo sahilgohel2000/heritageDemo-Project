@@ -1,5 +1,6 @@
 package com.example.haritagedemo.API
 
+import com.example.haritagedemo.FieldNearbySitesLocation
 import com.example.haritagedemo.HeritageSiteDetailModel
 import com.example.haritagedemo.Model.*
 import retrofit2.Call
@@ -28,6 +29,11 @@ interface ApiService {
     @FormUrlEncoded
     @POST(Api.API_ABOUT_AHMEDABAD)
     fun apiAboutAhmedabad(@FieldMap param: HashMap<String, Any?>): Call<Response<AboutAhmedabadModel>>
+
+    // Call Api For get Itinerary List
+    @FormUrlEncoded
+    @POST(Api.API_SEARCH_ITINERARY)
+    fun apiSearchItinerary(@FieldMap param: HashMap<String, Any?>): Call<Response<ArrayList<FieldNearbySitesLocation?>>>
 
     // Api For get Heritage Walk Details
     @FormUrlEncoded

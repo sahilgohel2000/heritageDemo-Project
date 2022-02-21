@@ -15,7 +15,7 @@ import java.util.ArrayList
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    lateinit var mPreferanceManager: PreferanceManager
+    open lateinit var mPreferanceManager: PreferanceManager
     internal var mContext:Context = this
     private var progress: View? = null
 

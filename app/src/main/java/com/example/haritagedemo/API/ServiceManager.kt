@@ -2,6 +2,7 @@ package com.example.haritagedemo.API
 
 import android.content.Context
 import android.net.Uri
+import com.example.haritagedemo.FieldNearbySitesLocation
 import com.example.haritagedemo.HeritageSiteDetailModel
 import com.example.haritagedemo.Model.*
 import com.example.haritagedemo.QuizData
@@ -43,6 +44,10 @@ class ServiceManager(private val mContext: Context) {
         return params
     }
 
+    fun apiSearchItinerary(params: HashMap<String, Any?>): ArrayList<FieldNearbySitesLocation?> {
+        val call = buildApi().apiSearchItinerary(addKey(params))
+        return call.execute().body()?.result!!
+    }
 
     /**
      *

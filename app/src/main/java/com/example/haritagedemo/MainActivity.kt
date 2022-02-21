@@ -94,9 +94,13 @@ class MainActivity : AppCompatActivity() {
         notificationButton = findViewById(R.id.notification)
 
         searchButton.setOnClickListener(View.OnClickListener {
-            Toast.makeText(this,"search",Toast.LENGTH_LONG).show()
             val searchIntent:Intent = Intent(this,SearchActivity::class.java)
             startActivity(searchIntent)
+        })
+
+        ChooseLanguage.setOnClickListener(View.OnClickListener {
+            val languageIntent:Intent = Intent(this,chooseLanguage::class.java)
+            startActivity(languageIntent)
         })
 
         notificationButton.setOnClickListener(View.OnClickListener {

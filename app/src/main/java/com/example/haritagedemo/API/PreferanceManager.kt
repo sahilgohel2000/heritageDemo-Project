@@ -98,6 +98,15 @@ class PreferanceManager(mContext:Context) {
         return arrayList
     }
 
+    fun setResentSearch(arrayList: ArrayList<FieldNearbySitesLocation?>?) {
+        val gson = Gson()
+        val list = gson.toJson(
+            arrayList,
+            object : TypeToken<ArrayList<FieldNearbySitesLocation?>?>() {}.type
+        )
+        setStringPreference(RESENT_SEARCH, list)
+    }
+
     /**
      * get user login or not
      */
