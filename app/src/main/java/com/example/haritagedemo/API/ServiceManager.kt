@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import com.example.haritagedemo.FieldNearbySitesLocation
 import com.example.haritagedemo.HeritageSiteDetailModel
+import com.example.haritagedemo.Language
 import com.example.haritagedemo.Model.*
 import com.example.haritagedemo.QuizData
 import okhttp3.OkHttpClient
@@ -47,6 +48,27 @@ class ServiceManager(private val mContext: Context) {
     fun apiSearchItinerary(params: HashMap<String, Any?>): ArrayList<FieldNearbySitesLocation?> {
         val call = buildApi().apiSearchItinerary(addKey(params))
         return call.execute().body()?.result!!
+    }
+
+    //Api for Language List
+    fun ApiGetLanguages(
+        params: HashMap<String, Any?>,
+        l: ResponseListener<retrofit2.Response<Response<ArrayList<Language?>>>>
+    ){
+        val call = buildApi().apiGetLanguageList(addKey(params))
+        call.enqueue(object : Callback<Response<ArrayList<Language?>>>{
+            override fun onResponse(
+                call: Call<Response<ArrayList<Language?>>>,
+                response: retrofit2.Response<Response<ArrayList<Language?>>>
+            ) {
+                l.onRequestSuccess(response)
+            }
+
+            override fun onFailure(call: Call<Response<ArrayList<Language?>>>, t: Throwable) {
+                l.onRequestFailed(t)
+            }
+
+        })
     }
 
     /**

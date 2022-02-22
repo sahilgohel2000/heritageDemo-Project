@@ -66,7 +66,8 @@ class HeritageWalkActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickC
     private fun callHeritageWalkApi() {
 
         val hashMap = HashMap<String,Any?>()
-        hashMap[Const.PARAM_LANGUAGE] = "en"
+//        hashMap[Const.PARAM_LANGUAGE] = "gu"
+        hashMap[Const.PARAM_LANGUAGE]=mPreferanceManager.getLanguage()!!.code
         hashMap["category"] = mType.toString().toLowerCase()
 
         val serviceManager = ServiceManager(mContext)

@@ -131,7 +131,7 @@ class HomeFragment : BaseFragment() {
 
         hashMap[Const.PARAM_NID] = dataId
         hashMap[Const.PARAM_USER_ID] = mPreferenceManager.getUserId()
-        hashMap[Const.PARAM_LANGUAGE] = "en"
+        hashMap[Const.PARAM_LANGUAGE] = mPreferenceManager.getLanguage()?.code
 
         serviceManager.apiLocalCuisineDetail(
             hashMap,
@@ -198,7 +198,7 @@ class HomeFragment : BaseFragment() {
 
         hashMap[Const.PARAM_NID] = dataId
         hashMap[Const.PARAM_USER_ID] = mPreferenceManager.getUserId()
-        hashMap[Const.PARAM_LANGUAGE] = "en"
+        hashMap[Const.PARAM_LANGUAGE] = mPreferenceManager.getLanguage()?.code
 
         serviceManager.apiGetFestivalDetails(
             hashMap,
@@ -268,7 +268,7 @@ class HomeFragment : BaseFragment() {
 
         hashMap[Const.PARAM_NID] = dataId
         hashMap[Const.PARAM_USER_ID] = mPreferenceManager.getUserId()
-        hashMap[Const.PARAM_LANGUAGE] = "en"
+        hashMap[Const.PARAM_LANGUAGE] = mPreferenceManager.getLanguage()?.code
 
         serviceManager.apiEventDetail(
             hashMap,
@@ -344,7 +344,7 @@ class HomeFragment : BaseFragment() {
 
         hashMap[Const.PARAM_NID] = dataId
         hashMap[Const.PARAM_USER_ID] = mPreferenceManager.getUserId()
-        hashMap[Const.PARAM_LANGUAGE] = "en"
+        hashMap[Const.PARAM_LANGUAGE] = mPreferenceManager.getLanguage()?.code
 
         serviceManager.apiHeritageSiteDetails(
             hashMap,

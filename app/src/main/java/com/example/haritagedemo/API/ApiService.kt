@@ -2,6 +2,7 @@ package com.example.haritagedemo.API
 
 import com.example.haritagedemo.FieldNearbySitesLocation
 import com.example.haritagedemo.HeritageSiteDetailModel
+import com.example.haritagedemo.Language
 import com.example.haritagedemo.Model.*
 import retrofit2.Call
 import retrofit2.http.FieldMap
@@ -39,6 +40,11 @@ interface ApiService {
     @FormUrlEncoded
     @POST(Api.API_GET_HERITAGE_WALK_DETAIL)
     fun apiGetHeritageWalkDetail(@FieldMap param: HashMap<String, Any?>): Call<Response<HeritageWalkModel>>
+
+    // Call Api For Language List
+    @FormUrlEncoded
+    @POST(Api.API_HERITAGE_LANGUAGE)
+    fun apiGetLanguageList(@FieldMap param: HashMap<String, Any?>): Call<Response<ArrayList<Language?>>>
 
     // Call Api For get Itinerary List
     @FormUrlEncoded

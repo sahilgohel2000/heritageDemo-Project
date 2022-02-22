@@ -34,6 +34,7 @@
     <string name="yes">yes</string>
     <string name="no">no</string>
     <string name="close">got it</string>
+    <string name="change_language_message">You are changing the application’s language. Please note: Only itineraries that are created in the currently selected language will be available.</string>
 
     <string-array name="Languages">
         <item>java</item>

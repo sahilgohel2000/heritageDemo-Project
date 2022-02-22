@@ -53,7 +53,7 @@ class AboutAhmedabadActivity : BaseActivity(),RelatedSiteAdapter.Callback {
         val serviceManager = ServiceManager(mContext)
         val hashMap = HashMap<String, Any?>()
 
-        hashMap[Const.PARAM_LANGUAGE] = "en"
+        hashMap[Const.PARAM_LANGUAGE] = mPreferanceManager.getLanguage()?.code
 
         serviceManager.apiGetAboutAhmedabad(
             hashMap,

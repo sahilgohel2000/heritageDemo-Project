@@ -77,7 +77,7 @@ class HeritageSiteDetailActivity :BaseActivity(),SiteNearbyAdapter.OnNearBySiteC
 
         hashMap[Const.PARAM_NID] = dataId
         hashMap[Const.PARAM_USER_ID] = mPreferanceManager.getUserId()
-        hashMap[Const.PARAM_LANGUAGE] = "en"
+        hashMap[Const.PARAM_LANGUAGE] = mPreferanceManager.getLanguage()?.code
 
         serviceManager.apiHeritageSiteDetails(
             hashMap,

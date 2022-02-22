@@ -48,7 +48,7 @@ class TourismPackageActivity : BaseActivity(),TourPackageAdapter.Callback {
     private fun callApiGetTourismPackages() {
         val paramMap = HashMap<String, Any?>()
         paramMap["package_name"] = "amc".takeIf { type == Const.TOURISMPACKAGE.AMC }?:"nomac"
-        paramMap[Const.PARAM_LANGUAGE] = "en"
+        paramMap[Const.PARAM_LANGUAGE] = mPreferanceManager.getLanguage()!!.code
 
         val serviceManager = ServiceManager(mContext)
         serviceManager.getTourismPackages(
