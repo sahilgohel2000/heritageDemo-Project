@@ -30,12 +30,10 @@ class chooseLanguage : BaseActivity(),chooseLanguageAdapter.Callback {
     }
 
     override fun bindViews() {
-        Log.d("chooseLanguages","BindViews")
 
         mLanguage = mPreferanceManager.getLanguage()
         mLayoutManager = LinearLayoutManager(mContext)
 
-        Log.d("chooseLanguages","getLanguage Function")
         mAdapter = chooseLanguageAdapter(mContext, mArrayList, this)
 
         with(langRecycler){
@@ -50,62 +48,45 @@ class chooseLanguage : BaseActivity(),chooseLanguageAdapter.Callback {
         }
 
         applyBtn.setOnClickListener(View.OnClickListener {
-//            mPreferanceManager.setLanguage(mArrayList[lastSelected])
-//            finish()
-            Log.d("chooseLanguages","applyBtn")
-
             showDialog()
         })
 
         cancelBtn.setOnClickListener(View.OnClickListener {
             finish()
         })
-
         callApiServiceList()
     }
 
     private fun showDialog() {
-        Log.d("chooseLanguages","show Dialog")
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("")
         builder.setMessage("You are changing the application’s language. Please note: Only itineraries that are created in the currently selected language will be available.")
 
         builder.setPositiveButton("Change Language"){dialogInterface, which ->
-
-            Log.d("chooseLanguages","change Language")
-
             if (lastSelected!=-1 && !mArrayList.isNullOrEmpty())
-                Log.d("chooseLanguages","change Language If")
                 mPreferanceManager.setLanguage(mArrayList[lastSelected])
             finish()
         }
 
         builder.setNegativeButton("Cancel"){dialogInterface, which ->
-            Log.d("chooseLanguages","Cancel")
         }
 
         val alertDialog:AlertDialog = builder.create()
-  //      alertDialog.setCancelable(false)
         alertDialog.cancel()
         alertDialog.show()
     }
 
     private fun callApiServiceList(){
-        Log.d("chooseLanguages","Call Api")
-
         val hashMap = HashMap<String, Any?>()
         val serviceManager = ServiceManager(mContext)
-
-        Log.d("chooseLanguages","Service Manager")
 
         serviceManager.ApiGetLanguages(
             hashMap,
             object : ResponseListener<retrofit2.Response<Response<ArrayList<Language?>>>>(){
                 override fun onRequestSuccess(response: retrofit2.Response<Response<ArrayList<Language?>>>) {
+
                     val responseBody = response.body()
-                    Log.d("chooseLanguages","Result1:"+response.body()!!.result)
-                    Log.d("chooseLanguages","Result1:"+responseBody!!.result.toString())
 
                     if (responseBody != null && response.code() == Const.SUCCESS){
                         val mArrayList1 = responseBody.result
@@ -122,15 +103,12 @@ class chooseLanguage : BaseActivity(),chooseLanguageAdapter.Callback {
 
                 override fun onRequestFailed(t: Throwable) {
                     super.onRequestFailed(t)
-                    Log.d("chooseLanguages","Failed")
                 }
             }
         )
     }
 
     private fun setData(mData: java.util.ArrayList<Language?>?) {
-        Log.d("chooseLanguages","setData"+mData)
-
         mArrayList.addAll(mData!!)
         mAdapter!!.notifyDataSetChanged()
         langRecycler.visibility = View.VISIBLE
@@ -141,7 +119,6 @@ class chooseLanguage : BaseActivity(),chooseLanguageAdapter.Callback {
         if (position != -1) {
             val mData = mArrayList[position]
             if (mData != null) {
-                //  if (mData.code != "gu" && mData.code != "hi") {
                 if (position != -1) {
                     if (lastSelected != position) {
 
@@ -161,7 +138,6 @@ class chooseLanguage : BaseActivity(),chooseLanguageAdapter.Callback {
                     }
                     lastSelected = position
                 }
-                // }
             }
         }
     }

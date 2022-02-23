@@ -20,8 +20,6 @@ class AmentiesAdapter(
         return MyViewHolder(inflater.inflate(R.layout.amenties_list_item,parent,false))
     }
 
-
-
     internal inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindViews(result: String) {
             Util.loadImageUrl(mContext, result, R.drawable.atm, itemView.imgAmentiees)

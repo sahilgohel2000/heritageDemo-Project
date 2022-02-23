@@ -55,6 +55,7 @@ class HomeFragment : BaseFragment() {
                     if (sheetBehaviorUnit.state == BottomSheetBehavior.STATE_HIDDEN){
                         Handler(Looper.getMainLooper()).post {
                             webView.loadUrl("javascript:deselectSite()")
+                            //sheetBehaviorUnit.state = BottomSheetBehavior.STATE_HIDDEN
                         }
                     }
                     else{}
@@ -205,7 +206,7 @@ class HomeFragment : BaseFragment() {
             object:ResponseListener<Response<FestivalDetailModel>>(){
                 override fun onRequestSuccess(response: Response<FestivalDetailModel>) {
                     mFestivalDetailModel = response.result
-                    Log.d("responses-->",response.result.toString())
+
                     activity!!.runOnUiThread(Runnable {
                     setupBottomSites(
                         mFestivalDetailModel!!.heritageSiteName,
@@ -275,7 +276,7 @@ class HomeFragment : BaseFragment() {
             object : ResponseListener<Response<EventDetailModel>>(){
                 override fun onRequestSuccess(response: Response<EventDetailModel>) {
                     mEventDetailModel = response.result
-                    Log.d("Events-->",response.result.toString())
+
                     activity!!.runOnUiThread(Runnable {
                     setupBottomSiteEvent(
                         mEventDetailModel!!.heritageSiteName,
@@ -322,12 +323,6 @@ class HomeFragment : BaseFragment() {
         idTVCourseTracks.text = joinToString
 
         bottomSheetLayout.setOnClickListener(View.OnClickListener {
-//            try {
-//                val intent=Intent(mContext,EmptyActivity::class.java)
-//                startActivity(intent)
-//            }catch (e:Exception){
-//                e.printStackTrace()
-//            }
             if (type!=null)
             {
                 Util.openDetailsScreen(mContext!!,type,nid)
@@ -350,13 +345,9 @@ class HomeFragment : BaseFragment() {
             hashMap,
             object : ResponseListener<Response<HeritageSiteDetailModel>>() {
                 override fun onRequestSuccess(response: Response<HeritageSiteDetailModel>) {
-//                    super.onRequestSuccess(response)
                     mHeritageSiteDetailModel = response.result
 
-                    //Log.d("response-->",response.result.toString())
-
                     activity!!.runOnUiThread(Runnable {
-                        Log.d("HomeFragment", "HeritageName:"+mHeritageSiteDetailModel!!.heritageSiteName)
                         setupBottomSite(
                             dataId,
                             mHeritageSiteDetailModel!!.heritageSiteName,
@@ -404,8 +395,6 @@ class HomeFragment : BaseFragment() {
         idTVCourseName.text = heritageSiteName
         idTVCourseTracks.text = joinToString
 
-        Log.d("HomeFragment",location.toString())
-
         idTVCourseDuration.text = location.toString()
 
         val distance = if (latLng != null) {
@@ -416,15 +405,7 @@ class HomeFragment : BaseFragment() {
         } else ""
         idTVCourseDuration.text = getString(R.string.lbl_approximate_distance,distance.toString())
 
-        Log.d("HomeFragment",location.toString())
-
         bottomSheetLayout.setOnClickListener(View.OnClickListener {
-//            try {
-//                val intent=Intent(mContext,EmptyActivity::class.java)
-//                startActivity(intent)
-//            }catch (e:Exception){
-//                e.printStackTrace()
-//            }
             if (type!=null)
             {
                 Util.openDetailsScreen(mContext!!,type,dataId)

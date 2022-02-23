@@ -39,11 +39,8 @@ class chooseLanguageAdapter (
     internal inner class MyViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         fun bindViews(mData:Language){
 
-            if (mData.name != null){
-                itemView.txtCountryName.text = mData.name
-            }else{
-                itemView.txtCountryName.text = mData.code
-            }
+            val names= arrayOf("English","Gujarati","Hindi")
+            itemView.txtCountryName.text = names.get(absoluteAdapterPosition).toString()
 
             itemView.imgFlags.visibility = View.GONE
 
