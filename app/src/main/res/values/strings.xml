@@ -35,6 +35,16 @@
     <string name="no">no</string>
     <string name="close">got it</string>
     <string name="change_language_message">You are changing the application’s language. Please note: Only itineraries that are created in the currently selected language will be available.</string>
+    <string name="explore_ahm_desc">Ahmedabad’s Heritage Sites on Map and as a list.</string>
+    <string name="morning_heritage_walk">Morning Heritage Walk</string>
+    <string name="evening_heritage_walk">Evening Heritage Walk</string>
+    <string name="heritage_walk">Heritage Walk</string>
+    <string name="heritage_walk_desc"><![CDATA["Information on the Walks, Included sites &amp; Booking "]]></string>
+    <string name="amc_tourism">AMC Tourism Package</string>
+    <string name="tourism_package">Tourism Packages</string>
+    <string name="tourism_packages_desc"><![CDATA[Information on the Packages, Included sites &amp; Booking]]></string>
+    <string name="ageless_ahm">Ageless Ahmedabad</string>
+    <string name="heritage_desc">India\'s first World Heritage Site</string>
 
     <string-array name="Languages">
         <item>java</item>

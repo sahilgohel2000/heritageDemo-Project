@@ -34,6 +34,7 @@ import com.example.haritagedemo.Activity.HelpActivity
 import com.example.haritagedemo.Activity.HeritageQuizActivity
 import com.example.haritagedemo.Activity.HeritageWalkActivity
 import com.example.haritagedemo.RoomDatabase.UserDatabase
+import com.example.haritagedemo.preHome.preHomeActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.jaredrummler.materialspinner.MaterialSpinner
@@ -172,7 +173,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         newsFeed.setOnClickListener(View.OnClickListener {
-            val newsFeedIntent:Intent = Intent(this,TourPackage::class.java)
+            val newsFeedIntent:Intent = Intent(this,preHomeActivity::class.java)
             startActivity(newsFeedIntent)
         })
 

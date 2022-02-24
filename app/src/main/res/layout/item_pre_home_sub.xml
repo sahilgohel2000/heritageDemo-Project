@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/Divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorBrown"/>
+
+    <LinearLayout
+        android:id="@+id/llayout"
+        android:background="@color/orange_transparent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/subImg"
+            android:layout_width="25dp"
+            android:layout_height="25dp"/>
+
+        <TextView
+            android:id="@+id/textTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="@dimen/_5dp"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="18dp"/>
+
+        <ImageView
+            android:id="@+id/ImgSub"
+            android:src="@drawable/ic_arrow_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_marginTop="@dimen/_5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+</LinearLayout>

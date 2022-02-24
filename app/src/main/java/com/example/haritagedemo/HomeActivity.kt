@@ -1,5 +1,7 @@
 package com.example.haritagedemo
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
@@ -11,5 +13,11 @@ class HomeActivity : AppCompatActivity() {
         val fragmentTransaction=supportFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.homeActivity,HomeFragment())
         fragmentTransaction.commit()
+    }
+    companion object {
+        fun startActivity(mContext: Context) {
+            val intent = Intent(mContext, HomeActivity::class.java)
+            mContext.startActivity(intent)
+        }
     }
 }

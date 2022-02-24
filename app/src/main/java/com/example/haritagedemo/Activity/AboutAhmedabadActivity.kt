@@ -1,5 +1,6 @@
 package com.example.haritagedemo.Activity
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -108,6 +109,14 @@ class AboutAhmedabadActivity : BaseActivity(),RelatedSiteAdapter.Callback {
             return Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY).toString()
         }else{
             return Html.fromHtml(description).toString()
+        }
+    }
+
+    companion object {
+        var MENU_SEARCH = 0
+        fun startActivity(mContext: Context) {
+            val intent = Intent(mContext, AboutAhmedabadActivity::class.java)
+            mContext.startActivity(intent)
         }
     }
 
