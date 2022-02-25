@@ -51,6 +51,8 @@ class signupactivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signupactivity)
 
+        Log.d("SigninActivity", "onCreate")
+
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -64,6 +66,7 @@ class signupactivity : AppCompatActivity() {
         signInBtn = findViewById(R.id.googleSignup)
         signInBtn.setOnClickListener(View.OnClickListener {
             signIn()
+            Log.d("SigninActivity", "Sign in btn")
         })
 
         //next button
@@ -74,7 +77,7 @@ class signupactivity : AppCompatActivity() {
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         next.setOnClickListener(View.OnClickListener {
-
+            Log.d("SigninActivity", "next button")
             insertDataToDatabase()
         })
 
@@ -108,9 +111,9 @@ class signupactivity : AppCompatActivity() {
                     firebaseAuthWithGoogle(account.idToken!!)
                 } catch (e: ApiException) {
                     // Google Sign In failed, update UI appropriately
-                    Log.w("SigninActivity", "Google sign in failed", e)
+                    Log.d("SigninActivity", "Google sign in failed", e)
                 }
-            }else{Log.w("SigninActivity", exception.toString())}
+            }else{Log.d("SigninActivity", exception.toString())}
         }
     }
 
@@ -126,40 +129,54 @@ class signupactivity : AppCompatActivity() {
                     finish()
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w("SigninActivity", "signInWithCredential:failure", task.exception)
+                    Log.d("SigninActivity", "signInWithCredential:failure", task.exception)
                 }
             }
     }
 
 
     private fun insertDataToDatabase() {
+        Log.d("SigninActivity", "insert function")
 
         val emailid = emailId.text.toString()
         val pass = password.text.toString()
 
+        Log.d("SigninActivity", "insert function 1:"+emailId.text.toString()+password.text.toString())
+        Log.d("SigninActivity", "insert function 2:"+emailid.toString()+pass.toString())
+
         if(inputCheck(emailid, pass)){
+            Log.d("SigninActivity", "input check")
+
             if(emailid.matches(emailPattern.toRegex()))
             {
+                Log.d("SigninActivity", "If Condition:1")
 
                 val user = Users(0, emailid, pass)
                 mUserViewModel.registerUser(user)
+
+                Log.d("SigninActivity", "Data Added"+user.userId.toString()+user.password.toString())
+
                 //Toast.makeText(this,"Successfully login",Toast.LENGTH_LONG).show()
                 Log.d("adddata","adddata")
+                Log.d("SigninActivity", "started Login Activity")
+
                 val intentss = Intent(baseContext, LoginActivity::class.java)
                 startActivity(intentss)
-
             }
             else{
+                Log.d("SigninActivity", "Else Part")
                 Toast.makeText(this,"please enter valid email",Toast.LENGTH_LONG).show()
             }
         }
         else{
+            Log.d("SigninActivity", "Else2")
             Toast.makeText(this,"unseuccessfull",Toast.LENGTH_LONG).show()
         }
     }
 
 
     private fun inputCheck( emailid: String, pass: String ):Boolean {
+        Log.d("SigninActivity", "Input Check")
         return !(TextUtils.isEmpty(emailid) && TextUtils.isEmpty(pass))
     }
 }

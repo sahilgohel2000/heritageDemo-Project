@@ -17,6 +17,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.haritagedemo.*
 import com.example.haritagedemo.RoomDatabase.UserDatabase
+import com.example.haritagedemo.RoomDatabase.UserRepository
+import com.example.haritagedemo.RoomDatabase.Users
 import com.example.haritagedemo.Signup.DashboardActivity
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
@@ -75,12 +77,14 @@ class LoginActivity : AppCompatActivity() {
         password = findViewById (R.id.password_Et)
         next = findViewById (R.id.next_Bt)
 
+
         next.setOnClickListener( View.OnClickListener {
 
             userEmail = emailId.text.toString()
             userPassword = password.text.toString()
 
-            Log.d("login","setonclicklistener")
+            Log.d("login","setonclicklistener"+userEmail.toString()+userPassword.toString())
+            Log.d("login","setonclicklistener"+emailId.text.toString()+password.text.toString())
 
             if(TextUtils.isEmpty(userEmail)){
 
@@ -91,22 +95,27 @@ class LoginActivity : AppCompatActivity() {
             else{
                 Log.d("login","else email")
                 val userDatabase = UserDatabase.getDatabase(applicationContext)
-                val userdao = userDatabase.UserDao()
-                val userEntity = userdao.getUserId( userEmail, userPassword )
+                val userdao = userDatabase.UserDao().getUserId(userEmail,userEmail)
+//                val userEntity = userdao.getUserId( userEmail, userPassword )
+
+                Log.d("login","Else"+userdao.toString())
+                Log.d("login","Else"+userdao)
 
                 //code for verify email
-                if (userEntity == null){
-
+                if (userdao == null){
                     Log.d("login","email check")
                     Toast.makeText(this,"incorect",Toast.LENGTH_SHORT).show()
 
                 }
                 else{
                     Toast.makeText(this,"corect",Toast.LENGTH_SHORT).show()
-                    userEmail=userEntity.userId
+                    userEmail=userdao.userId
+                    Log.d("login","setonclicklistener"+userEmail.toString())
                     val intent = Intent(this, MainActivity::class.java).putExtra("name",userEmail)
                     startActivity( intent )
                 }
+                Log.d("login","bahar aa gya"+userEmail.toString())
+                Log.d("login","bahar aa gya"+userdao.toString())
             }
         })
 

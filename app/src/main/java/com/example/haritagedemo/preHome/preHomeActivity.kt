@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +40,8 @@ class preHomeActivity : BaseActivity(),preHomeMenuAdapter.OnDrawerItemClickCallb
         mainRecycler.addItemDecoration(SpacesItemDecoration(spacing, spacing))
         val vto = mainRecycler.viewTreeObserver
 
+
+
         vto.addOnGlobalLayoutListener(object :ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
@@ -57,6 +60,14 @@ class preHomeActivity : BaseActivity(),preHomeMenuAdapter.OnDrawerItemClickCallb
             val intent:Intent= Intent(this, MainActivity::class.java)
             startActivity(intent)
         })
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            super.onKeyDown(keyCode, event)
+            return false
+        }
+        return true
     }
 
     private fun setUpMenu() {

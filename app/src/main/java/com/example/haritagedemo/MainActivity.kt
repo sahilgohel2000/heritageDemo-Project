@@ -68,7 +68,6 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("JavascriptInterface")
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("MainActivity", "onCreate")
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -80,14 +79,6 @@ class MainActivity : AppCompatActivity() {
         }catch (e:Exception){
             e.printStackTrace()
         }
-
-
-//        secondwebView = findViewById(R.id.secondWebView)
-//        setUpMapViews()
-
-//        Handler().postDelayed({
-//            progressDialog.dismiss()
-//        },2000)
 
         navigationView = findViewById(R.id.navigation)
 
@@ -213,15 +204,11 @@ class MainActivity : AppCompatActivity() {
         setupviews()
     }
 
-
     private fun setupviews() {
         setUpDrawerLayout()
-        Log.d("MainActivity", "seupview")
     }
 
     private fun setUpDrawerLayout() {
-        Log.d("MainActivity", "setUpDrawerLayout")
-
         setSupportActionBar(appBar)
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, maindrawer, R.string.app_name, R.string.app_name)
@@ -229,8 +216,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Log.d("MainActivity", "onOptionsItemSelected")
-
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show()
             return true
