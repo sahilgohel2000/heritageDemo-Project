@@ -142,8 +142,8 @@ class MainActivity : AppCompatActivity() {
 
         Homebutton = findViewById(R.id.secondLayout)
         Homebutton.setOnClickListener(View.OnClickListener {
-            val HomeIntent:Intent = Intent(this,HomeActivity::class.java)
-            startActivity(HomeIntent)
+            val homeIntent:Intent = Intent(this,preHomeActivity::class.java)
+            startActivity(homeIntent)
         })
 
         helpLine.setOnClickListener(View.OnClickListener {
@@ -173,8 +173,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         newsFeed.setOnClickListener(View.OnClickListener {
-            val newsFeedIntent:Intent = Intent(this,preHomeActivity::class.java)
-            startActivity(newsFeedIntent)
+
         })
 
         mAuth = FirebaseAuth.getInstance()

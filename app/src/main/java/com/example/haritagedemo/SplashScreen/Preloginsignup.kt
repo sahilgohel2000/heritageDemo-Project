@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.example.haritagedemo.Login.LoginActivity
 import com.example.haritagedemo.MainActivity
 import com.example.haritagedemo.R
+import com.example.haritagedemo.preHome.preHomeActivity
 import com.example.haritagedemo.signupactivity
 
 class Preloginsignup : AppCompatActivity() {
@@ -50,8 +51,10 @@ class Preloginsignup : AppCompatActivity() {
 
         skip.setOnClickListener(View.OnClickListener {
             Log.d("Preloginsignup","skipbtn")
-            val intent:Intent= Intent(this, MainActivity::class.java)
-            startActivity(intent)
+//            val intent:Intent= Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+            val newIntent:Intent= Intent(this,preHomeActivity::class.java)
+            startActivity(newIntent)
         })
     }
 //

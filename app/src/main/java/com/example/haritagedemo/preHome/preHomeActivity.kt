@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.*
@@ -50,6 +51,11 @@ class preHomeActivity : BaseActivity(),preHomeMenuAdapter.OnDrawerItemClickCallb
                 mAdapter = preHomeMenuAdapter(mContext, height, mMenuList, this@preHomeActivity)
                 mainRecycler.adapter = mAdapter
             }
+        })
+
+        txtLetsGo.setOnClickListener(View.OnClickListener {
+            val intent:Intent= Intent(this, MainActivity::class.java)
+            startActivity(intent)
         })
     }
 
@@ -119,7 +125,9 @@ class preHomeActivity : BaseActivity(),preHomeMenuAdapter.OnDrawerItemClickCallb
             }
             MENU_ID_EXP_AHMEDABAD -> {
 //                HomeActivity.startActivity(mContext)
-                finish()
+                val intent:Intent= Intent(this, MainActivity::class.java)
+                startActivity(intent)
+//                finish()
             }
             MENU_ID_ABOUT_AHMEDABAD -> {
                 AboutAhmedabadActivity.startActivity(mContext)
