@@ -24,6 +24,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.random.Random
 
 class LoginActivity : AppCompatActivity() {
 
@@ -95,17 +97,20 @@ class LoginActivity : AppCompatActivity() {
             else{
                 Log.d("login","else email")
                 val userDatabase = UserDatabase.getDatabase(applicationContext)
-                val userdao = userDatabase.UserDao().getUserId(userEmail,userEmail)
+                val userdao = userDatabase.UserDao().getUserId(userEmail,userPassword)
 //                val userEntity = userdao.getUserId( userEmail, userPassword )
 
-                Log.d("login","Else"+userdao.toString())
-                Log.d("login","Else"+userdao)
+//                try{
+//                    Log.d("login","Else 1"+userDatabase.UserDao().registerUser(Users(0,userEmail,userPassword)).toString())
+//                    Log.d("login","Else 2"+userDatabase.UserDao().readAllUsers()!!)
+//                }catch (e:Exception){
+//                    e.printStackTrace()
+//                }
 
                 //code for verify email
                 if (userdao == null){
                     Log.d("login","email check")
-                    Toast.makeText(this,"incorect",Toast.LENGTH_SHORT).show()
-
+                    Toast.makeText(this,"Null",Toast.LENGTH_SHORT).show()
                 }
                 else{
                     Toast.makeText(this,"corect",Toast.LENGTH_SHORT).show()
@@ -116,6 +121,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 Log.d("login","bahar aa gya"+userEmail.toString())
                 Log.d("login","bahar aa gya"+userdao.toString())
+                finish()
             }
         })
 

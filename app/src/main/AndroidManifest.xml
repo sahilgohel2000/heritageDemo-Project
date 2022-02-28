@@ -17,9 +17,12 @@
         android:theme="@style/Theme.Haritagedemo"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".preHome.preHomeActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:name=".Activity.relatedLinkActivity"
             android:exported="false" />
+        <activity
+            android:name=".preHome.preHomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
             android:name=".chooseLanguage"
             android:exported="false"

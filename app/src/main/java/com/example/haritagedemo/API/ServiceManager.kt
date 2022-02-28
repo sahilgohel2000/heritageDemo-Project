@@ -71,6 +71,30 @@ class ServiceManager(private val mContext: Context) {
         })
     }
 
+    //api for get related link model
+    fun apiGetRelatedLink(
+        params: HashMap<String, Any?>,
+        l:ResponseListener<retrofit2.Response<Response<ArrayList<RelatedLinkModel?>>>>
+    ){
+        val call = buildApi().apiGetRelatedLink(addKey(params))
+        call.enqueue(object : Callback<Response<ArrayList<RelatedLinkModel?>>>{
+            override fun onResponse(
+                call: Call<Response<ArrayList<RelatedLinkModel?>>>,
+                response: retrofit2.Response<Response<ArrayList<RelatedLinkModel?>>>
+            ) {
+                l.onRequestSuccess(response)
+            }
+
+            override fun onFailure(
+                call: Call<Response<ArrayList<RelatedLinkModel?>>>,
+                t: Throwable
+            ) {
+                l.onRequestFailed(t)
+            }
+
+        })
+    }
+
     /**
      *
      * Api For get site Details

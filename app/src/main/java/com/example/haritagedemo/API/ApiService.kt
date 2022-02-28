@@ -66,6 +66,11 @@ interface ApiService {
     @POST(Api.API_GET_HELPLINE)
     fun apiHelpLine(@FieldMap param: HashMap<String, Any?>): Call<Response<ArrayList<HelpModel?>>>
 
+    // Call Api For get Related Link
+    @FormUrlEncoded
+    @POST(Api.API_GET_RELATED_LINK)
+    fun apiGetRelatedLink(@FieldMap param: HashMap<String, Any?>): Call<Response<ArrayList<RelatedLinkModel?>>>
+
     //call api heritage Quiz......
     @FormUrlEncoded
     @POST(Api.API_GET_QUIZ)

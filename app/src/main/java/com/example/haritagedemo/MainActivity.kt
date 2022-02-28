@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -28,20 +29,23 @@ import android.widget.Toast
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.API.Const
-import com.example.haritagedemo.Activity.AboutAhmedabadActivity
-import com.example.haritagedemo.Activity.HelpActivity
-import com.example.haritagedemo.Activity.HeritageQuizActivity
-import com.example.haritagedemo.Activity.HeritageWalkActivity
+import com.example.haritagedemo.API.Response
+import com.example.haritagedemo.API.ResponseListener
+import com.example.haritagedemo.API.ServiceManager
+import com.example.haritagedemo.Activity.*
+import com.example.haritagedemo.Model.RelatedLinkModel
 import com.example.haritagedemo.RoomDatabase.UserDatabase
 import com.example.haritagedemo.preHome.preHomeActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.jaredrummler.materialspinner.MaterialSpinner
+import kotlinx.android.synthetic.main.activity_related_link.*
 import java.lang.Exception
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),RelatedLinkAdapter.CallBack {
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var navigationView: NavigationView
@@ -66,11 +70,25 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var activity: Activity
 
+    private var jAdapterRelated:RelatedLinkAdapter? = null
+    private val jArrayList:ArrayList<RelatedLinkModel?> = ArrayList()
+    private var jLayoutManager: LinearLayoutManager? = null
+
     @SuppressLint("JavascriptInterface")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        initializeCallApi()
+        jAdapterRelated = RelatedLinkAdapter(this,jArrayList,this)
+        jLayoutManager = LinearLayoutManager(this)
+        with(linkNames){
+            layoutManager = jLayoutManager
+            adapter = jAdapterRelated
+        }
+
+
 
         try {
             val fragmentTransaction=supportFragmentManager.beginTransaction()
@@ -164,7 +182,8 @@ class MainActivity : AppCompatActivity() {
         })
 
         newsFeed.setOnClickListener(View.OnClickListener {
-
+            val newIntent = Intent(this,relatedLinkActivity::class.java)
+            startActivity(newIntent)
         })
 
         mAuth = FirebaseAuth.getInstance()
@@ -173,35 +192,100 @@ class MainActivity : AppCompatActivity() {
         //if login with room database
         Temail = findViewById(R.id.profileName)
         var ename: String? = intent.getStringExtra("name")
-        Temail.setText(ename)
+        if (ename != null){
+            Temail.setText(ename)
+            LogOutBtn.visibility = View.VISIBLE
+        }else{
+            Temail.setText("Welcome to AHA Ahmedabad")
+            LogOutBtn.visibility = View.GONE
+        }
+
+        LogOutBtn.setOnClickListener(View.OnClickListener {
+            alertBox()
+        })
 
         //if login with google
         Tname = findViewById(R.id.homeText)
         Tname.text = currentUser?.displayName
 
-        ProfileInfo = findViewById(R.id.firstLayout)
-        ProfileInfo.setOnClickListener(View.OnClickListener {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle(R.string.dialogTitle)
-
-            builder.setMessage(R.string.dialogMessage)
-            builder.setIcon(R.drawable.ic_baseline_info)
-
-            //performing logout
-            builder.setPositiveButton("Logout"){dialogInterface, which ->
-                Toast.makeText(applicationContext,"Logout",Toast.LENGTH_LONG).show()
-                mAuth.signOut()
-                Temail.setText("Welcome to AHA Ahmedabad")
-                Tname.setText("Welcome to AHA Ahmedbad")
-            }
-            builder.setNegativeButton("No"){dialogInterface, which ->
-                Toast.makeText(applicationContext,"clicked No",Toast.LENGTH_LONG).show()
-            }
-            val alertDialog:AlertDialog = builder.create()
-            alertDialog.cancel()
-            alertDialog.show()
-        })
+//        ProfileInfo = findViewById(R.id.firstLayout)
+//        ProfileInfo.setOnClickListener(View.OnClickListener {
+//            val builder = AlertDialog.Builder(this)
+//            builder.setTitle(R.string.dialogTitle)
+//
+//            builder.setMessage(R.string.dialogMessage)
+//            builder.setIcon(R.drawable.ic_baseline_info)
+//
+//            //performing logout
+//            builder.setPositiveButton("Logout"){dialogInterface, which ->
+//                Toast.makeText(applicationContext,"Logout",Toast.LENGTH_LONG).show()
+//                mAuth.signOut()
+//                Temail.setText("Welcome to AHA Ahmedabad")
+//                Tname.setText("Welcome to AHA Ahmedbad")
+//            }
+//            builder.setNegativeButton("No"){dialogInterface, which ->
+//                Toast.makeText(applicationContext,"clicked No",Toast.LENGTH_LONG).show()
+//            }
+//            val alertDialog:AlertDialog = builder.create()
+//            alertDialog.cancel()
+//            alertDialog.show()
+//        })
         setupviews()
+    }
+
+
+    private fun alertBox() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.dialogTitle)
+
+        builder.setMessage(R.string.dialogMessage)
+        builder.setIcon(R.drawable.ic_baseline_info)
+
+        //performing logout
+        builder.setPositiveButton("Logout"){dialogInterface, which ->
+            Toast.makeText(applicationContext,"Logout",Toast.LENGTH_LONG).show()
+            mAuth.signOut()
+            Temail.text = null
+            Temail.setText("Welcome to AHA Ahmedabad")
+            Tname.setText("Welcome to AHA Ahmedbad")
+            LogOutBtn.visibility = View.GONE
+        }
+        builder.setNegativeButton("No"){dialogInterface, which ->
+            Toast.makeText(applicationContext,"clicked No",Toast.LENGTH_LONG).show()
+        }
+        val alertDialog:AlertDialog = builder.create()
+        alertDialog.cancel()
+        alertDialog.show()
+    }
+
+    private fun initializeCallApi() {
+        val paramMap=HashMap<String,Any?>()
+
+        ServiceManager(this).apiGetRelatedLink(
+            paramMap,
+            object : ResponseListener<retrofit2.Response<Response<ArrayList<RelatedLinkModel?>>>>(){
+                override fun onRequestSuccess(response: retrofit2.Response<Response<ArrayList<RelatedLinkModel?>>>) {
+                    val responseBody= response.body()
+
+                    if (responseBody != null && responseBody.code ==Const.SUCCESS){
+                        setRelatedLink(responseBody)
+                    }
+                }
+
+                override fun onRequestFailed(t: Throwable) {
+                    super.onRequestFailed(t)
+                }
+
+                override fun onRequestFailed(message: String) {
+                    super.onRequestFailed(message)
+                }
+            }
+        )
+    }
+
+    private fun setRelatedLink(responseBody: Response<java.util.ArrayList<RelatedLinkModel?>>) {
+        jArrayList.addAll(responseBody.result!!)
+        jAdapterRelated!!.notifyDataSetChanged()
     }
 
     private fun setupviews() {
@@ -254,5 +338,10 @@ class MainActivity : AppCompatActivity() {
                 super.onPageFinished(view, url)
             }
         }
+    }
+
+    override fun OnRelatedLink(pos: RelatedLinkModel) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(pos.link))
+        startActivity(intent)
     }
 }
