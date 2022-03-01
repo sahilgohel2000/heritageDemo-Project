@@ -30,6 +30,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.haritagedemo.API.Const
 import com.example.haritagedemo.API.Response
 import com.example.haritagedemo.API.ResponseListener
@@ -87,7 +88,6 @@ class MainActivity : AppCompatActivity(),RelatedLinkAdapter.CallBack {
             layoutManager = jLayoutManager
             adapter = jAdapterRelated
         }
-
 
 
         try {
@@ -191,7 +191,8 @@ class MainActivity : AppCompatActivity(),RelatedLinkAdapter.CallBack {
 
         //if login with room database
         Temail = findViewById(R.id.profileName)
-        var ename: String? = intent.getStringExtra("name")
+        var ename: String? = null
+        ename = intent.getStringExtra("name")
         if (ename != null){
             Temail.setText(ename)
             LogOutBtn.visibility = View.VISIBLE
@@ -207,7 +208,10 @@ class MainActivity : AppCompatActivity(),RelatedLinkAdapter.CallBack {
         //if login with google
         Tname = findViewById(R.id.homeText)
         Tname.text = currentUser?.displayName
-
+        Glide.with(this).load(currentUser?.photoUrl).into(profileImage)
+        if (Tname!=null){
+            LogOutBtn.visibility = View.VISIBLE
+        }
 //        ProfileInfo = findViewById(R.id.firstLayout)
 //        ProfileInfo.setOnClickListener(View.OnClickListener {
 //            val builder = AlertDialog.Builder(this)

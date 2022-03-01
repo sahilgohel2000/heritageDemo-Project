@@ -85,16 +85,14 @@
                     android:background="@color/textcolorcream">
 
                     <ImageView
-                        android:id="@+id/imgview"
+                        android:id="@+id/profileImage"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/img"
+                        android:layout_marginStart="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.085"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.533" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/homeText"
@@ -102,14 +100,12 @@
                         android:layout_height="wrap_content"
                         android:text="Welcome to AHA Ahmedabad"
                         android:textColor="@color/white"
-                        android:textSize="15dp"
+                        android:textSize="13dp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginTop="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.25"
-                        app:layout_constraintStart_toEndOf="@+id/imgview"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.266" />
+                        app:layout_constraintStart_toEndOf="@+id/profileImage"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/profileName"
@@ -119,12 +115,10 @@
                         android:textColor="@color/white"
                         android:textSize="10dp"
                         android:textStyle="bold"
+                        android:layout_marginStart="26dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.115"
-                        app:layout_constraintStart_toEndOf="@+id/imgview"
-                        app:layout_constraintTop_toBottomOf="@+id/homeText"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintStart_toEndOf="@+id/profileImage"
+                        app:layout_constraintTop_toBottomOf="@+id/homeText"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
