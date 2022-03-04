@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.text.Html
 import android.util.Log
 import android.view.View
@@ -26,14 +27,12 @@ class HeritageWalkActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickC
     private var mAdapter: SiteNearbyAdapter? = null
     private var nArrayList: ArrayList<FieldNearbySitesLocation?> = ArrayList()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_heritage_walk)
     }
 
     override fun bindViews() {
-
         mType = intent.getSerializableExtra(Intent.EXTRA_TITLE) as Const.HERITAGEWALK
 
         callHeritageWalkApi()

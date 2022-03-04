@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewTreeObserver
@@ -24,6 +25,8 @@ class preHomeActivity : BaseActivity(),preHomeMenuAdapter.OnDrawerItemClickCallb
     private val mMenuList: ArrayList<preHomeModel> = ArrayList()
     private val mSubMenuList1: ArrayList<navigationDrawerModel?> = ArrayList()
     private val mSubMenuList2: ArrayList<navigationDrawerModel?> = ArrayList()
+
+    val loading = loading(this)
 
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
 
@@ -57,6 +60,12 @@ class preHomeActivity : BaseActivity(),preHomeMenuAdapter.OnDrawerItemClickCallb
         })
 
         txtLetsGo.setOnClickListener(View.OnClickListener {
+            loading.loadingAlertDialog()
+            val handler = Handler()
+            handler.postDelayed(Runnable {
+                loading.dismissDialog()
+            },5000)
+
             val intent:Intent= Intent(this, MainActivity::class.java)
             startActivity(intent)
         })

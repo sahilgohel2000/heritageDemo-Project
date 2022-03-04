@@ -3,6 +3,7 @@ package com.example.haritagedemo.SplashScreen
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -11,6 +12,7 @@ import android.widget.Toast
 import com.example.haritagedemo.Login.LoginActivity
 import com.example.haritagedemo.MainActivity
 import com.example.haritagedemo.R
+import com.example.haritagedemo.loading
 import com.example.haritagedemo.preHome.preHomeActivity
 import com.example.haritagedemo.signupactivity
 
@@ -24,6 +26,8 @@ class Preloginsignup : AppCompatActivity() {
 
         val prelogin:Button=findViewById(R.id.prelogin)
         val presignup:Button=findViewById(R.id.presignup)
+
+        val loading = loading(this)
 
         val ppolicy:TextView=findViewById(R.id.privacy)
         val skip:TextView=findViewById(R.id.skip)
@@ -53,6 +57,13 @@ class Preloginsignup : AppCompatActivity() {
             Log.d("Preloginsignup","skipbtn")
 //            val intent:Intent= Intent(this, MainActivity::class.java)
 //            startActivity(intent)
+
+            loading.loadingAlertDialog()
+            val handler = Handler()
+            handler.postDelayed(Runnable {
+                loading.dismissDialog()
+            },5000)
+
             val newIntent:Intent= Intent(this,preHomeActivity::class.java)
             startActivity(newIntent)
         })
