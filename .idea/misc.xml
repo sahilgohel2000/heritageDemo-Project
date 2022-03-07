@@ -52,11 +52,14 @@
         <entry key="..\:/haritagedemo/app/src/main/res/menu/navigation_drawer.xml" value="0.2" />
         <entry key="..\:/haritagedemo/app/src/main/res/menu/navigation_menu.xml" value="0.1296875" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/circle.xml" value="0.117" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/default_dot.xml" value="0.165" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/img.xml" value="0.117" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/item_separator_filter.xml" value="0.1255" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/lock_img.xml" value="0.236986301369863" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/rounded_corner_textview_correct.xml" value="0.168" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/rounded_corner_textview_incorrect.xml" value="0.168" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/selected_dot.xml" value="0.165" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable-v24/tab_selector.xml" value="0.165" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable/addratings.xml" value="0.15" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable/background_dialog.xml" value="0.122" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/drawable/circletwo.xml" value="0.117" />
@@ -83,6 +86,7 @@
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_heritage_site_detail.xml" value="0.16793893129770993" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_heritage_walk.xml" value="0.2" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_home2.xml" value="0.22592592592592592" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_intro.xml" value="0.22592592592592592" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_local_cuisine.xml" value="0.10416666666666667" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_notification.xml" value="0.20462962962962963" />
@@ -106,7 +110,7 @@
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_helpline_num.xml" value="0.12361111111111112" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_helpline_number.xml" value="0.19212962962962962" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_near_by_sites.xml" value="0.13564814814814816" />
-        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_nearby_sites.xml" value="0.2" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_nearby_sites.xml" value="0.536" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_pre_home.xml" value="0.2" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_pre_home_sub.xml" value="0.22592592592592592" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_related_link.xml" value="0.4" />
