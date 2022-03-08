@@ -46,6 +46,12 @@
     <string name="ageless_ahm">Ageless Ahmedabad</string>
     <string name="heritage_desc">India\'s first World Heritage Site</string>
 
+    <string name="explore_india_first_unesco_city">Explore India\'s first UNESCO World Heritage city, Ahmedabad like never before with …</string>
+    <string name="intro_page1">All the information you need right at your fingertips. Easily access it on the home page and plan your days exploring Ahmedabad’s heritage.</string>
+    <string name="intro_page2">Use the filter buttons to find heritage sites of your interest, amenities, events and popular eateries near you. View them on map or as a list.</string>
+    <string name="intro_page3">Get real time alerts and notifications as you move, letting you discover more of the city’s cultural heritage, ongoing festivals and events.</string>
+    <string name="intro_page4">Learn about 100+ heritage sites through the rich, relevant content on site detail pages like virtual tours, audio guides, videos and AR visualisations.</string>
+    <string name="intro_page5">Set up your profile, select your interests and let the app create itineraries just for you, complete with transit information, booking options and more.</string>
 
     <string-array name="Languages">
         <item>java</item>

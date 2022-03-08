@@ -86,7 +86,7 @@
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_heritage_site_detail.xml" value="0.16793893129770993" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_heritage_walk.xml" value="0.2" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_home2.xml" value="0.22592592592592592" />
-        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_intro.xml" value="0.22592592592592592" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_intro.xml" value="0.176" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_local_cuisine.xml" value="0.10416666666666667" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/activity_notification.xml" value="0.20462962962962963" />
@@ -103,6 +103,7 @@
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/drawer_header.xml" value="0.16435185185185186" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/fragment_heritage_site_detail.xml" value="0.22592592592592592" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/fragment_home.xml" value="0.15833333333333333" />
+        <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/fragment_intro.xml" value="0.22592592592592592" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_choose_layout.xml" value="0.16342592592592592" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_help.xml" value="0.1574074074074074" />
         <entry key="..\:/heritageDemo Project/heritageDemo-Project/app/src/main/res/layout/item_help_line_number.xml" value="0.16805555555555557" />

@@ -186,6 +186,11 @@ class MainActivity : AppCompatActivity(),RelatedLinkAdapter.CallBack {
             startActivity(newIntent)
         })
 
+        third.setOnClickListener(View.OnClickListener {
+            val thirdIntent = Intent(this,IntroActivity::class.java)
+            startActivity(thirdIntent)
+        })
+
         mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth.currentUser
 
