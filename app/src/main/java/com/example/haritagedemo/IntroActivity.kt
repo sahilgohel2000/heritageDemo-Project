@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -21,9 +22,12 @@ class IntroActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
+        Log.d("IntroActivity","OnCreate")
     }
 
     override fun bindViews() {
+        Log.d("IntroActivity","bindViews")
+
         introList.add(
             IntroModel(
                 R.string.explore_india_first_unesco_city,
@@ -64,28 +68,31 @@ class IntroActivity : BaseActivity() {
                 R.string.intro_page5
             )
         )
+        Log.d("IntroActivity","Data Added in Adapter 1")
 
         val vAdapter = MoviesPagerAdapter(supportFragmentManager, introList)
         introVP.adapter = vAdapter
+        Log.d("IntroActivity","Data Added in Adapter 2")
 
-        tabLayouts.addTab(tabLayouts.newTab())
-        tabLayouts.addTab(tabLayouts.newTab())
-        tabLayouts.addTab(tabLayouts.newTab())
-        tabLayouts.addTab(tabLayouts.newTab())
-        tabLayouts.addTab(tabLayouts.newTab())
+        tabLayouts!!.addTab(tabLayouts!!.newTab())
+        tabLayouts!!.addTab(tabLayouts!!.newTab())
+        tabLayouts!!.addTab(tabLayouts!!.newTab())
+        tabLayouts!!.addTab(tabLayouts!!.newTab())
+        tabLayouts!!.addTab(tabLayouts!!.newTab())
+        Log.d("IntroActivity","Tab Layout")
 
         introVP.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayouts))
         tabLayouts.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 nextButton.visibility = View.VISIBLE.takeIf { tab!!.position == 4 }?: View.GONE
+                //skipButton.visibility = View.GONE
+                Log.d("IntroActivity","Next Button")
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                TODO("Not yet implemented")
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                TODO("Not yet implemented")
             }
 
         })
@@ -109,6 +116,7 @@ class IntroActivity : BaseActivity() {
         fun startActivity(mContext: Context){
             val intentr = Intent(mContext, IntroActivity::class.java)
             mContext.startActivity(intentr)
+            Log.d("IntroActivity","Start Intro Activity")
         }
     }
 
@@ -118,10 +126,12 @@ class IntroActivity : BaseActivity() {
     ):FragmentStatePagerAdapter(fragmentManager){
         override fun getCount(): Int {
             return intro.size
+            Log.d("IntroActivity","Get Count")
         }
 
         override fun getItem(position: Int): Fragment {
-            TODO("Not yet implemented")
+            return IntroFragment.newInstance(intro[position])
+            Log.d("IntroActivity","get Item")
         }
 
     }
