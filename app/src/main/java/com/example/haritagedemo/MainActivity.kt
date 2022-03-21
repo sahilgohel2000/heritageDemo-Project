@@ -7,26 +7,13 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.*
 import android.webkit.*
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
-import androidx.core.view.get
-import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.spinner_layout.*
-import android.widget.AdapterView.OnItemSelectedListener as AdapterViewOnItemSelectedListener
-import android.widget.AdapterView
-
 import android.widget.Toast
-
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,14 +24,11 @@ import com.example.haritagedemo.API.ResponseListener
 import com.example.haritagedemo.API.ServiceManager
 import com.example.haritagedemo.Activity.*
 import com.example.haritagedemo.Model.RelatedLinkModel
-import com.example.haritagedemo.RoomDatabase.UserDatabase
 import com.example.haritagedemo.preHome.preHomeActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.jaredrummler.materialspinner.MaterialSpinner
-import kotlinx.android.synthetic.main.activity_related_link.*
 import java.lang.Exception
-
 
 class MainActivity : AppCompatActivity(),RelatedLinkAdapter.CallBack {
 
@@ -63,13 +47,13 @@ class MainActivity : AppCompatActivity(),RelatedLinkAdapter.CallBack {
     private lateinit var mAuth: FirebaseAuth
 
     //Constraint Layout
-    private lateinit var ProfileInfo:ConstraintLayout
+//    private lateinit var ProfileInfo:ConstraintLayout
 
     //second WebView
     private lateinit var secondwebView:WebView
     private lateinit var progressDialog: ProgressDialog
 
-    private lateinit var activity: Activity
+//    private lateinit var activity: Activity
 
     private var jAdapterRelated:RelatedLinkAdapter? = null
     private val jArrayList:ArrayList<RelatedLinkModel?> = ArrayList()
@@ -263,6 +247,7 @@ class MainActivity : AppCompatActivity(),RelatedLinkAdapter.CallBack {
             Toast.makeText(applicationContext,"clicked No",Toast.LENGTH_LONG).show()
         }
         val alertDialog:AlertDialog = builder.create()
+
         alertDialog.cancel()
         alertDialog.show()
     }

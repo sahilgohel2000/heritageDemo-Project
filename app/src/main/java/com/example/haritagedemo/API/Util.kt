@@ -1,17 +1,29 @@
 package com.example.haritagedemo.API
 
+import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.haritagedemo.Activity.EventDetailActivity
 import com.example.haritagedemo.Activity.FestivalDetailActivity
 import com.example.haritagedemo.Activity.HeritageSiteDetailActivity
 import com.example.haritagedemo.Activity.LocalCuisineActivity
+import com.example.haritagedemo.R
+import com.google.android.gms.maps.model.LatLng
+import org.w3c.dom.Text
 import java.lang.Exception
 import java.math.BigDecimal
+import java.util.*
 
 object Util {
 
@@ -53,6 +65,7 @@ object Util {
         }
     }
 
+
     fun loadImageUrl(
         mContext: Context,
         imageUrl:String?,
@@ -77,6 +90,160 @@ object Util {
             e.printStackTrace()
         }
     }
+
+    fun showGetThereDialog(
+        heritageSiteDetailActivity: HeritageSiteDetailActivity,
+        siteName: String,
+        latitude: Double,
+        longitude: Double,
+        latLng: LatLng?
+    ) {
+        val dialog = Dialog(heritageSiteDetailActivity)
+        dialog.setContentView(R.layout.dialog_get_there)
+
+        Objects.requireNonNull(dialog.window)!!
+            .setLayout(
+                heritageSiteDetailActivity.resources.getDimensionPixelSize(R.dimen._300dp),
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+
+        val tvDriving = dialog.findViewById<TextView>(R.id.tv_driving)
+        val tvPublicTransport = dialog.findViewById<TextView>(R.id.tv_public_transport)
+        val tvMyByk = dialog.findViewById<TextView>(R.id.tv_myByk)
+        val tvUber = dialog.findViewById<TextView>(R.id.tv_Uber)
+        val tvOla = dialog.findViewById<TextView>(R.id.tv_Ola)
+        val tvWalking = dialog.findViewById<TextView>(R.id.tv_walking)
+
+        val tvCancel = dialog.findViewById<TextView>(R.id.tv_Cancel)
+
+        tvDriving.setOnClickListener {
+            getThereMode(heritageSiteDetailActivity,siteName,"d")
+        }
+
+        tvPublicTransport.setOnClickListener {
+            getThereMode(heritageSiteDetailActivity,siteName,"trasit")
+        }
+
+        tvMyByk.setOnClickListener {
+            openMyBikeApp(heritageSiteDetailActivity)
+        }
+
+        tvMyByk.setOnClickListener {
+            Util.openUberCab(
+                heritageSiteDetailActivity,
+                siteName,
+                latLng!!.latitude,
+                latLng!!.longitude,
+                latitude,
+                longitude
+            )
+        }
+
+        tvOla.setOnClickListener {
+            openBookCab(heritageSiteDetailActivity,latLng!!.latitude,latLng!!.longitude,latitude,longitude)
+        }
+
+        tvWalking.setOnClickListener {
+            getThereMode(heritageSiteDetailActivity,siteName,"w")
+        }
+
+        tvCancel.setOnClickListener {
+            dialog.cancel()
+        }
+        dialog.show()
+    }
+
+    private fun openBookCab(
+        mContext: HeritageSiteDetailActivity,
+        currLat: Double?,
+        currLng: Double?,
+        dropLat: Double?,
+        dropLng: Double?
+    ) {
+        val mIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://olawebcdn.com/assets/ola-universal-link.html?lat=$currLat&lng=$currLng&category=share&utm_source=xapp_token&landing_page=bk&drop_lat=$dropLat&drop_lng=$dropLng&affiliate_uid=12345")
+        )
+        mContext.startActivity(mIntent)
+    }
+
+    private fun openUberCab(
+        mContext: HeritageSiteDetailActivity,
+        nickName: String,
+        currLat: Double?,
+        currLng: Double?,
+        dropLat: Double?,
+        dropLng: Double?
+    ) {
+        val pm:PackageManager = mContext.packageManager
+        try {
+            pm.getPackageInfo("com.ubercab",PackageManager.GET_ACTIVITIES)
+            val uri = "uber://?"+
+                    "pickup[longitude]=$currLng&" +
+                    "pickup[latitude]=$currLat&" +
+                    "pickup[nickname]=$nickName" +
+                    "dropoff[formatted_address]=$nickName, Ahmedabad, Gujarat, India&" +
+                    "dropoff[latitude]=$dropLat&" +
+                    "dropoff[longitude]=$dropLng&" +
+                    "action=setPickup"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(uri)
+            mContext.startActivity(intent)
+        }catch (e:PackageManager.NameNotFoundException){
+            try {
+                mContext.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=com.ubercab")
+                    )
+                )
+            }catch (anfe:ActivityNotFoundException){
+                mContext.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("http://play.google.com/store/apps/details?id=com.ubercab")
+                    )
+                )
+            }
+        }
+
+    }
+
+    private fun openMyBikeApp(mContext: Context) {
+        var intent:Intent? = mContext.packageManager.getLaunchIntentForPackage("in.greenpedia.mybyk")
+
+        if (intent != null){
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            mContext.startActivity(intent)
+        }else{
+            intent = Intent(Intent.ACTION_VIEW)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.data = Uri.parse("market://details?id=" + "in.greenpedia.mybyk")
+            mContext.startActivity(intent)
+        }
+    }
+
+    private fun getThereMode(mContext: HeritageSiteDetailActivity, msiteName: String, mode: String) {
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("http://maps.google.com/maps?daddr=$msiteName&dirflg=$mode")
+        )
+        intent.setPackage("com.google.android.apps.maps")
+        try {
+            mContext.startActivity(intent)
+        }catch (e:ActivityNotFoundException){
+            try {
+                val unrestrictedIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("http://maps.google.com/maps?daddr=$msiteName, Ahmedabad, Gujarat, India&travelmode=$mode")
+                )
+                mContext.startActivity(unrestrictedIntent)
+            }catch (innerex:ActivityNotFoundException){
+                innerex.printStackTrace()
+            }
+        }
+    }
+
 
 //    /**
 //     * load image resource

@@ -1,19 +1,25 @@
 package com.example.haritagedemo.Activity
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haritagedemo.*
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.openDetailsScreen
 import com.example.haritagedemo.HeritageSiteDetailModel
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_heritage_site_detail.*
-import java.util.HashMap
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
@@ -24,6 +30,9 @@ class HeritageSiteDetailActivity :BaseActivity(),SiteNearbyAdapter.OnNearBySiteC
     var contentMessage: String? = null
     var titleMsg: String? = null
     var type: String? = null
+    private var latLng: LatLng? = null
+    private var isPermissionFor = Const.PERMISSION.TAKE_PHOTO
+
     private var mAdapter: SiteNearbyAdapter? = null
     private var mArrayList: ArrayList<FieldNearbySitesLocation?> = ArrayList()
     private var mCustomPagerAdapter: CustomPagerAdapter? = null
@@ -48,6 +57,11 @@ class HeritageSiteDetailActivity :BaseActivity(),SiteNearbyAdapter.OnNearBySiteC
         val spacingVertical = resources.getDimensionPixelSize(R.dimen._8dp)
         val spacingHorizontal = resources.getDimensionPixelSize(R.dimen._zero_dp)
 
+//        getThereBtn.setOnClickListener {
+//            Toast.makeText(this,"Get There",Toast.LENGTH_SHORT).show()
+//
+//        }
+
         mAdapter = SiteNearbyAdapter(
             mContext,
             mArrayList,
@@ -70,6 +84,7 @@ class HeritageSiteDetailActivity :BaseActivity(),SiteNearbyAdapter.OnNearBySiteC
             adapter = mAdapterAmenities
         }
     }
+
 
     private fun callAPIHeritageSiteDetails() {
         val serviceManager = ServiceManager(mContext)
@@ -184,19 +199,30 @@ class HeritageSiteDetailActivity :BaseActivity(),SiteNearbyAdapter.OnNearBySiteC
         nearestTrain.text = mHeritageSiteDetailModel.fieldNearestTrainStationLocation.toString()
         nearestAirport.text = mHeritageSiteDetailModel.fieldNearestAirportLocation.toString()
 
-        floatingBtn.setOnClickListener(View.OnClickListener {
-            Toast.makeText(this,"Button is Working",Toast.LENGTH_LONG).show()
-//            floatingBtn.visibility = View.GONE
-            floatingBtn.setImageResource(
-                if (isPlay)
-                    R.drawable.cross_button
-                else
-                    R.drawable.plus_sign
+//        floatingBtn.setOnClickListener(View.OnClickListener {
+//            Toast.makeText(this,"Button is Working",Toast.LENGTH_LONG).show()
+////            floatingBtn.visibility = View.GONE
+//            floatingBtn.setImageResource(
+//                if (isPlay)
+//                    R.drawable.cross_button
+//                else
+//                    R.drawable.plus_sign
+//            )
+//
+//            isPlay = !isPlay
+//
+//        })
+
+        getThereBtn.setOnClickListener {
+            isPermissionFor = Const.PERMISSION.BOOK_CAB
+            Util.showGetThereDialog(
+                this,
+                mHeritageSiteDetailModel.translateName,
+                mHeritageSiteDetailModel.latitude,
+                mHeritageSiteDetailModel.longitude,
+                latLng
             )
-
-            isPlay = !isPlay
-
-        })
+        }
     }
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag

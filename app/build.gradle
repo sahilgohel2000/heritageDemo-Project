@@ -138,6 +138,8 @@ dependencies {
 
     implementation 'com.borjabravo:readmoretextview:2.1.0'
 
+    implementation 'com.github.armcha:ElasticView:0.2.0'
+
 }
 apply plugin: 'kotlin-kapt'
 
