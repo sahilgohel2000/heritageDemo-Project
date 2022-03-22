@@ -1,11 +1,17 @@
 package com.example.haritagedemo
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +19,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.getLocation
@@ -25,8 +34,11 @@ import com.google.android.gms.maps.model.LatLng
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import com.example.haritagedemo.API.Util.getDistance
+import com.example.haritagedemo.Activity.HeritageSiteDetailActivity.Companion.RQ_LOCATION
+import com.example.haritagedemo.Util.LocationHelper
+import org.json.JSONObject
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
 
     lateinit var bottomSheetLayout: LinearLayout
     private val RC_BACKGROUND_LOCATION = 2021
@@ -36,7 +48,7 @@ class HomeFragment : BaseFragment() {
     private var mFestivalDetailModel: FestivalDetailModel? = null
     private var mEventDetailModel: EventDetailModel? = null
     private var mLocalCuisineDetail: LocalCuisineDetail? = null
-
+    private var locationHelper: LocationHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +57,10 @@ class HomeFragment : BaseFragment() {
     override fun bindViews(view: View) {
         setsUpMap()
 
+        setLoc.setOnClickListener {
+            Log.d("HomeFragmnet","setLoc")
+            setCurrentLocation()
+        }
         bottomSheetLayout = view.findViewById(R.id.bottomsheetLayout)
         sheetBehaviorUnit = BottomSheetBehavior.from(bottomSheetLayout)
         sheetBehaviorUnit.state = BottomSheetBehavior.STATE_HIDDEN
@@ -64,6 +80,8 @@ class HomeFragment : BaseFragment() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
 
+//        setCurrentLocation()
+        checkLocationPermission()
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -91,9 +109,57 @@ class HomeFragment : BaseFragment() {
         }
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
+                if (activity != null){
+                    Handler().postDelayed(Runnable {
+                        val intent = requireActivity().intent.extras?.getParcelable<Intent>("filterData")
+                        if (intent == null) setCurrentLocation()
+                        else Log.d("HomeFragmnet","Else Not Work")
+                    },4000)
+                }
+//                super.onPageFinished(view, url)
             }
         }
+    }
+
+    fun setCurrentLocation(){
+        if (latLng != null){
+            Log.d("HomeFragmnet","setCurrentLocation If")
+            try {
+                Log.d("HomeFragmnet","setCurrentLocation Try")
+                val jsonObject = JSONObject().apply {
+                    this.put("latitude",latLng!!.latitude)
+                    this.put("longitude",latLng!!.longitude)
+                    this.put("icon",resources.getString(R.string.gis_map_current_location_icon))
+                }
+                webView?.loadUrl("javascript:setMyLocation('$jsonObject')")
+                Log.d("HomeFragmnet","setCurrentLocation")
+            }catch (e:Exception){
+                e.printStackTrace()
+                Log.d("HomeFragmnet","setCurrentLocation catch="+e.printStackTrace().toString())
+            }
+        }
+    }
+
+    fun getLocation(){
+        if (checkLocationPermission()){
+            locationHelper = LocationHelper(activity,this,true,false,false)
+        }
+        else{
+            requestPermission()
+        }
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            RQ_LOCATION
+        )
+    }
+
+    fun checkLocationPermission():Boolean{
+        val result=ContextCompat.checkSelfPermission(mContext!!, android.Manifest.permission.ACCESS_FINE_LOCATION)
+        return result == PackageManager.PERMISSION_GRANTED
     }
 
     inner class WebInterface(val mContext: Context){
@@ -362,7 +428,9 @@ class HomeFragment : BaseFragment() {
                             getLocation(
                                 mHeritageSiteDetailModel!!.latitude,
                                 mHeritageSiteDetailModel!!.longitude
-                            )
+                            ),
+                            mHeritageSiteDetailModel!!.latitude,
+                            mHeritageSiteDetailModel!!.longitude
                         )
                     })
                 }
@@ -387,7 +455,9 @@ class HomeFragment : BaseFragment() {
         nid: String,
         fieldUploadUrl: String,
         amenities: ArrayList<String>,
-        location: Location
+        location: Location,
+        latitude: Double?,
+        longitude: Double?
     ) {
         Glide.with(mContext!!).load(fieldUploadUrl).into(course)
 
@@ -396,13 +466,14 @@ class HomeFragment : BaseFragment() {
         idTVCourseTracks.text = joinToString
 
         idTVCourseDuration.text = location.toString()
-
+        latLng = LatLng(latitude!!,longitude!!)
         val distance = if (latLng != null) {
             getDistance(
                 location,
                 getLocation(latLng!!.latitude, latLng!!.longitude)
             )
-        } else ""
+        } else
+            Log.d("HomeFragmnet","Its Not Working")
         idTVCourseDuration.text = getString(R.string.lbl_approximate_distance,distance.toString())
 
         bottomSheetLayout.setOnClickListener(View.OnClickListener {
@@ -412,7 +483,6 @@ class HomeFragment : BaseFragment() {
                 sheetBehaviorUnit.state=BottomSheetBehavior.STATE_COLLAPSED
             }
         })
-
     }
 
 
@@ -433,4 +503,75 @@ class HomeFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    override fun onLocationFound(location: Location?) {
+        if (location!=null){
+            latLng = LatLng(location.latitude, location.longitude)
+            setCurrentLocation()
+            checkLocationPermission()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (locationHelper != null){
+            locationHelper?.onRequestPermissionsResult(requestCode,permissions,grantResults)
+        }
+        when(requestCode){
+            RQ_LOCATION -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                getLocation()
+            }else{
+                Log.d("HomeFragmnet","its not works")
+            }
+            RC_BACKGROUND_LOCATION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                }else{
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_BACKGROUND_LOCATION)){
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                            Uri.fromParts(
+                                "package",
+                                requireActivity().packageName,
+                                null
+                            )
+                            )
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                    }else{
+                        Log.d("HomeFragmnet","Issue in Permission")
+                    }
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onDeclineProcessForLocation() {
+        Log.d("HomeFragmnet","onDeclineProcessForLocation")
+    }
+
+    companion object {
+        const val RQ_LOCATION = 1
+        const val shouldChangeLikeButton: Boolean = false
+        const val LIKE_BTN_CHANGE_REQ = 27
+        const val IS_LIKED_IN_SITE_DETAIL = "isLikedInSiteDetail";
+        const val SITE_ID = "siteId";
+
+        fun getAppNameFromPkgName(packagename: String, context: Context): String {
+            return try {
+                val packageManager = context.packageManager
+                val info: ApplicationInfo =
+                    packageManager.getApplicationInfo(packagename, PackageManager.GET_META_DATA)
+                packageManager.getApplicationLabel(info) as String
+            } catch (e: PackageManager.NameNotFoundException) {
+                e.printStackTrace()
+                ""
+            }
+        }
+
+        @JvmStatic
+        fun newInstance() = HomeFragment()
+    }
 }

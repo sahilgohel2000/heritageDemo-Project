@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -128,19 +129,20 @@ object Util {
             openMyBikeApp(heritageSiteDetailActivity)
         }
 
-        tvMyByk.setOnClickListener {
+        tvUber.setOnClickListener {
             Util.openUberCab(
                 heritageSiteDetailActivity,
                 siteName,
-                latLng!!.latitude,
-                latLng!!.longitude,
+                latLng?.latitude,
+                latLng?.longitude,
                 latitude,
                 longitude
             )
         }
 
         tvOla.setOnClickListener {
-            openBookCab(heritageSiteDetailActivity,latLng!!.latitude,latLng!!.longitude,latitude,longitude)
+            Util.openBookCab(heritageSiteDetailActivity, latLng!!.latitude,
+                latLng.longitude,latitude,longitude)
         }
 
         tvWalking.setOnClickListener {

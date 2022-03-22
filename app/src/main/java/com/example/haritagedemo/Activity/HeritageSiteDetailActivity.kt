@@ -215,6 +215,8 @@ class HeritageSiteDetailActivity :BaseActivity(),SiteNearbyAdapter.OnNearBySiteC
 
         getThereBtn.setOnClickListener {
             isPermissionFor = Const.PERMISSION.BOOK_CAB
+            latLng = LatLng(mHeritageSiteDetailModel.latitude, mHeritageSiteDetailModel.longitude)
+
             Util.showGetThereDialog(
                 this,
                 mHeritageSiteDetailModel.translateName,
