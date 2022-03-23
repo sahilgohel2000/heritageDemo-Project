@@ -46,30 +46,30 @@
             android:text="DSA Self Paced Course"
             android:maxLines="1"
             android:textColor="@color/black"
-            android:textSize="12dp"
+            android:textSize="13dp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/like"
+            app:layout_constraintEnd_toStartOf="@id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/course"
             app:layout_constraintStart_toStartOf="@id/guidline"/>
 
-        <ImageView
-            android:id="@+id/like"
-            android:src="@drawable/favorite"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toStartOf="@id/addplus"
-            app:layout_constraintTop_toBottomOf="@+id/course"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/like"-->
+<!--            android:src="@drawable/favorite"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginEnd="10dp"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/addplus"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/course"/>-->
 
-        <ImageView
-            android:id="@+id/addplus"
-            android:src="@drawable/plusicon"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/course"
-            app:layout_constraintRight_toRightOf="@id/guideline2"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/addplus"-->
+<!--            android:src="@drawable/plusicon"-->
+<!--            android:layout_width="25dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/course"-->
+<!--            app:layout_constraintRight_toRightOf="@id/guideline2"/>-->
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidline"
@@ -93,9 +93,9 @@
             android:layout_marginTop="3dp"
             android:text="Course Tracks"
             android:textColor="@color/black"
-            android:textSize="8dp"
+            android:textSize="9dp"
             android:maxLines="1"
-            app:layout_constraintEnd_toStartOf="@id/like"
+            app:layout_constraintEnd_toStartOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="@id/guidline"
             app:layout_constraintTop_toBottomOf="@id/idTVCourseName"/>
 
@@ -107,7 +107,7 @@
             android:layout_marginTop="5dp"
             android:text="Course Duration"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="11dp"
             android:maxLines="1"
             app:layout_constraintLeft_toLeftOf="@id/guidline"
             app:layout_constraintRight_toRightOf="@id/guideline2"
@@ -115,13 +115,15 @@
 
         <Button
             android:id="@+id/idBtnDismiss"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="9dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:backgroundTint="@color/gray"
             android:text="Get There"
             android:textAllCaps="false"
@@ -130,42 +132,42 @@
             app:layout_constraintTop_toBottomOf="@id/idTVCourseDuration"/>
 
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/sharebtn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="15dp"
-            android:clickable="true"
-            app:fabCustomSize="30dp"
-            app:borderWidth="0dp"
-            android:backgroundTint="#800000"
-            android:src="@drawable/sharebutton"
-            tools:ignore="SpeakableTextPresentCheck"
-            app:layout_constraintRight_toRightOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/idTVCourseDuration"/>
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/sharebtn"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:clickable="true"-->
+<!--            app:fabCustomSize="30dp"-->
+<!--            app:borderWidth="0dp"-->
+<!--            android:backgroundTint="#800000"-->
+<!--            android:src="@drawable/sharebutton"-->
+<!--            tools:ignore="SpeakableTextPresentCheck"-->
+<!--            app:layout_constraintRight_toRightOf="@id/guideline2"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/idTVCourseDuration"/>-->
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/cambtn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:src="@drawable/cameraicon"
-            app:layout_constraintRight_toLeftOf="@+id/sharebtn"
-            app:layout_constraintTop_toBottomOf="@id/idTVCourseDuration"/>
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/cambtn"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:layout_marginEnd="15dp"-->
+<!--            android:src="@drawable/cameraicon"-->
+<!--            app:layout_constraintRight_toLeftOf="@+id/sharebtn"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/idTVCourseDuration"/>-->
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/addRating"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="14dp"
-            app:borderWidth="0dp"
-            app:fabCustomSize="30dp"
-            android:src="@drawable/ratings"
-            app:layout_constraintRight_toLeftOf="@id/cambtn"
-            app:layout_constraintTop_toBottomOf="@id/idTVCourseDuration"
-            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/addRating"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:layout_marginEnd="14dp"-->
+<!--            app:borderWidth="0dp"-->
+<!--            app:fabCustomSize="30dp"-->
+<!--            android:src="@drawable/ratings"-->
+<!--            app:layout_constraintRight_toLeftOf="@id/cambtn"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/idTVCourseDuration"-->
+<!--            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

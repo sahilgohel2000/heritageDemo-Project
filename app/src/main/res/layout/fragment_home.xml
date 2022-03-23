@@ -18,12 +18,10 @@
 
     <Button
         android:id="@+id/setLoc"
-        android:text="setLocation"
-        android:textAllCaps="false"
-        android:textSize="15sp"
-        android:layout_marginTop="500dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:background="@drawable/my_location"
+        android:layout_marginTop="300dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
 
 <include layout="@layout/view_bottomsheet_quickview"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

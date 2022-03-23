@@ -12,7 +12,6 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.haritagedemo.Activity.EventDetailActivity
@@ -21,7 +20,6 @@ import com.example.haritagedemo.Activity.HeritageSiteDetailActivity
 import com.example.haritagedemo.Activity.LocalCuisineActivity
 import com.example.haritagedemo.R
 import com.google.android.gms.maps.model.LatLng
-import org.w3c.dom.Text
 import java.lang.Exception
 import java.math.BigDecimal
 import java.util.*
@@ -29,23 +27,39 @@ import java.util.*
 object Util {
 
     fun getDistance(location1: Location, location2: Location): Float {
+        Log.d("UtilClass","Util.get Distance1:"+location1.toString()+location2.toString())
+
         // return  (Math.round((location1.distanceTo(location2) / 1000) * 10.0) / 10.0).toFloat()
         var distance = location1.distanceTo(location2) / 1000
+        Log.d("UtilClass","Util.get Distance2:"+distance.toString())
+
         var addedKm = Math.ceil((distance / 6).toDouble())
+        Log.d("UtilClass","Util.get Distance2:"+addedKm.toString())
+
         var totalKm = distance + addedKm
+        Log.d("UtilClass","Util.get Distance3:"+totalKm.toString())
+
         return round(totalKm.toFloat(), 2)
     }
 
     fun round(d: Float, decimalPlace: Int): Float {
+        Log.d("UtilClass","Util.round1:"+d.toString()+decimalPlace.toString())
+
         var bd = BigDecimal(java.lang.Float.toString(d))
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP)
+        Log.d("UtilClass","Util.round2:"+bd.toString())
+
         return bd.toFloat()
     }
 
     fun getLocation(lat: Double, long: Double): Location {
+        Log.d("UtilClass","Util.get Location"+lat.toString()+long.toString())
+
         var location = Location(LocationManager.GPS_PROVIDER)
         location.latitude = lat
         location.longitude = long
+        Log.d("UtilClass","Util.get Location"+location.latitude.toString()+location.longitude.toString())
+
         return location
     }
 
@@ -93,18 +107,18 @@ object Util {
     }
 
     fun showGetThereDialog(
-        heritageSiteDetailActivity: HeritageSiteDetailActivity,
+        mContext: Context,
         siteName: String,
         latitude: Double,
         longitude: Double,
         latLng: LatLng?
     ) {
-        val dialog = Dialog(heritageSiteDetailActivity)
+        val dialog = Dialog(mContext!!)
         dialog.setContentView(R.layout.dialog_get_there)
 
         Objects.requireNonNull(dialog.window)!!
             .setLayout(
-                heritageSiteDetailActivity.resources.getDimensionPixelSize(R.dimen._300dp),
+                mContext.resources.getDimensionPixelSize(R.dimen._300dp),
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
 
@@ -118,20 +132,20 @@ object Util {
         val tvCancel = dialog.findViewById<TextView>(R.id.tv_Cancel)
 
         tvDriving.setOnClickListener {
-            getThereMode(heritageSiteDetailActivity,siteName,"d")
+            getThereMode(mContext!!,siteName,"d")
         }
 
         tvPublicTransport.setOnClickListener {
-            getThereMode(heritageSiteDetailActivity,siteName,"trasit")
+            getThereMode(mContext!!,siteName,"trasit")
         }
 
         tvMyByk.setOnClickListener {
-            openMyBikeApp(heritageSiteDetailActivity)
+            openMyBikeApp(mContext)
         }
 
         tvUber.setOnClickListener {
             Util.openUberCab(
-                heritageSiteDetailActivity,
+                mContext!!,
                 siteName,
                 latLng?.latitude,
                 latLng?.longitude,
@@ -141,12 +155,12 @@ object Util {
         }
 
         tvOla.setOnClickListener {
-            Util.openBookCab(heritageSiteDetailActivity, latLng!!.latitude,
+            Util.openBookCab(mContext!!, latLng!!.latitude,
                 latLng.longitude,latitude,longitude)
         }
 
         tvWalking.setOnClickListener {
-            getThereMode(heritageSiteDetailActivity,siteName,"w")
+            getThereMode(mContext!!,siteName,"w")
         }
 
         tvCancel.setOnClickListener {
@@ -156,7 +170,7 @@ object Util {
     }
 
     private fun openBookCab(
-        mContext: HeritageSiteDetailActivity,
+        mContext: Context,
         currLat: Double?,
         currLng: Double?,
         dropLat: Double?,
@@ -170,7 +184,7 @@ object Util {
     }
 
     private fun openUberCab(
-        mContext: HeritageSiteDetailActivity,
+        mContext: Context,
         nickName: String,
         currLat: Double?,
         currLng: Double?,
@@ -225,7 +239,7 @@ object Util {
         }
     }
 
-    private fun getThereMode(mContext: HeritageSiteDetailActivity, msiteName: String, mode: String) {
+    private fun getThereMode(mContext: Context, msiteName: String, mode: String) {
         val intent = Intent(
             Intent.ACTION_VIEW,
             Uri.parse("http://maps.google.com/maps?daddr=$msiteName&dirflg=$mode")

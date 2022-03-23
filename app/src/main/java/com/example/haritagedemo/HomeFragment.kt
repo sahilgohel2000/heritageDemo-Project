@@ -45,6 +45,7 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
     lateinit var sheetBehaviorUnit: BottomSheetBehavior<*>
     private var mHeritageSiteDetailModel: HeritageSiteDetailModel?=null
     private var latLng: LatLng? = null
+    private var isPermissionFor = Const.PERMISSION.TAKE_PHOTO
     private var mFestivalDetailModel: FestivalDetailModel? = null
     private var mEventDetailModel: EventDetailModel? = null
     private var mLocalCuisineDetail: LocalCuisineDetail? = null
@@ -58,8 +59,9 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
         setsUpMap()
 
         setLoc.setOnClickListener {
-            Log.d("HomeFragmnet","setLoc")
+            Log.d("HomeFragmnet","setLocation Btn")
             setCurrentLocation()
+            checkLocationPermission()
         }
         bottomSheetLayout = view.findViewById(R.id.bottomsheetLayout)
         sheetBehaviorUnit = BottomSheetBehavior.from(bottomSheetLayout)
@@ -80,8 +82,6 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
 
-//        setCurrentLocation()
-        checkLocationPermission()
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -122,6 +122,10 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
     }
 
     fun setCurrentLocation(){
+        Log.d("HomeFragmnet","set Current Location 1")
+            latLng = LatLng(23.0477,72.5728)
+
+        //latitude=23.0477, longitude=72.5728
         if (latLng != null){
             Log.d("HomeFragmnet","setCurrentLocation If")
             try {
@@ -137,19 +141,29 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
                 e.printStackTrace()
                 Log.d("HomeFragmnet","setCurrentLocation catch="+e.printStackTrace().toString())
             }
+        }else{
+            Log.d("HomeFragmnet","Else Latlng is Null")
         }
     }
 
-    fun getLocation(){
-        if (checkLocationPermission()){
-            locationHelper = LocationHelper(activity,this,true,false,false)
-        }
-        else{
-            requestPermission()
-        }
-    }
+//    fun getLocation(){
+//        Log.d("HomeFragmnet","Get Location Function")
+//
+//        if (checkLocationPermission()){
+//            Log.d("HomeFragmnet","If CheckLocationPermission")
+//
+//            locationHelper = LocationHelper(activity,this,true,false,false)
+//        }
+//        else{
+//            requestPermission()
+//            Log.d("HomeFragmnet","request Permission")
+//
+//        }
+//    }
 
     private fun requestPermission() {
+        Log.d("HomeFragmnet","request Permission :2")
+
         ActivityCompat.requestPermissions(
             requireActivity(),
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -158,7 +172,10 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
     }
 
     fun checkLocationPermission():Boolean{
+        Log.d("HomeFragmnet","Check Location Permission 2")
+
         val result=ContextCompat.checkSelfPermission(mContext!!, android.Manifest.permission.ACCESS_FINE_LOCATION)
+        Log.d("HomeFragmnet","Check Location Permission 3")
         return result == PackageManager.PERMISSION_GRANTED
     }
 
@@ -257,6 +274,19 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
                 sheetBehaviorUnit.state=BottomSheetBehavior.STATE_COLLAPSED
             }
         })
+
+        idBtnDismiss.setOnClickListener {
+            isPermissionFor = Const.PERMISSION.BOOK_CAB
+            latLng = LatLng(mLocalCuisineDetail!!.latitude, mLocalCuisineDetail!!.longitude)
+
+            Util.showGetThereDialog(
+                mContext!!,
+                mLocalCuisineDetail!!.translateName,
+                mLocalCuisineDetail!!.latitude,
+                mLocalCuisineDetail!!.longitude,
+                latLng
+            )
+        }
     }
 
     private fun callAPIGetFestivalDetails(dataId: String?){
@@ -326,6 +356,19 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
                 sheetBehaviorUnit.state=BottomSheetBehavior.STATE_COLLAPSED
             }
         })
+
+        idBtnDismiss.setOnClickListener {
+            isPermissionFor = Const.PERMISSION.BOOK_CAB
+            latLng = LatLng(mFestivalDetailModel!!.latitude, mFestivalDetailModel!!.longitude)
+
+            Util.showGetThereDialog(
+                mContext!!,
+                mFestivalDetailModel!!.heritageSiteName,
+                mFestivalDetailModel!!.latitude,
+                mFestivalDetailModel!!.longitude,
+                latLng
+            )
+        }
     }
 
     //CALL API EVENT DETAIL
@@ -395,6 +438,19 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
                 sheetBehaviorUnit.state=BottomSheetBehavior.STATE_COLLAPSED
             }
         })
+
+        idBtnDismiss.setOnClickListener {
+            isPermissionFor = Const.PERMISSION.BOOK_CAB
+            latLng = LatLng(mEventDetailModel!!.latitude, mEventDetailModel!!.longitude)
+
+            Util.showGetThereDialog(
+                mContext!!,
+                mEventDetailModel!!.heritageSiteName,
+                mEventDetailModel!!.latitude,
+                mEventDetailModel!!.longitude,
+                latLng
+            )
+        }
     }
 
     //CALL API HERITAGE SITE
@@ -412,6 +468,7 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
             object : ResponseListener<Response<HeritageSiteDetailModel>>() {
                 override fun onRequestSuccess(response: Response<HeritageSiteDetailModel>) {
                     mHeritageSiteDetailModel = response.result
+                    Log.d("HomeFragmnet","Response:1 =->:"+mHeritageSiteDetailModel!!.latitude.toString()+mHeritageSiteDetailModel!!.longitude.toString())
 
                     activity!!.runOnUiThread(Runnable {
                         setupBottomSite(
@@ -465,16 +522,31 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
         idTVCourseName.text = heritageSiteName
         idTVCourseTracks.text = joinToString
 
+        latLng = LatLng(23.0477,72.5728)
+
         idTVCourseDuration.text = location.toString()
-        latLng = LatLng(latitude!!,longitude!!)
+//        latLng = LatLng(latitude!!,longitude!!)
+        Log.d("HomeFragmnet","set latLng"+latLng+latitude.toString()+longitude.toString())
+
+
         val distance = if (latLng != null) {
+            Log.d("HomeFragmnet","check Distance 1"+location.toString())
+            Log.d("HomeFragmnet","check Distance 3"+latitude.toString()+longitude.toString())
+// latitude=23.0477, longitude=72.5728
+// 23.06054           72.5802878
             getDistance(
                 location,
                 getLocation(latLng!!.latitude, latLng!!.longitude)
             )
-        } else
+            Log.d("HomeFragmnet","check Distance 2"+ getDistance(location, Util.getLocation(latLng!!.latitude, latLng!!.longitude)).toString())
+
+        } else{
             Log.d("HomeFragmnet","Its Not Working")
-        idTVCourseDuration.text = getString(R.string.lbl_approximate_distance,distance.toString())
+        }
+
+        Log.d("HomeFragmnet","Its Not Working"+distance.toString())
+
+        idTVCourseDuration.text = getString(R.string.lbl_approximate_distance,getDistance(location, Util.getLocation(latLng!!.latitude, latLng!!.longitude)).toString())
 
         bottomSheetLayout.setOnClickListener(View.OnClickListener {
             if (type!=null)
@@ -483,8 +555,20 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
                 sheetBehaviorUnit.state=BottomSheetBehavior.STATE_COLLAPSED
             }
         })
-    }
 
+        idBtnDismiss.setOnClickListener {
+            isPermissionFor = Const.PERMISSION.BOOK_CAB
+            latLng = LatLng(mHeritageSiteDetailModel!!.latitude, mHeritageSiteDetailModel!!.longitude)
+
+            Util.showGetThereDialog(
+                mContext!!,
+                mHeritageSiteDetailModel!!.translateName,
+                mHeritageSiteDetailModel!!.latitude,
+                mHeritageSiteDetailModel!!.longitude,
+                latLng
+            )
+        }
+    }
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag
     private fun stripHtml(description: String): CharSequence? {
@@ -504,49 +588,66 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
     }
 
     override fun onLocationFound(location: Location?) {
+        Log.d("HomeFragmnet","onLocation Found 1"+location.toString())
+
         if (location!=null){
+            Log.d("HomeFragmnet","loc!=null")
+
             latLng = LatLng(location.latitude, location.longitude)
             setCurrentLocation()
             checkLocationPermission()
         }
+        Log.d("HomeFragmnet","onlocation found!!"+latLng.toString())
+
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        if (locationHelper != null){
-            locationHelper?.onRequestPermissionsResult(requestCode,permissions,grantResults)
-        }
-        when(requestCode){
-            RQ_LOCATION -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                getLocation()
-            }else{
-                Log.d("HomeFragmnet","its not works")
-            }
-            RC_BACKGROUND_LOCATION -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-
-                }else{
-                    if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_BACKGROUND_LOCATION)){
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                            Uri.fromParts(
-                                "package",
-                                requireActivity().packageName,
-                                null
-                            )
-                            )
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        startActivity(intent)
-                    }else{
-                        Log.d("HomeFragmnet","Issue in Permission")
-                    }
-                }
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<String>,
+//        grantResults: IntArray
+//    ) {
+//        Log.d("HomeFragmnet","on Request Permission")
+//
+//        if (locationHelper != null){
+//            Log.d("HomeFragmnet","If Locationhelper != null")
+//
+//            locationHelper?.onRequestPermissionsResult(requestCode,permissions,grantResults)
+//        }
+//        when(requestCode){
+//            RQ_LOCATION -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                Log.d("HomeFragmnet","Permision granted + getLocation")
+//
+//                getLocation()
+//            }else{
+//                Log.d("HomeFragmnet","its not works")
+//            }
+//            RC_BACKGROUND_LOCATION -> {
+//                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                    Log.d("HomeFragmnet","If EC_BACKGROUND_LOCATION")
+//
+//                }else{
+//                    Log.d("HomeFragmnet","Else RC_BACK_LOC")
+//
+//                    if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_BACKGROUND_LOCATION)){
+//                        Log.d("HomeFragmnet","Else, If RC_BACK_LOC")
+//
+//                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+//                            Uri.fromParts(
+//                                "package",
+//                                requireActivity().packageName,
+//                                null
+//                            )
+//                            )
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                        startActivity(intent)
+//                    }else{
+//                        Log.d("HomeFragmnet","Issue in Permission")
+//                    }
+//                }
+//            }
+//        }
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//    }
 
     override fun onDeclineProcessForLocation() {
         Log.d("HomeFragmnet","onDeclineProcessForLocation")
