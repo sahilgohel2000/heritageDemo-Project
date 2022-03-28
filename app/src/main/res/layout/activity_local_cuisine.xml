@@ -223,6 +223,15 @@
                 app:layout_constraintTop_toBottomOf="@id/cuisinenearbySites"
                 tools:listitem="@layout/item_nearby_sites"/>
 
+<!--            <Button-->
+<!--                android:id="@+id/getThere"-->
+<!--                android:text="Get There"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:background="@color/colorOrange"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"/>-->
+<!--            -->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -347,6 +347,25 @@
                 app:layout_constraintTop_toBottomOf="@id/eventtxtAirport"
                 app:layout_constraintStart_toStartOf="parent"/>
 
+            <Button
+                android:id="@+id/getThereBtn"
+                android:text="Get There"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@color/colorOrange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="50dp"
+                app:layout_constraintTop_toBottomOf="@id/eventnearestAirport"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

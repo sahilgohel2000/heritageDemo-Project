@@ -12,6 +12,7 @@ import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.openDetailsScreen
 
 import com.example.haritagedemo.Model.EventDetailModel
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_event_detail.*
 import kotlinx.android.synthetic.main.activity_event_detail.mViewpager
 import java.util.HashMap
@@ -24,6 +25,10 @@ class EventDetailActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCa
     var contentMessage: String? = null
     var titleMsg: String? = null
     var type: String? = null
+
+    private var latLng: LatLng? = null
+    private var isPermissionFor = Const.PERMISSION.TAKE_PHOTO
+
     private var eAdapter: SiteNearbyAdapter? = null
     private var eArrayList: ArrayList<FieldNearbySitesLocation?> = ArrayList()
     private var mCustomPagerAdapter: CustomPagerAdapter? = null
@@ -152,6 +157,18 @@ class EventDetailActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickCa
         eventnearestTrain.text = mEventDetailModel.fieldNearestTrainStationLocation.toString()
         eventnearestAirport.text = mEventDetailModel.fieldNearestAirportLocation.toString()
 
+        getThereBtn.setOnClickListener {
+            isPermissionFor = Const.PERMISSION.BOOK_CAB
+            latLng = LatLng(mEventDetailModel.latitude, mEventDetailModel.longitude)
+
+            Util.showGetThereDialog(
+                this,
+                mEventDetailModel.transLateName,
+                mEventDetailModel.latitude,
+                mEventDetailModel.longitude,
+                latLng
+            )
+        }
     }
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag

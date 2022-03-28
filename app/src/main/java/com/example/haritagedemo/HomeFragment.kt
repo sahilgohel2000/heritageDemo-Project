@@ -1,13 +1,12 @@
 package com.example.haritagedemo
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.location.Location
-import android.net.Uri
+import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -22,21 +21,25 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.bumptech.glide.Glide
 import com.example.haritagedemo.API.*
+import com.example.haritagedemo.API.Util.getDistance
 import com.example.haritagedemo.API.Util.getLocation
 import com.example.haritagedemo.Model.EventDetailModel
+import com.example.haritagedemo.Model.FestivalDetailModel
+import com.example.haritagedemo.Util.LocationHelper
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_bottomsheet_quickview.*
-import com.example.haritagedemo.Model.FestivalDetailModel
-import com.google.android.gms.maps.model.LatLng
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import com.example.haritagedemo.API.Util.getDistance
-import com.example.haritagedemo.Activity.HeritageSiteDetailActivity.Companion.RQ_LOCATION
-import com.example.haritagedemo.Util.LocationHelper
 import org.json.JSONObject
+
 
 class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
 
@@ -51,12 +54,26 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
     private var mLocalCuisineDetail: LocalCuisineDetail? = null
     private var locationHelper: LocationHelper? = null
 
+    lateinit var mFusedLocationClient: FusedLocationProviderClient
+    var latitudeText:String?=null
+    var longitudeText:String?=null
+    val PERMISSION_ID:Int = 44
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun bindViews(view: View) {
         setsUpMap()
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext!!)
+
+        try {
+            getLastLocation()
+        }catch (e:Exception){
+            e.printStackTrace()
+            Log.d("MainActivity","Exception"+e.printStackTrace().toString())
+        }
 
         setLoc.setOnClickListener {
             Log.d("HomeFragmnet","setLocation Btn")
@@ -82,6 +99,116 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
 
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLastLocation() {
+        Log.d("HomeFragmnet","get Last Location Function")
+
+        if (checkPermissions()){
+            Log.d("HomeFragmnet","get Last Location: If check Permision")
+
+            try {
+
+                if (isLocationEnabled()) {
+                    Log.d("HomeFragmnet", "get Last Location: If isLocationEnabled")
+
+                    mFusedLocationClient.getLastLocation()
+                        .addOnCompleteListener(OnCompleteListener {
+                            Log.d("HomeFragmnet", "get Last Location: getLastLocation")
+
+                            val location = it.getResult()
+                            if (location == null) {
+                                Log.d("HomeFragmnet", "get Last Location:Location is Null")
+
+                                requestNewLocationData()
+                            } else {
+                                latitudeText = location.latitude.toString()
+                                longitudeText = location.longitude.toString()
+                                Log.d(
+                                    "HomeFragmnet",
+                                    "Location Got" + location.latitude.toString() + location.longitude.toString()
+                                )
+                            }
+                        })
+                } else {
+                    Log.d("HomeFragmnet", "get Last Location: Else")
+
+                    Toast.makeText(mContext!!, "Turn On Location", Toast.LENGTH_LONG).show()
+                    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    startActivity(intent)
+                }
+            }catch (e:Exception){
+                e.printStackTrace()
+                Log.d("HomeFragmnet","Exception"+e.printStackTrace().toString())
+            }
+        }else{
+            requestPermission()
+        }
+    }
+
+    private fun requestPermission() {
+        Log.d("MainActivity","Welcome request Permission")
+
+        ActivityCompat.requestPermissions(requireActivity(),Array<String>(5){
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+            android.Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_ID)
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestNewLocationData() {
+        Log.d("HomeFragmnet","request new locatrion data")
+
+        val mLocationRequest = com.google.android.gms.location.LocationRequest.create()
+        mLocationRequest.setPriority(com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY)
+        mLocationRequest.setInterval(5)
+        mLocationRequest.setFastestInterval(0)
+        mLocationRequest.setNumUpdates(1)
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext!!)
+        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper()!!)
+        Log.d("HomeFragmnet","request new location complete")
+
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        Log.d("HomeFragmnet","onRequset Result Permi1")
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_ID){
+            Log.d("HomeFragmnet","onRequest Permission Result")
+            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                getLastLocation()
+                Log.d("HomeFragmnet","Last Location")
+            }
+        }
+    }
+
+    val mLocationCallback = object : LocationCallback(){
+        override fun onLocationResult(p0: LocationResult) {
+            Log.d("MainActivity","on Location Result")
+            val mLastLocation = p0.lastLocation
+            latitudeText = mLastLocation.latitude.toString()
+            longitudeText = mLastLocation.longitude.toString()
+            Log.d("MainActivity","Location Got 2 :"+mLastLocation.latitude.toString()+mLastLocation.longitude.toString())
+            super.onLocationResult(p0)
+        }
+    }
+
+    private fun isLocationEnabled():Boolean {
+        Log.d("HomeFragmnet", "is Location Enabled")
+        val locationManager = mContext!!.applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+        return locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager!!.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun checkPermissions(): Boolean {
+        Log.d("HomeFragmnet","welcome to Check Permision")
+        return ActivityCompat.checkSelfPermission(mContext!!,android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext!!,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -116,15 +243,15 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
                         else Log.d("HomeFragmnet","Else Not Work")
                     },4000)
                 }
-//                super.onPageFinished(view, url)
+                super.onPageFinished(view, url)
             }
         }
     }
 
     fun setCurrentLocation(){
         Log.d("HomeFragmnet","set Current Location 1")
-            latLng = LatLng(23.0477,72.5728)
-
+            latLng = LatLng(latitudeText!!.toDouble(),longitudeText!!.toDouble())
+//        23.0158874   72.5047236
         //latitude=23.0477, longitude=72.5728
         if (latLng != null){
             Log.d("HomeFragmnet","setCurrentLocation If")
@@ -146,30 +273,6 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
         }
     }
 
-//    fun getLocation(){
-//        Log.d("HomeFragmnet","Get Location Function")
-//
-//        if (checkLocationPermission()){
-//            Log.d("HomeFragmnet","If CheckLocationPermission")
-//
-//            locationHelper = LocationHelper(activity,this,true,false,false)
-//        }
-//        else{
-//            requestPermission()
-//            Log.d("HomeFragmnet","request Permission")
-//
-//        }
-//    }
-
-    private fun requestPermission() {
-        Log.d("HomeFragmnet","request Permission :2")
-
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-            RQ_LOCATION
-        )
-    }
 
     fun checkLocationPermission():Boolean{
         Log.d("HomeFragmnet","Check Location Permission 2")
@@ -230,6 +333,12 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
                         mLocalCuisineDetail!!.fieldHeritageSitesCategory.joinToString(
                         separator = " "
                         ),
+                            getLocation(
+                                mLocalCuisineDetail!!.latitude,
+                                mLocalCuisineDetail!!.longitude
+                            ),
+                            mLocalCuisineDetail!!.latitude,
+                            mLocalCuisineDetail!!.longitude,
                         mLocalCuisineDetail!!.type,
                         response.result!!.nid
                         )
@@ -257,23 +366,49 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
 
     private fun setupBottomCusine(
         heritageSiteName: String,
-        get: String,
-        joinToString: String,
-        type: String,
-        nid: String
+        fieldUploadUrl: String,
+        category: String,
+        location: Location,
+        latitude: Double,
+        longitude: Double,
+        type1: String,
+        nid1: String
     ) {
-        Glide.with(mContext!!).load(get).into(course)
+        Glide.with(mContext!!).load(fieldUploadUrl).into(course)
 
         idTVCourseName.text = heritageSiteName
-        idTVCourseTracks.text = joinToString
+        idTVCourseTracks.text = category
 
         bottomSheetLayout.setOnClickListener(View.OnClickListener {
-            if (type!=null)
+            if (type1!=null)
             {
-                Util.openDetailsScreen(mContext!!,type,nid)
+                Util.openDetailsScreen(mContext!!,type1,nid1)
                 sheetBehaviorUnit.state=BottomSheetBehavior.STATE_COLLAPSED
             }
         })
+
+        idTVCourseDuration.text = location.toString()
+//        latLng = LatLng(latitude!!,longitude!!)
+        Log.d("HomeFragmnet","set latLng"+latLng+latitude.toString()+longitude.toString())
+
+
+        val distance = if (latLng != null) {
+            Log.d("HomeFragmnet","check Distance 1"+location.toString())
+            Log.d("HomeFragmnet","check Distance 3"+latitude.toString()+longitude.toString())
+// latitude=23.0477, longitude=72.5728
+// 23.06054           72.5802878
+            //23.0158874   72.5047236
+            getDistance(
+                location,
+                getLocation(latLng!!.latitude, latLng!!.longitude)
+            )
+            Log.d("HomeFragmnet","check Distance 2"+ getDistance(location, Util.getLocation(latLng!!.latitude, latLng!!.longitude)).toString())
+
+        } else{
+            Log.d("HomeFragmnet","Its Not Working")
+        }
+
+        idTVCourseDuration.text = getString(R.string.lbl_approximate_distance,getDistance(location, Util.getLocation(latLng!!.latitude, latLng!!.longitude)).toString())
 
         idBtnDismiss.setOnClickListener {
             isPermissionFor = Const.PERMISSION.BOOK_CAB
@@ -310,6 +445,12 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
                         mFestivalDetailModel!!.fieldFestivalCategory.joinToString(
                             separator = " "
                         ),
+                        getLocation(
+                            mFestivalDetailModel!!.latitude,
+                            mFestivalDetailModel!!.longitude
+                        ),
+                        mFestivalDetailModel!!.latitude,
+                        mFestivalDetailModel!!.longitude,
                         mFestivalDetailModel!!.heritageSiteName.toString(),
                         mFestivalDetailModel!!.type,
                         response.result!!.nid
@@ -338,24 +479,51 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
 
     private fun setupBottomSites(
         heritageSiteName: String,
-        get: String,
-        joinToString: String,
-        toString: String,
-        type: String,
-        nid: String
+        fielduploadUrl: String,
+        category: String,
+        location: Location,
+        latitude: Double,
+        longitude: Double,
+        sitename: String,
+        type1: String,
+        nid1: String
     ) {
-        Glide.with(mContext!!).load(get).into(course)
+        Glide.with(mContext!!).load(fielduploadUrl).into(course)
 
         idTVCourseName.text = heritageSiteName
-        idTVCourseTracks.text = joinToString
+        idTVCourseTracks.text = category
 
         bottomSheetLayout.setOnClickListener(View.OnClickListener {
-            if (type!=null)
+            if (sitename!=null)
             {
-                Util.openDetailsScreen(mContext!!,type,nid)
+                Util.openDetailsScreen(mContext!!,type1,nid1)
                 sheetBehaviorUnit.state=BottomSheetBehavior.STATE_COLLAPSED
             }
         })
+
+        idTVCourseDuration.text = location.toString()
+//        latLng = LatLng(latitude!!,longitude!!)
+        Log.d("HomeFragmnet","set latLng"+latLng+latitude.toString()+longitude.toString())
+
+
+        val distance = if (latLng != null) {
+            Log.d("HomeFragmnet","check Distance 1"+location.toString())
+            Log.d("HomeFragmnet","check Distance 3"+latitude.toString()+longitude.toString())
+// latitude=23.0477, longitude=72.5728
+// 23.06054           72.5802878
+            //23.0158874   72.5047236
+            getDistance(
+                location,
+                getLocation(latLng!!.latitude, latLng!!.longitude)
+            )
+            Log.d("HomeFragmnet","check Distance 2"+ getDistance(location, Util.getLocation(latLng!!.latitude, latLng!!.longitude)).toString())
+
+        } else{
+            Log.d("HomeFragmnet","Its Not Working")
+        }
+
+        idTVCourseDuration.text = getString(R.string.lbl_approximate_distance,getDistance(location, Util.getLocation(latLng!!.latitude, latLng!!.longitude)).toString())
+
 
         idBtnDismiss.setOnClickListener {
             isPermissionFor = Const.PERMISSION.BOOK_CAB
@@ -385,13 +553,19 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
             object : ResponseListener<Response<EventDetailModel>>(){
                 override fun onRequestSuccess(response: Response<EventDetailModel>) {
                     mEventDetailModel = response.result
-
+                    Log.d("HomeFragmnet","response-->"+response.result.toString())
                     activity!!.runOnUiThread(Runnable {
                     setupBottomSiteEvent(
                         mEventDetailModel!!.heritageSiteName,
                         mEventDetailModel!!.fieldHeritageSitesCategory.joinToString(
                             separator = " "
                         ),
+                        getLocation(
+                            mEventDetailModel!!.latitude,
+                            mEventDetailModel!!.longitude
+                        ),
+                        mEventDetailModel!!.latitude,
+                        mEventDetailModel!!.longitude,
                         mEventDetailModel!!.fieldUploadUrl.get(0),
                         mEventDetailModel!!.type,
                         response.result!!.nid
@@ -420,16 +594,45 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
 
     private fun setupBottomSiteEvent(
         heritageSiteName: String,
-        joinToString: String,
-        get: String,
+        category: String,
+        location: Location,
+        latitude: Double,
+        longitude: Double,
+        fieldUploadUrl: String,
         type: String,
         nid: String
     ) {
-        Glide.with(mContext!!).load(get).into(course)
+
+        Glide.with(mContext!!).load(fieldUploadUrl).into(course)
 
 //        idTVCourseTracks.text = stripHtml(description) //stripHtml that removes Html tag and get data without tag
         idTVCourseName.text = heritageSiteName
-        idTVCourseTracks.text = joinToString
+        idTVCourseTracks.text = category
+
+        latLng = LatLng(latitudeText!!.toDouble(),longitudeText!!.toDouble())
+
+        idTVCourseDuration.text = location.toString()
+//        latLng = LatLng(latitude!!,longitude!!)
+        Log.d("HomeFragmnet","set latLng"+latLng+latitude.toString()+longitude.toString())
+
+
+        val distance = if (latLng != null) {
+            Log.d("HomeFragmnet","check Distance 1"+location.toString())
+            Log.d("HomeFragmnet","check Distance 3"+latitude.toString()+longitude.toString())
+// latitude=23.0477, longitude=72.5728
+// 23.06054           72.5802878
+            //23.0158874   72.5047236
+            getDistance(
+                location,
+                getLocation(latLng!!.latitude, latLng!!.longitude)
+            )
+            Log.d("HomeFragmnet","check Distance 2"+ getDistance(location, Util.getLocation(latLng!!.latitude, latLng!!.longitude)).toString())
+
+        } else{
+            Log.d("HomeFragmnet","Its Not Working")
+        }
+
+        idTVCourseDuration.text = getString(R.string.lbl_approximate_distance,getDistance(location, Util.getLocation(latLng!!.latitude, latLng!!.longitude)).toString())
 
         bottomSheetLayout.setOnClickListener(View.OnClickListener {
             if (type!=null)
@@ -451,6 +654,7 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
                 latLng
             )
         }
+
     }
 
     //CALL API HERITAGE SITE
@@ -522,7 +726,7 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
         idTVCourseName.text = heritageSiteName
         idTVCourseTracks.text = joinToString
 
-        latLng = LatLng(23.0477,72.5728)
+        latLng = LatLng(latitudeText!!.toDouble(),longitudeText!!.toDouble())
 
         idTVCourseDuration.text = location.toString()
 //        latLng = LatLng(latitude!!,longitude!!)
@@ -534,6 +738,7 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
             Log.d("HomeFragmnet","check Distance 3"+latitude.toString()+longitude.toString())
 // latitude=23.0477, longitude=72.5728
 // 23.06054           72.5802878
+            //23.0158874   72.5047236
             getDistance(
                 location,
                 getLocation(latLng!!.latitude, latLng!!.longitude)
@@ -543,8 +748,6 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
         } else{
             Log.d("HomeFragmnet","Its Not Working")
         }
-
-        Log.d("HomeFragmnet","Its Not Working"+distance.toString())
 
         idTVCourseDuration.text = getString(R.string.lbl_approximate_distance,getDistance(location, Util.getLocation(latLng!!.latitude, latLng!!.longitude)).toString())
 
@@ -600,54 +803,6 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
         Log.d("HomeFragmnet","onlocation found!!"+latLng.toString())
 
     }
-
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<String>,
-//        grantResults: IntArray
-//    ) {
-//        Log.d("HomeFragmnet","on Request Permission")
-//
-//        if (locationHelper != null){
-//            Log.d("HomeFragmnet","If Locationhelper != null")
-//
-//            locationHelper?.onRequestPermissionsResult(requestCode,permissions,grantResults)
-//        }
-//        when(requestCode){
-//            RQ_LOCATION -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-//                Log.d("HomeFragmnet","Permision granted + getLocation")
-//
-//                getLocation()
-//            }else{
-//                Log.d("HomeFragmnet","its not works")
-//            }
-//            RC_BACKGROUND_LOCATION -> {
-//                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-//                    Log.d("HomeFragmnet","If EC_BACKGROUND_LOCATION")
-//
-//                }else{
-//                    Log.d("HomeFragmnet","Else RC_BACK_LOC")
-//
-//                    if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_BACKGROUND_LOCATION)){
-//                        Log.d("HomeFragmnet","Else, If RC_BACK_LOC")
-//
-//                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-//                            Uri.fromParts(
-//                                "package",
-//                                requireActivity().packageName,
-//                                null
-//                            )
-//                            )
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                        startActivity(intent)
-//                    }else{
-//                        Log.d("HomeFragmnet","Issue in Permission")
-//                    }
-//                }
-//            }
-//        }
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//    }
 
     override fun onDeclineProcessForLocation() {
         Log.d("HomeFragmnet","onDeclineProcessForLocation")

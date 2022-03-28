@@ -37,4 +37,5 @@ abstract class BaseFragment : Fragment() {
     }
 
     abstract fun bindViews(view: View)
+
 }

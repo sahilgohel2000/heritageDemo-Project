@@ -10,6 +10,7 @@ import com.example.haritagedemo.*
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.openDetailsScreen
 import com.example.haritagedemo.Model.FestivalDetailModel
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_festival_detail.*
 import kotlinx.android.synthetic.main.activity_festival_detail.mViewpager
 import kotlin.collections.ArrayList
@@ -21,6 +22,10 @@ class FestivalDetailActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClic
     var contentMessage: String? = null
     var titleMsg: String? = null
     var type: String? = null
+
+    private var latLng: LatLng? = null
+    private var isPermissionFor = Const.PERMISSION.TAKE_PHOTO
+
     private var fAdapter:SiteNearbyAdapter? = null
     private var fArrayList: ArrayList<FieldNearbySitesLocation?> = ArrayList()
     private var mCustomPagerAdapter: CustomPagerAdapter? = null
@@ -144,7 +149,21 @@ class FestivalDetailActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClic
             festivalRecycler.visibility = View.GONE
             festivalVisit.visibility = View.GONE
         }
+        btnGetThere.setOnClickListener {
+            isPermissionFor = Const.PERMISSION.BOOK_CAB
+            latLng = LatLng(mFestivalDetailModel.latitude, mFestivalDetailModel.longitude)
+
+            Util.showGetThereDialog(
+                this,
+                mFestivalDetailModel.heritageSiteName,
+                mFestivalDetailModel.latitude,
+                mFestivalDetailModel.longitude,
+                latLng
+            )
+        }
+
     }
+
 
     //this stripHtml method removes the Html Tag without this we can get data with html tag
     private fun stripHtml(description: String): CharSequence? {
