@@ -64,6 +64,7 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
     }
 
     override fun bindViews(view: View) {
+
         setsUpMap()
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext!!)
@@ -213,6 +214,7 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setsUpMap() {
+        Log.d("HomeFragmnet","Set Up Map")
 
         webView.addJavascriptInterface(WebInterface(mContext!!), "appInterface")
         webView.settings.javaScriptEnabled = true
@@ -220,9 +222,18 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
         webView.settings.allowFileAccess = true
         webView.settings.domStorageEnabled = true
         webView.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
-        webView.loadUrl(
-            "file:///android_asset/index.html"
-        )
+        webView.settings.setGeolocationEnabled(true)
+        webView.settings.loadWithOverviewMode = true
+
+        try {
+            Log.d("HomeFragmnet","Try :")
+            webView.loadUrl(
+                "file:///android_asset/index.html"
+            )
+        }catch (e:Exception){
+            e.printStackTrace()
+            Log.d("HomeFragmnet","Catch:"+e.printStackTrace().toString())
+        }
 
         webView.webChromeClient = object : WebChromeClient() {
             override fun onJsAlert(
@@ -295,7 +306,15 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
 
                     if (!dataId.isNullOrEmpty() && type != null){
                         if (type.equals(Const.HERITAGETYPE.HERITAGE_SITE.toString(),true)){
-                            callAPIHeritageSiteDetails(dataId)
+                            try {
+                                Log.d("MainActivity","New Try: ")
+                                callAPIHeritageSiteDetails(dataId)
+                                Log.d("MainActivity","Call Heritage Api: ")
+                            }catch (e:Exception)
+                            {
+                             e.printStackTrace()
+                                Log.d("MainActivity","Exception: "+e.printStackTrace().toString())
+                            }
                         }
                         else if (type.equals(Const.HERITAGETYPE.FESTIVALS.toString(),true)){
                             callAPIGetFestivalDetails(dataId)
