@@ -73,14 +73,13 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
             getLastLocation()
         }catch (e:Exception){
             e.printStackTrace()
-            Log.d("MainActivity","Exception"+e.printStackTrace().toString())
         }
 
         setLoc.setOnClickListener {
-            Log.d("HomeFragmnet","setLocation Btn")
             setCurrentLocation()
             checkLocationPermission()
         }
+
         bottomSheetLayout = view.findViewById(R.id.bottomsheetLayout)
         sheetBehaviorUnit = BottomSheetBehavior.from(bottomSheetLayout)
         sheetBehaviorUnit.state = BottomSheetBehavior.STATE_HIDDEN
@@ -104,44 +103,31 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
 
     @SuppressLint("MissingPermission")
     private fun getLastLocation() {
-        Log.d("HomeFragmnet","get Last Location Function")
 
         if (checkPermissions()){
-            Log.d("HomeFragmnet","get Last Location: If check Permision")
-
             try {
-
                 if (isLocationEnabled()) {
-                    Log.d("HomeFragmnet", "get Last Location: If isLocationEnabled")
-
                     mFusedLocationClient.getLastLocation()
                         .addOnCompleteListener(OnCompleteListener {
-                            Log.d("HomeFragmnet", "get Last Location: getLastLocation")
-
                             val location = it.getResult()
                             if (location == null) {
-                                Log.d("HomeFragmnet", "get Last Location:Location is Null")
-
                                 requestNewLocationData()
                             } else {
                                 latitudeText = location.latitude.toString()
                                 longitudeText = location.longitude.toString()
                                 Log.d(
-                                    "HomeFragmnet",
+                                    "HomeFragment",
                                     "Location Got" + location.latitude.toString() + location.longitude.toString()
                                 )
                             }
                         })
                 } else {
-                    Log.d("HomeFragmnet", "get Last Location: Else")
-
                     Toast.makeText(mContext!!, "Turn On Location", Toast.LENGTH_LONG).show()
                     val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                     startActivity(intent)
                 }
             }catch (e:Exception){
                 e.printStackTrace()
-                Log.d("HomeFragmnet","Exception"+e.printStackTrace().toString())
             }
         }else{
             requestPermission()
@@ -149,8 +135,6 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
     }
 
     private fun requestPermission() {
-        Log.d("MainActivity","Welcome request Permission")
-
         ActivityCompat.requestPermissions(requireActivity(),Array<String>(5){
             android.Manifest.permission.ACCESS_COARSE_LOCATION
             android.Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_ID)
@@ -158,8 +142,6 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
 
     @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
-        Log.d("HomeFragmnet","request new locatrion data")
-
         val mLocationRequest = com.google.android.gms.location.LocationRequest.create()
         mLocationRequest.setPriority(com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY)
         mLocationRequest.setInterval(5)
@@ -167,8 +149,6 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
         mLocationRequest.setNumUpdates(1)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext!!)
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper()!!)
-        Log.d("HomeFragmnet","request new location complete")
-
     }
 
     override fun onRequestPermissionsResult(
@@ -176,31 +156,24 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        Log.d("HomeFragmnet","onRequset Result Permi1")
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_ID){
-            Log.d("HomeFragmnet","onRequest Permission Result")
             if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 getLastLocation()
-                Log.d("HomeFragmnet","Last Location")
             }
         }
     }
 
     val mLocationCallback = object : LocationCallback(){
         override fun onLocationResult(p0: LocationResult) {
-            Log.d("MainActivity","on Location Result")
             val mLastLocation = p0.lastLocation
             latitudeText = mLastLocation.latitude.toString()
             longitudeText = mLastLocation.longitude.toString()
-            Log.d("MainActivity","Location Got 2 :"+mLastLocation.latitude.toString()+mLastLocation.longitude.toString())
             super.onLocationResult(p0)
         }
     }
 
     private fun isLocationEnabled():Boolean {
-        Log.d("HomeFragmnet", "is Location Enabled")
         val locationManager = mContext!!.applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
         return locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager!!.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
@@ -208,14 +181,11 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
     }
 
     private fun checkPermissions(): Boolean {
-        Log.d("HomeFragmnet","welcome to Check Permision")
         return ActivityCompat.checkSelfPermission(mContext!!,android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext!!,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setsUpMap() {
-        Log.d("HomeFragmnet","Set Up Map")
-
         webView.addJavascriptInterface(WebInterface(mContext!!), "appInterface")
         webView.settings.javaScriptEnabled = true
         webView.settings.allowContentAccess = true
@@ -226,13 +196,11 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
         webView.settings.loadWithOverviewMode = true
 
         try {
-            Log.d("HomeFragmnet","Try :")
             webView.loadUrl(
                 "file:///android_asset/index.html"
             )
         }catch (e:Exception){
             e.printStackTrace()
-            Log.d("HomeFragmnet","Catch:"+e.printStackTrace().toString())
         }
 
         webView.webChromeClient = object : WebChromeClient() {
@@ -251,7 +219,7 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
                     Handler().postDelayed(Runnable {
                         val intent = requireActivity().intent.extras?.getParcelable<Intent>("filterData")
                         if (intent == null) setCurrentLocation()
-                        else Log.d("HomeFragmnet","Else Not Work")
+                        else ""
                     },4000)
                 }
                 super.onPageFinished(view, url)
@@ -260,36 +228,27 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
     }
 
     fun setCurrentLocation(){
-        Log.d("HomeFragmnet","set Current Location 1")
             latLng = LatLng(latitudeText!!.toDouble(),longitudeText!!.toDouble())
 //        23.0158874   72.5047236
         //latitude=23.0477, longitude=72.5728
         if (latLng != null){
-            Log.d("HomeFragmnet","setCurrentLocation If")
             try {
-                Log.d("HomeFragmnet","setCurrentLocation Try")
                 val jsonObject = JSONObject().apply {
                     this.put("latitude",latLng!!.latitude)
                     this.put("longitude",latLng!!.longitude)
                     this.put("icon",resources.getString(R.string.gis_map_current_location_icon))
                 }
                 webView?.loadUrl("javascript:setMyLocation('$jsonObject')")
-                Log.d("HomeFragmnet","setCurrentLocation")
             }catch (e:Exception){
                 e.printStackTrace()
-                Log.d("HomeFragmnet","setCurrentLocation catch="+e.printStackTrace().toString())
             }
         }else{
-            Log.d("HomeFragmnet","Else Latlng is Null")
         }
     }
 
 
     fun checkLocationPermission():Boolean{
-        Log.d("HomeFragmnet","Check Location Permission 2")
-
         val result=ContextCompat.checkSelfPermission(mContext!!, android.Manifest.permission.ACCESS_FINE_LOCATION)
-        Log.d("HomeFragmnet","Check Location Permission 3")
         return result == PackageManager.PERMISSION_GRANTED
     }
 
@@ -307,13 +266,10 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
                     if (!dataId.isNullOrEmpty() && type != null){
                         if (type.equals(Const.HERITAGETYPE.HERITAGE_SITE.toString(),true)){
                             try {
-                                Log.d("MainActivity","New Try: ")
                                 callAPIHeritageSiteDetails(dataId)
-                                Log.d("MainActivity","Call Heritage Api: ")
                             }catch (e:Exception)
                             {
                              e.printStackTrace()
-                                Log.d("MainActivity","Exception: "+e.printStackTrace().toString())
                             }
                         }
                         else if (type.equals(Const.HERITAGETYPE.FESTIVALS.toString(),true)){
