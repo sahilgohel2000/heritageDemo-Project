@@ -5,13 +5,18 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.icu.text.CaseMap
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.net.Uri
 import android.util.Log
+import android.webkit.ConsoleMessage
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.haritagedemo.Activity.EventDetailActivity
@@ -23,8 +28,40 @@ import com.google.android.gms.maps.model.LatLng
 import java.lang.Exception
 import java.math.BigDecimal
 import java.util.*
+import com.example.haritagedemo.API.AlertMessage
 
 object Util {
+
+    //check internetConnections
+    fun isConnectedtoInternet(mContext: Context?):Boolean{
+        return try {
+            val cm = mContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+            val activeNetwork: NetworkInfo? = cm?.activeNetworkInfo
+            activeNetwork?.isConnectedOrConnecting == true
+        }catch (e:Exception){
+            e.printStackTrace()
+            false
+        }
+    }
+
+    fun message(mContext: Context?,message: String?){
+        if (mContext != null && message != null && !message.trim().isEmpty()){
+            Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun showMessage(title: String,message: String,mContext: Context){
+        if (message.trim().isNotEmpty()){
+            AlertMessage().showMessage(mContext, message, title)
+        }
+    }
+
+    fun showMessage(mContext: Context?, message: String?){
+        if (mContext!=null && message!=null && !message.trim().isEmpty())
+        {
+            AlertMessage().showMessage(mContext,message)
+        }
+    }
 
     fun getDistance(location1: Location, location2: Location): Float {
         Log.d("UtilClass","Util.get Distance1:"+location1.toString()+location2.toString())

@@ -52,6 +52,20 @@
     <string name="retry">Retry</string>
     <string name="cancel">Cancel</string>
 
+    <!--retrofit error msg-->
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_match_not_started_yet">Match has not started yet.</string>
+    <string name="error_connect">Connection Error</string>
+    <string name="something_want_wrong">Something went wrong. Please try again.</string>
+    <string name="something_want_server">Something went wrong at server</string>
+    <string name="request_error_time_out">Time Out, Please retry</string>
+    <string name="request_error_auth_failure">AuthFailureError</string>
+    <string name="request_error_server">ServerError</string>
+    <string name="request_error_parse">ParseError</string>
+    <string name="request_error_network">NetworkError</string>
+    <string name="request_error_no_response">No response from server</string>
+    <string name="request_error_no_response_login">No data getting in response from server</string>
+
     <string name="explore_india_first_unesco_city">Explore India\'s first UNESCO World Heritage city, Ahmedabad like never before with …</string>
     <string name="intro_page1">All the information you need right at your fingertips. Easily access it on the home page and plan your days exploring Ahmedabad’s heritage.</string>
     <string name="intro_page2">Use the filter buttons to find heritage sites of your interest, amenities, events and popular eateries near you. View them on map or as a list.</string>

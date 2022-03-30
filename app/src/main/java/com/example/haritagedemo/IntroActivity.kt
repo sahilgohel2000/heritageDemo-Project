@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.haritagedemo.API.BaseActivity
 import com.example.haritagedemo.Model.IntroModel
 import com.example.haritagedemo.preHome.preHomeActivity
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_intro.*
 
