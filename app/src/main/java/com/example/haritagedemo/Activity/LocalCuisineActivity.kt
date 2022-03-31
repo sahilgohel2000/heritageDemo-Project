@@ -66,6 +66,12 @@ class LocalCuisineActivity : BaseActivity(),SiteNearbyAdapter.OnNearBySiteClickC
     }
 
     private fun callAPILocalCusine() {
+
+        if (!Util.isConnectedtoInternet(mContext)){
+            Util.showMessage(mContext,getString(R.string.error_no_internet))
+            return
+        }
+
         val serviceManager=ServiceManager(mContext)
         val hashMap=HashMap<String, Any?>()
 

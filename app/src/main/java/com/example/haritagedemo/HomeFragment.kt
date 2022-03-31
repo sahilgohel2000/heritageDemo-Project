@@ -21,7 +21,6 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import com.bumptech.glide.Glide
 import com.example.haritagedemo.API.*
 import com.example.haritagedemo.API.Util.getDistance
@@ -64,6 +63,11 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
     }
 
     override fun bindViews(view: View) {
+
+        if (!Util.isConnectedtoInternet(mContext)){
+            Util.showMessage(mContext,getString(R.string.error_no_internet))
+            return
+        }
 
         setsUpMap()
 
@@ -288,6 +292,12 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
     }
 
     private fun callAPILocalCusine(dataId: String?){
+
+        if (!Util.isConnectedtoInternet(mContext)){
+            Util.showMessage(mContext,getString(R.string.error_no_internet))
+            return
+        }
+
         val serviceManager = ServiceManager(mContext!!)
         val hashMap = HashMap<String, Any?>()
 
@@ -400,6 +410,12 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
     }
 
     private fun callAPIGetFestivalDetails(dataId: String?){
+
+        if (!Util.isConnectedtoInternet(mContext)){
+            Util.showMessage(mContext,getString(R.string.error_no_internet))
+            return
+        }
+
         val serviceManager = ServiceManager(mContext!!)
         val hashMap = HashMap<String, Any?>()
 
@@ -516,6 +532,12 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
 
     //CALL API EVENT DETAIL
     private fun callAPIEventDetail(dataId: String?){
+
+        if (!Util.isConnectedtoInternet(mContext)){
+            Util.showMessage(mContext,getString(R.string.error_no_internet))
+            return
+        }
+
         val serviceManager = ServiceManager(mContext!!)
         val hashMap = HashMap<String, Any?>()
 
@@ -634,6 +656,11 @@ class HomeFragment : BaseFragment(),LocationHelper.LocationHelperCallback {
 
     //CALL API HERITAGE SITE
      fun callAPIHeritageSiteDetails(dataId: String?){
+
+        if (!Util.isConnectedtoInternet(mContext)){
+            Util.showMessage(mContext,getString(R.string.error_no_internet))
+            return
+        }
 
         val serviceManager = ServiceManager(mContext!!)
         val hashMap = HashMap<String, Any?>()

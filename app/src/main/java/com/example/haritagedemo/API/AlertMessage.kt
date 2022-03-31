@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.net.wifi.p2p.WifiP2pManager
+import android.util.Log
 import com.amc.amcheritage.utils.LogHelper
 import com.example.haritagedemo.R
 
@@ -71,16 +72,19 @@ class AlertMessage {
         isCancelableDialog: Boolean,
         listener: AlertMessageListener?
     ) {
-        if (mContext!=null){
-            LogHelper.e(
-                this.javaClass.simpleName,"Not able to show dialog because of null context"
-            )
-            return
-        }
 
-        if (mContext is Activity)
-            if (mContext.isFinishing)
-                return
+//        if (mContext!=null){
+//            Log.d("HomeFragmnet","********mContext!=null*****")
+//
+//            LogHelper.e(
+//                this.javaClass.simpleName,"Not able to show dialog because of null context"
+//            )
+//            return
+//        }
+
+//        if (mContext is Activity)
+//            if (mContext.isFinishing)
+//                return
 
         val myDialog = MyAlertDialog(mContext)
         myDialog.setMTitle(mContext.getString(R.string.app_name).takeIf { title.isNullOrBlank() }?:title!!)
